@@ -20,6 +20,9 @@
             "version": "detect"
         }
     },
+    "rules": {
+        "react/prop-types": false
+    },
     "ignorePatterns": [
         "next.config.js"
     ]

@@ -1,2 +1,2 @@
-start pnpm run dev
+start pnpm run debug
 start pnpm run typecheck

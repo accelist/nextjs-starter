@@ -21,7 +21,7 @@
         }
     },
     "rules": {
-        "react/prop-types": false
+        "react/prop-types": 0
     },
     "ignorePatterns": [
         "next.config.js"

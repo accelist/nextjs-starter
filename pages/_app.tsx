@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import type { NextComponentType, NextPageContext } from 'next';
+import Router from 'next/router';
+import NProgress from 'nprogress';
 
 import '../src/css/index.css';
 
@@ -21,5 +23,9 @@ function CustomApp({ Component, pageProps }: AppProps): JSX.Element {
         </Layout>
     );
 }
+
+Router.events.on('routeChangeStart', NProgress.start);
+Router.events.on('routeChangeComplete', NProgress.done);
+Router.events.on('routeChangeError', NProgress.done);
 
 export default CustomApp;

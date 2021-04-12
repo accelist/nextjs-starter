@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Debug Next.js Dev",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "port": 9229
+        }
+    ]
+}

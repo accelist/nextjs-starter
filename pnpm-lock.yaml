@@ -1,6 +1,9 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@fortawesome/fontawesome-svg-core': 1.2.35
+  '@fortawesome/free-solid-svg-icons': 5.15.3
+  '@fortawesome/react-fontawesome': 0.1.14
   '@popperjs/core': 2.9.2
   '@types/node': ^14.14.37
   '@types/nprogress': ^0.2.0
@@ -19,6 +22,9 @@ specifiers:
   typescript: 4.2.4
 
 dependencies:
+  '@fortawesome/fontawesome-svg-core': 1.2.35
+  '@fortawesome/free-solid-svg-icons': 5.15.3
+  '@fortawesome/react-fontawesome': 0.1.14_ec0af2bc0907a851e3e0afc4708fd0f0
   '@popperjs/core': 2.9.2
   bootstrap: 5.0.0-beta3_@popperjs+core@2.9.2
   next: 10.1.3_507781d099a67956587e23f5ac79078b
@@ -91,6 +97,39 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@fortawesome/fontawesome-common-types/0.2.35:
+    resolution: {integrity: sha512-IHUfxSEDS9dDGqYwIW7wTN6tn/O8E0n5PcAHz9cAaBoZw6UpG20IG/YM3NNLaGPwPqgjBAFjIURzqoQs3rrtuw==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dev: false
+
+  /@fortawesome/fontawesome-svg-core/1.2.35:
+    resolution: {integrity: sha512-uLEXifXIL7hnh2sNZQrIJWNol7cTVIzwI+4qcBIq9QWaZqUblm0IDrtSqbNg+3SQf8SMGHkiSigD++rHmCHjBg==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 0.2.35
+    dev: false
+
+  /@fortawesome/free-solid-svg-icons/5.15.3:
+    resolution: {integrity: sha512-XPeeu1IlGYqz4VWGRAT5ukNMd4VHUEEJ7ysZ7pSSgaEtNvSo+FLurybGJVmiqkQdK50OkSja2bfZXOeyMGRD8Q==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 0.2.35
+    dev: false
+
+  /@fortawesome/react-fontawesome/0.1.14_ec0af2bc0907a851e3e0afc4708fd0f0:
+    resolution: {integrity: sha512-4wqNb0gRLVaBm/h+lGe8UfPPivcbuJ6ecI4hIgW0LjI7kzpYB9FkN0L9apbVzg+lsBdcTf0AlBtODjcSX5mmKA==}
+    peerDependencies:
+      '@fortawesome/fontawesome-svg-core': ^1.2.32
+      react: '>=16.x'
+    dependencies:
+      '@fortawesome/fontawesome-svg-core': 1.2.35
+      prop-types: 15.7.2
+      react: 17.0.2
+    dev: false
 
   /@hapi/accept/5.0.1:
     resolution: {integrity: sha512-fMr4d7zLzsAXo28PRRQPXR1o2Wmu+6z+VY1UzDp0iFo13Twj8WePakwXBiqn3E1aAlTpSNzCXdnnQXFhst8h8Q==}

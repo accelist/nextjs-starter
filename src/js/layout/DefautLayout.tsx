@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Head from 'next/head';
 import { SideBar } from "./Sidebar";
 import { Navbar } from "./Navbar";
 
 export const DefaultLayout: React.FunctionComponent = function ({ children }) {
+    const [displaySidebar, setDisplaySidebar] = useState(false);
+
     return (
         <React.Fragment>
             <Head>
@@ -12,9 +14,9 @@ export const DefaultLayout: React.FunctionComponent = function ({ children }) {
                 <link key="favicon" rel="icon" href="/favicon.ico" />
             </Head>
             <div className="navbar-frame">
-                <Navbar></Navbar>
+                <Navbar toggleSidebar={() => setDisplaySidebar(!displaySidebar)}></Navbar>
                 <div className="sidebar-frame">
-                    <SideBar></SideBar>
+                    <SideBar display={displaySidebar}></SideBar>
                     <div className="container d-flex flex-column py-4">
                         {children}
                     </div>

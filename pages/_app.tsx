@@ -3,6 +3,8 @@ import App, { AppContext, AppProps } from 'next/app';
 import type { NextComponentType, NextPageContext } from 'next';
 import Router from 'next/router';
 import NProgress from 'nprogress';
+import { config } from '@fortawesome/fontawesome-svg-core';
+config.autoAddCss = false;
 
 import '../src/css/index.css';
 

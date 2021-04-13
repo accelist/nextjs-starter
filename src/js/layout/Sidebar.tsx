@@ -8,6 +8,8 @@ export const SideBar: React.FunctionComponent<{
         let c = "sidebar d-flex flex-column text-white bg-dark";
         if (!display){
             c += " sidebar-hide";
+        } else {
+            c += " sidebar-show";
         }
 
         return c;

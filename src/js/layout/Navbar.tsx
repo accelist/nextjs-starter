@@ -17,7 +17,7 @@ export const Navbar: React.FunctionComponent<{
         <div className="container-fluid stacked-nav">
             <header className="row flex-centered flex-wrap justify-content-lg-between py-3 bg-dark text-light">
                 <a href="/" className="col-12 col-lg-3 flex-centered justify-content-lg-start mb-2 mb-lg-0 text-decoration-none">
-                    <img className="navbar-logo ms-lg-4" src="/logo.png"></img>
+                    <img className="navbar-logo ms-lg-5" src="/logo.png"></img>
                 </a>
                 <ul className="nav col-12 col-lg-auto flex-centered mb-2 mb-lg-0">
                     <li className="d-lg-none">

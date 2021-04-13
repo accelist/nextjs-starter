@@ -17,9 +17,9 @@ export const DefaultLayout: React.FunctionComponent = function ({ children }) {
                 <Navbar toggleSidebar={() => setDisplaySidebar(!displaySidebar)}></Navbar>
                 <div className="sidebar-frame">
                     <SideBar display={displaySidebar}></SideBar>
-                    <div className="container d-flex flex-column py-4">
+                    <main className="container py-4">
                         {children}
-                    </div>
+                    </main>
                 </div>
             </div>
         </React.Fragment>

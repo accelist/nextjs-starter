@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page } from '../src/js/components/Page';
+import { Page } from '../src/js/types/Page';
 import { DefaultLayout } from '../src/js/layout/DefautLayout';
 import { Title } from '../src/js/components/Title';
 import Link from 'next/link';

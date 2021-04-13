@@ -1,2 +1,4 @@
 @import 'bootstrap';
 @import 'nprogress/nprogress.css';
+
+@import './sidebar';

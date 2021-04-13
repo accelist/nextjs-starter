@@ -1,2 +1,12 @@
+.dockerignore
+Dockerfile
+
+.git
+.gitignore
+
 .next
 node_modules
+
+.vscode
+.env.development
+dev.cmd

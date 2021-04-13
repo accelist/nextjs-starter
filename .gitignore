@@ -69,9 +69,12 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variables file
-# .env, .env.development, and .env.production files should be included in your repository as they define defaults.
-# .env.local should be added to .gitignore, as those files are intended to be ignored. 
-# .env.local is where secrets can be stored.
+# Next.js inlines environment files into the final build, which is not ideal for production.
+# Container-based deployment like Kubernetes requires environment variables read from the machine.
+# Thus we definitely do not want people submitting .env and .env.production file into the CI,
+# causing the final build image to have inlined environment variable from the file! 
+.env
+.env.production
 .env.local
 .env.test
 

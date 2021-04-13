@@ -7,6 +7,7 @@ export const DefaultLayout: React.FunctionComponent = function ({ children }) {
             <Head>
                 <meta key="meta-charset" charSet="utf-8" />
                 <meta key="meta-viewport" name="viewport" content="width=device-width, initial-scale=1" />
+                <link key="favicon" rel="icon" href="/favicon.ico" />
             </Head>
             <header>
                 HEADER GOES HERE

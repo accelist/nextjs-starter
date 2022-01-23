@@ -1,29 +1,17 @@
 {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended"
-    ],
-    "parserOptions": {
-        "ecmaVersion": 2020,
-        "sourceType": "module"
-    },
-    "env": {
-        "browser": true,
-        "commonjs": true
-    },
-    "settings": {
-        "react": {
-            "version": "detect"
-        }
-    },
-    "rules": {
-        "react/prop-types": 0
-    },
-    "ignorePatterns": [
-        "next.config.js"
-    ]
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "next/core-web-vitals"
+  ],
+  "rules": {
+    "react/prop-types": 0,
+    "@next/next/no-img-element": 0
+  },
+  "ignorePatterns": [
+    "next.config.js"
+  ]
 }

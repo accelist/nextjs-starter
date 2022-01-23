@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import { getAppSettings } from '../AppSettings';
+import { getAppSettings } from '../functions/AppSettings';
 
 const { websiteName } = getAppSettings();
 

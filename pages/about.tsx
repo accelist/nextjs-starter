@@ -1,7 +1,7 @@
 import React from 'react';
-import { Page } from '../src/js/types/Page';
-import { DefaultLayout } from '../src/js/layout/DefautLayout';
-import { Title } from '../src/js/components/Title';
+import { DefaultLayout } from '../components/DefautLayout';
+import { Title } from '../components/Title';
+import { Page } from '../types/Page';
 
 const Index: Page = () => {
     return (

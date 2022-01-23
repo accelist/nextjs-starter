@@ -6,7 +6,7 @@ import NProgress from 'nprogress';
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
-import '../src/css/index.css';
+import '../css/index.css';
 
 type NextComponentWithLayout = NextComponentType<NextPageContext, unknown, unknown> & {
     layout?: React.ComponentType

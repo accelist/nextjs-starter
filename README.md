@@ -26,6 +26,14 @@
 
 - Visual Studio breakpoint and debugging configured
 
+## How to Use?
+
+[Download as Zip File](https://github.com/accelist/nextjs-starter/archive/refs/heads/master.zip)
+
+Unzip the template folder, rename the folder to your project name, run `npm install`, then `npm run dev`
+
+The web app should be accessible at http://localhost:3000
+
 ## Project Structure
 
 > TODO
@@ -49,3 +57,7 @@
 ## Theme Customization
 
 > TODO, explain how to customize `Navbar`, `Sidebar`, and progress bar color
+
+## Step Debugging with Visual Studio Code
+
+> TODO

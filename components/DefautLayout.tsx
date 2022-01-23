@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { SideBar } from "./Sidebar";
 import { Navbar } from "./Navbar";
 
-export const DefaultLayout: React.FunctionComponent = function ({ children }) {
+export const DefaultLayout: React.FC = ({ children }) => {
     const [displaySidebar, setDisplaySidebar] = useState(false);
 
     return (

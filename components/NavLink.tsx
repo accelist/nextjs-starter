@@ -2,11 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-export const NavLink: React.FunctionComponent<{
+export const NavLink: React.FC<{
     href?: string,
     children: React.ReactNode,
     style?: React.CSSProperties
-}> = function ({ href, children, style }) {
+}> = ({ href, children, style }) => {
 
     const router = useRouter();
 

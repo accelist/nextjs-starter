@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBoxes, faChartLine, faHome, faTable, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from '../components/NavLink';
 
-export const SideBar: React.FunctionComponent<{
+export const SideBar: React.FC<{
     display: boolean
-}> = function ({ display }) {
+}> = ({ display }) => {
 
     function sideBarClass(): string {
         let c = "sidebar d-flex flex-column bg-dark";

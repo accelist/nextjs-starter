@@ -6,9 +6,9 @@ import Link from 'next/link';
 import { useSession, signIn, signOut } from "next-auth/react";
 import Dropdown from 'react-bootstrap/Dropdown';
 
-export const Navbar: React.FunctionComponent<{
+export const Navbar: React.FC<{
     toggleSidebar?: () => void;
-}> = function ({ toggleSidebar }) {
+}> = ({ toggleSidebar }) => {
 
     const { data: session } = useSession()
 

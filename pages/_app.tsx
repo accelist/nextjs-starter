@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import App, { AppContext, AppProps } from 'next/app';
 import type { NextComponentType, NextPageContext } from 'next';
 import Router from 'next/router';
 import NProgress from 'nprogress';
+import { SessionProvider } from "next-auth/react";
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
@@ -12,17 +13,18 @@ type NextComponentWithLayout = NextComponentType<NextPageContext, unknown, unkno
     layout?: React.ComponentType
 }
 
-function CustomApp({ Component, pageProps }: AppProps): JSX.Element {
-
-    useEffect(() => {
-        import('bootstrap');
-    }, []);
+function CustomApp({
+    Component,
+    pageProps: { session, ...pageProps }
+}: AppProps): JSX.Element {
 
     const Layout = (Component as NextComponentWithLayout).layout ?? React.Fragment;
     return (
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
+        <SessionProvider session={session}>
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        </SessionProvider>
     );
 }
 
@@ -34,6 +36,10 @@ CustomApp.getInitialProps = async (appContext: AppContext) => {
     const appProps = await App.getInitialProps(appContext);
     return { ...appProps };
 }
+
+NProgress.configure({
+    showSpinner: false
+});
 
 Router.events.on('routeChangeStart', NProgress.start);
 Router.events.on('routeChangeComplete', NProgress.done);

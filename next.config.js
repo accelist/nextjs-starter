@@ -1,8 +1,14 @@
 module.exports = {
-    serverRuntimeConfig: {},
     // add environment variables accessible via AppSettings here:
+    // visible only by Next.js server (secrets)
+    serverRuntimeConfig: {
+        nextAuthSecret: process.env['NEXTAUTH_SECRET'],
+        githubId: process.env['GITHUB_ID'],
+        githubSecret: process.env['GITHUB_SECRET']
+    },
+    // visible in Browser and Next.js server (DANGER!! Public Information!)
     publicRuntimeConfig: {
-        websiteName: process.env['websiteName']
+        websiteName: process.env['WEBSITE_NAME']
     },
     productionBrowserSourceMaps: true,
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
@@ -11,8 +17,7 @@ module.exports = {
             config.plugins.push(new ForkTsCheckerWebpackPlugin({
                 eslint: {
                     files: [
-                        'pages/**/*.{ts,tsx,js,jsx}',
-                        'src/**/*.{ts,tsx,js,jsx}',
+                        '**/*.{ts,tsx,js,jsx}',
                     ]
                 }
             }));

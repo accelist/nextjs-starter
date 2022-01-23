@@ -1,1 +1,1 @@
-pnpm run debug
+npm run debug

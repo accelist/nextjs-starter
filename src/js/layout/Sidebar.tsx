@@ -1,12 +1,15 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBoxes, faChartLine, faHome, faTable, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from '../components/NavLink';
 
 export const SideBar: React.FunctionComponent<{
     display: boolean
 }> = function ({ display }) {
 
     function sideBarClass(): string {
-        let c = "sidebar d-flex flex-column text-white bg-dark";
-        if (!display){
+        let c = "sidebar d-flex flex-column bg-dark";
+        if (!display) {
             c += " sidebar-hide";
         } else {
             c += " sidebar-show";
@@ -15,48 +18,42 @@ export const SideBar: React.FunctionComponent<{
         return c;
     }
 
+    const textWhite: React.CSSProperties = {
+        color: 'white'
+    };
+
     return (
         <div className={sideBarClass()} >
             <ul className="nav nav-pills d-flex flex-column p-3">
                 <li className="nav-item">
-                    <a href="#" className="nav-link active">
-                        <svg className="bi me-2" width={16} height={16}>
-                            <use xlinkHref="#home" />
-                        </svg>
+                    <NavLink style={textWhite} href='/'>
+                        <FontAwesomeIcon fixedWidth icon={faHome} className='me-2'></FontAwesomeIcon>
                         Home
-                    </a>
+                    </NavLink>
                 </li>
                 <li>
-                    <a href="#" className="nav-link text-white">
-                        <svg className="bi me-2" width={16} height={16}>
-                            <use xlinkHref="#speedometer2" />
-                        </svg>
+                    <NavLink style={textWhite}>
+                        <FontAwesomeIcon fixedWidth icon={faChartLine} className='me-2'></FontAwesomeIcon>
                         Dashboard
-                    </a>
+                    </NavLink>
                 </li>
                 <li>
-                    <a href="#" className="nav-link text-white">
-                        <svg className="bi me-2" width={16} height={16}>
-                            <use xlinkHref="#table" />
-                        </svg>
+                    <NavLink style={textWhite}>
+                        <FontAwesomeIcon fixedWidth icon={faTable} className='me-2'></FontAwesomeIcon>
                         Orders
-                    </a>
+                    </NavLink>
                 </li>
                 <li>
-                    <a href="#" className="nav-link text-white">
-                        <svg className="bi me-2" width={16} height={16}>
-                            <use xlinkHref="#grid" />
-                        </svg>
+                    <NavLink style={textWhite}>
+                        <FontAwesomeIcon fixedWidth icon={faBoxes} className='me-2'></FontAwesomeIcon>
                         Products
-                    </a>
+                    </NavLink>
                 </li>
                 <li>
-                    <a href="#" className="nav-link text-white">
-                        <svg className="bi me-2" width={16} height={16}>
-                            <use xlinkHref="#people-circle" />
-                        </svg>
+                    <NavLink style={textWhite}>
+                        <FontAwesomeIcon fixedWidth icon={faUsers} className='me-2'></FontAwesomeIcon>
                         Customers
-                    </a>
+                    </NavLink>
                 </li>
             </ul>
         </div>

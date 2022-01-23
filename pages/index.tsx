@@ -4,7 +4,7 @@ import { DefaultLayout } from '../src/js/layout/DefautLayout';
 import { Title } from '../src/js/components/Title';
 import Link from 'next/link';
 
-const Index: Page = function () {
+const Index: Page = () => {
     return (
         <div>
             <Title name="Home"></Title>

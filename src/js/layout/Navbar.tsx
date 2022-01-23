@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from '../components/NavLink';
 
 export const Navbar: React.FunctionComponent<{
     toggleSidebar?: () => void;
@@ -8,7 +9,7 @@ export const Navbar: React.FunctionComponent<{
 
     const onBurgerClick: React.MouseEventHandler<HTMLAnchorElement> = function (e) {
         e.preventDefault();
-        if (toggleSidebar){
+        if (toggleSidebar) {
             toggleSidebar();
         }
     }
@@ -25,14 +26,27 @@ export const Navbar: React.FunctionComponent<{
                             <FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
                         </a>
                     </li>
-                    <li><a href="#" className="nav-link active">Home</a></li>
-                    <li><a href="#" className="nav-link">Features</a></li>
-                    <li><a href="#" className="nav-link">Pricing</a></li>
-                    <li><a href="#" className="nav-link">FAQs</a></li>
-                    <li><a href="#" className="nav-link">About</a></li>
+                    <li>
+                        <NavLink href='/'>Home</NavLink>
+                    </li>
+                    <li>
+                        <NavLink>Features</NavLink>
+                    </li>
+                    <li>
+                        <NavLink>Pricing</NavLink>
+                    </li>
+                    <li>
+                        <NavLink>FAQ</NavLink>
+                    </li>
+                    <li>
+                        <NavLink href='/about'>About</NavLink>
+                    </li>
                 </ul>
                 <div className="col-12 col-lg-3 flex-centered justify-content-lg-end">
-                    <button type="button" className="btn btn-success me-2">Sign in</button>
+                    <button type="button" className="btn btn-success me-2">
+                        <FontAwesomeIcon icon={faSignInAlt} className='me-2'></FontAwesomeIcon>
+                        Sign in
+                    </button>
                 </div>
             </header>
         </div>

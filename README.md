@@ -44,7 +44,7 @@ The web app should be accessible at http://localhost:3000
 
 > TODO, explain about page layout
 
-## AppSettings API
+## `AppSettings` API
 
 > TODO, explain about how to work with Environment Variables
 
@@ -63,3 +63,7 @@ The web app should be accessible at http://localhost:3000
 ## Step Debugging with Visual Studio Code
 
 > TODO
+
+## `Authorize` Component
+
+> TODO, explain Role-Based Access Control and session callback

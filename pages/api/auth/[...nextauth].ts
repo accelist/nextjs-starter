@@ -14,8 +14,9 @@ export default NextAuth({
             authorization: {
                 params: {
                     // add additional API Access scope here:
+                    // if the scope for API Access is not provided, Access Token will not be returned!
                     // read more: https://next-auth.js.org/providers/azure-ad-b2c
-                    scope: `offline_access openid`
+                    scope: `offline_access openid https://login.accelist.com/test-api/access`
                 }
             },
         }),
@@ -29,6 +30,13 @@ export default NextAuth({
             // For example, using the access token to get user roles from the web API
             session['roles'] = ['Administrator', 'IT Manager'];
             return session
+        },
+        async jwt({ token, account }) {
+            // Persist the OAuth access_token to the token right after signin
+            if (account?.access_token) {
+                token['accessToken'] = account.access_token
+            }
+            return token
         }
     },
     // Don't forget to change these for Production!

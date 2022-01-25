@@ -20,9 +20,15 @@
 
 - OAuth to Azure Active Directory B2C configured
 
+- `Authorize` component: Supports Role-Based Access Control (RBAC)
+
+- API Gateway for proxying HTTP requests to back-end web API with Access Token
+
 - Automatic progress bar during page navigation
 
-- Batteries included: `jotai`, `swr`, `axios`, Bootstrap 5, `react-bootstrap`, FontAwesome 5
+- Default `SwrFetcher` function based on `axios` included for `swr` library
+
+- Batteries included: `jotai`, Bootstrap 5, `react-bootstrap`, FontAwesome 5
 
 - Visual Studio breakpoint and debugging configured
 
@@ -67,3 +73,7 @@ The web app should be accessible at http://localhost:3000
 ## `Authorize` Component
 
 > TODO, explain Role-Based Access Control and session callback
+
+## API Gateway
+
+> TODO, explain proxying requests to back-end web API

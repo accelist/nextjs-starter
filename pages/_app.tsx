@@ -1,6 +1,7 @@
 import React from 'react';
-import App, { AppContext, AppProps } from 'next/app';
-import type { NextComponentType, NextPageContext } from 'next';
+import type { NextPage } from 'next'
+import type { AppProps, AppContext } from 'next/app'
+import App from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import { SessionProvider } from "next-auth/react";
@@ -9,21 +10,23 @@ config.autoAddCss = false;
 
 import '../css/index.css';
 
-type NextComponentWithLayout = NextComponentType<NextPageContext, unknown, unknown> & {
-    layout?: React.ComponentType
+type NextPageWithLayout = NextPage & {
+    layout?: (page: React.ReactElement) => React.ReactNode;
+}
+
+type AppPropsWithLayout = AppProps & {
+    Component: NextPageWithLayout;
 }
 
 function CustomApp({
     Component,
     pageProps: { session, ...pageProps }
-}: AppProps): JSX.Element {
+}: AppPropsWithLayout): JSX.Element {
 
-    const Layout = (Component as NextComponentWithLayout).layout ?? React.Fragment;
+    const withLayout = Component.layout ?? (page => page);
     return (
         <SessionProvider session={session}>
-            <Layout>
-                <Component {...pageProps} />
-            </Layout>
+            {withLayout(<Component {...pageProps} />)}
         </SessionProvider>
     );
 }

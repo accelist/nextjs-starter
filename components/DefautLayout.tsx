@@ -25,3 +25,5 @@ export const DefaultLayout: React.FC = ({ children }) => {
         </React.Fragment>
     );
 }
+
+export const WithDefaultLayout = (page: React.ReactElement) => <DefaultLayout>{page}</DefaultLayout>;

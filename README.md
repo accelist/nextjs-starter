@@ -8,7 +8,9 @@
 
 - TypeScript + ESLint configured
 
-- Check-as-You-Type development experience, just like instapack!
+- Check-as-You-Type development experience (just like instapack!)
+
+- Visual Studio breakpoint and debugging configured
 
 - Responsive dashboard (top and side navigation bar) template
 
@@ -29,8 +31,6 @@
 - Default `SwrFetcher` function based on `axios` included for `swr` library
 
 - Batteries included: `jotai`, Bootstrap 5, `react-bootstrap`, FontAwesome 5
-
-- Visual Studio breakpoint and debugging configured
 
 ## How to Use?
 

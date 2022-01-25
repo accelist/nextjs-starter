@@ -3,8 +3,10 @@ module.exports = {
     // visible only by Next.js server (secrets)
     serverRuntimeConfig: {
         nextAuthSecret: process.env['NEXTAUTH_SECRET'],
-        githubId: process.env['GITHUB_ID'],
-        githubSecret: process.env['GITHUB_SECRET']
+        azureAuthTenantName: process.env['AZURE_AD_B2C_TENANT_NAME'],
+        azureAuthClientID: process.env['AZURE_AD_B2C_CLIENT_ID'],
+        azureAuthClientSecret: process.env['AZURE_AD_B2C_CLIENT_SECRET'],
+        azureAuthPrimaryUserFlow: process.env['AZURE_AD_B2C_PRIMARY_USER_FLOW'],
     },
     // visible in Browser and Next.js server (DANGER!! Public Information!)
     publicRuntimeConfig: {

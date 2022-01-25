@@ -32,7 +32,7 @@ export const SideBar: React.FC<{
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink style={textWhite}>
+                    <NavLink style={textWhite} href='/dashboard'>
                         <FontAwesomeIcon fixedWidth icon={faChartLine} className='me-2'></FontAwesomeIcon>
                         Dashboard
                     </NavLink>

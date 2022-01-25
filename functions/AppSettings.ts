@@ -3,8 +3,10 @@ import getConfig from 'next/config';
 export interface RuntimeAppSettings {
     websiteName: string;
     nextAuthSecret: string;
-    githubId: string;
-    githubSecret: string;
+    azureAuthTenantName: string;
+    azureAuthClientID: string;
+    azureAuthClientSecret: string;
+    azureAuthPrimaryUserFlow: string;
 }
 
 export const AppSettings = {

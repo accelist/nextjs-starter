@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from '../components/NavLink';
 import Link from 'next/link';
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Dropdown from 'react-bootstrap/Dropdown';
+import { signInWithAzureADB2C } from '../functions/SignInWithAzureADB2C';
 
 export const Navbar: React.FC<{
     toggleSidebar?: () => void;
@@ -33,7 +34,7 @@ export const Navbar: React.FC<{
             );
         } else {
             return (
-                <button type="button" onClick={() => signIn('github')} className="btn btn-success">
+                <button type="button" onClick={signInWithAzureADB2C} className="btn btn-success">
                     <FontAwesomeIcon icon={faSignInAlt} className='me-2'></FontAwesomeIcon>
                     Sign in
                 </button>

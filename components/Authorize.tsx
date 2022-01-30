@@ -9,10 +9,10 @@ export const Authorize: React.FC<{
     const { data: session, status } = useSession()
 
     useEffect(() => {
-        if (status === 'unauthenticated') {
+        if (status === 'unauthenticated' || session?.['error']) {
             signInWithAzureADB2C();
         }
-    }, [status]);
+    }, [session, status]);
 
     /**
      * Enforce Role-Based Access Control (RBAC) against the accessed page.

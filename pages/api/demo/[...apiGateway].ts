@@ -23,7 +23,7 @@ const apiGateway = async (req, res) => {
     const jwt = await getToken({ req, secret });
     const accessToken = jwt?.['accessToken'];
 
-    if (typeof accessToken === 'string') {
+    if (accessToken && typeof accessToken === 'string') {
         apiProxyOptions.headers = {
             Authorization: `Bearer ${accessToken}`
         }

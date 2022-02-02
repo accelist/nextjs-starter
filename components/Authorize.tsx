@@ -1,62 +1,32 @@
 import React, { useEffect } from 'react';
-import { useSession } from "next-auth/react"
-import { signInWithAzureADB2C } from '../functions/SignInWithAzureADB2C';
+import { useMsal, useIsAuthenticated } from '@azure/msal-react';
+import { loginRequest } from '../functions/msal';
 
 export const Authorize: React.FC<{
     roles?: string[]
-}> = ({ children, roles }) => {
+}> = ({ children }) => {
 
-    const { data: session, status } = useSession()
+    const { instance } = useMsal();
+    const isAuthenticated = useIsAuthenticated();
 
     useEffect(() => {
-        if (status === 'unauthenticated' || session?.['error']) {
-            signInWithAzureADB2C();
+        if (!isAuthenticated) {
+            instance.loginRedirect(loginRequest).catch(console.error);
         }
-    }, [session, status]);
+    }, [isAuthenticated, instance]);
 
-    /**
-     * Enforce Role-Based Access Control (RBAC) against the accessed page.
-     * @returns boolean value signifying whether the user is authorized to access the page or not.
-     */
-    function tryAuthorize(): boolean {
-        if (!roles) {
-            return true;
-        }
-
-        if (session) {
-            const userRoles = session['roles'];
-            if (Array.isArray(userRoles)) {
-                const roleMatches = roles.filter(role => userRoles.includes(role));
-                if (roleMatches.length) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    if (status === 'authenticated') {
-        const authorized = tryAuthorize();
-
-        if (authorized) {
-            return (
-                <>
-                    {children}
-                </>
-            );
-        } else {
-            return (
-                <div>
-                    Forbidden
-                </div>
-            );
-        }
+    if (!isAuthenticated) {
+        // TODO: design the redirecting page
+        return (
+            <div>
+                Redirecting to sign in page...
+            </div>
+        );
     }
 
     return (
-        <div>
-            Redirecting to sign in page...
-        </div>
+        <>
+            {children}
+        </>
     );
 }

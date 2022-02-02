@@ -4,11 +4,12 @@ import type { AppProps, AppContext } from 'next/app'
 import App from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import { SessionProvider } from "next-auth/react";
+import { MsalProvider } from "@azure/msal-react";
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
 import '../css/index.css';
+import { msalInstance } from '../functions/msal';
 
 type NextPageWithLayout = NextPage & {
     layout?: (page: React.ReactElement) => React.ReactNode;
@@ -20,14 +21,14 @@ type AppPropsWithLayout = AppProps & {
 
 function CustomApp({
     Component,
-    pageProps: { session, ...pageProps }
+    pageProps
 }: AppPropsWithLayout): JSX.Element {
 
     const withLayout = Component.layout ?? (page => page);
     return (
-        <SessionProvider session={session}>
+        <MsalProvider instance={msalInstance}>
             {withLayout(<Component {...pageProps} />)}
-        </SessionProvider>
+        </MsalProvider>
     );
 }
 

@@ -2,13 +2,14 @@ import getConfig from 'next/config';
 
 export interface RuntimeAppSettings {
     websiteName: string;
-    nextAuthSecret: string;
     azureAuthTenantName: string;
     azureAuthClientID: string;
-    azureAuthClientSecret: string;
     azureAuthPrimaryUserFlow: string;
 }
 
+/**
+ * Returns a combined runtime application environment variables.
+ */
 export const AppSettings = {
     get current(): RuntimeAppSettings {
         const config = getConfig();

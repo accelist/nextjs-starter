@@ -9,11 +9,12 @@ const msalConfig: msal.Configuration = {
         clientId: AppSettings.current.azureAuthClientID,
         authority: `https://${tenantName}.b2clogin.com/${tenantName}.onmicrosoft.com/${policyName}`, // /v2.0/.well-known/openid-configuration
         knownAuthorities: [`https://${tenantName}.b2clogin.com`],
-        redirectUri: 'http://localhost:3000',
+        redirectUri: '/auth/sign-in',
+        postLogoutRedirectUri: '/'
     },
     cache: {
         cacheLocation: 'localStorage'
-    }
+    },
 };
 
 // Add scopes here for acquiring Access Token for back-end API

@@ -14,22 +14,12 @@ export const Navbar: React.FC<{
     const { instance, accounts } = useMsal();
     const fullName = accounts[0]?.name;
 
-    async function signIn() {
-        try {
-            await instance.loginRedirect(loginRequest);
-        } catch (err) {
-            console.error(err);
-        }
+    function signIn() {
+        instance.loginRedirect(loginRequest).catch(console.error);
     }
 
-    async function signOut() {
-        try {
-            await instance.logoutRedirect({
-                postLogoutRedirectUri: 'http://localhost:3000/'
-            });
-        } catch (err) {
-            console.error(err);
-        }
+    function signOut() {
+        instance.logoutRedirect().catch(console.error);
     }
 
     const onBurgerClick: React.MouseEventHandler<HTMLAnchorElement> = function (e) {

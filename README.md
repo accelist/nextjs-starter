@@ -24,7 +24,7 @@
 
 - `Authorize` component: Supports Role-Based Access Control (RBAC)
 
-- API Gateway for proxying HTTP requests to back-end web API with Access Token
+- API Gateway for proxying HTTP requests to back-end web API
 
 - Automatic progress bar during page navigation
 

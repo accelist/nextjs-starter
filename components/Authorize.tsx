@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import NProgress from 'nprogress';
 import * as msal from "@azure/msal-browser";
-import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal, useIsAuthenticated } from '@azure/msal-react';
 import { loginRequest } from '../functions/msal';
 import { AccessTokenContext, useAccessToken } from '../functions/UseAccessToken';
 
@@ -53,9 +54,8 @@ export const Authorize: React.FC<{
 }> = ({ roles, children }) => {
 
     const { instance, inProgress, accounts } = useMsal();
+    const isAuthenticated = useIsAuthenticated();
     const [accessToken, setAccessToken] = useState('');
-
-    const isLoggedIn = Boolean(accounts[0]);
     const isReady = (inProgress === msal.InteractionStatus.None);
 
     useEffect(() => {
@@ -70,20 +70,22 @@ export const Authorize: React.FC<{
         }
 
         if (isReady) {
-            if (isLoggedIn) {
+            if (isAuthenticated) {
+                NProgress.start();
                 // https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-spa-acquire-token?tabs=react#acquire-a-token-with-a-redirect
                 setTokenSilently().catch(err => {
                     if (err instanceof msal.InteractionRequiredAuthError) {
                         instance.acquireTokenRedirect(loginRequestWithAccount).catch(console.error);
+                    } else {
+                        console.error(err);
                     }
-                    console.error(err);
-                });
+                }).then(() => NProgress.done());
             } else {
                 instance.loginRedirect(loginRequest).catch(console.error);
             }
 
         }
-    }, [accounts, inProgress, instance, isLoggedIn, isReady]);
+    }, [accounts, instance, isAuthenticated, isReady]);
 
     return (
         <>

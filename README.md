@@ -30,7 +30,9 @@
 
 - Default `SwrFetcher` function based on `axios` included for `swr` library
 
-- Batteries included: `jotai`, Bootstrap 5, `react-bootstrap`, FontAwesome 5
+- `UseAuthorizedAxios` and `UseAuthorizedSwrFetcher` hooks for acquiring HTTP clients with Authorization Bearer header set
+
+- Batteries included: `jotai`, Bootstrap 5, `react-bootstrap`, FontAwesome 5, `sweetalert2`
 
 ## How to Use?
 
@@ -72,7 +74,11 @@ The web app should be accessible at http://localhost:3000
 
 ## `Authorize` Component
 
-> TODO, explain Role-Based Access Control and session callback
+> TODO, explain Role-Based Access Control
+
+## Authorized HTTP Clients
+
+> TODO, explain `useAuthorizedAxios` and `useAuthorizedSwrFetcher` hooks
 
 ## API Gateway
 

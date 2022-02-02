@@ -71,6 +71,7 @@ export const Authorize: React.FC<{
 
         if (isReady) {
             if (isLoggedIn) {
+                // https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-spa-acquire-token?tabs=react#acquire-a-token-with-a-redirect
                 setTokenSilently().catch(err => {
                     if (err instanceof msal.InteractionRequiredAuthError) {
                         instance.acquireTokenRedirect(loginRequestWithAccount).catch(console.error);

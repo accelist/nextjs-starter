@@ -17,7 +17,6 @@ const Dashboard: React.FC = () => {
 
     return (
         <div>
-            <Title name="Dashboard"></Title>
             <p>You have Administrator or Operation roles</p>
             <p>
                 {JSON.stringify(data)}
@@ -32,6 +31,7 @@ const Dashboard: React.FC = () => {
 const DashboardPage: Page = () => {
     return (
         <Authorize roles={['Administrator', 'Operation']}>
+            <Title name="Dashboard"></Title>
             <Dashboard></Dashboard>
         </Authorize>
     );

@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as msal from "@azure/msal-browser";
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
 import { loginRequest } from '../functions/msal';
-import { AccessTokenContext } from './AccessTokenContext';
+import { AccessTokenContext, useAccessToken } from '../functions/UseAccessToken';
 
 const CheckRoles: React.FC<{
     roles?: string[]
 }> = ({ roles, children }) => {
 
-    const accessToken = useContext(AccessTokenContext);
+    const accessToken = useAccessToken();
     const [ready, setReady] = useState(false);
     const [userRoles, setUserRoles] = useState<string[]>([]);
 

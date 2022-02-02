@@ -1,18 +1,23 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
+import { DefaultAxiosRequestHeader } from "./DefaultAxiosRequestHeader";
 
-const client = axios.create({
-    headers: {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache',
-        'Expires': '0'
-    }
-});
-
-function createSwrFetcher() {
+export function createSwrFetcher(client: AxiosInstance) {
     return async (url: string) => {
         const response = await client.get(url);
         return response.data;
     }
 }
 
-export const SwrFetcher = createSwrFetcher();
+/**
+ * Gets the default Axios client instance.
+ * Caching is disabled via `DefaultAxiosRequestHeader` object.
+ */
+export const DefaultAxiosClient: AxiosInstance = axios.create({
+    headers: DefaultAxiosRequestHeader
+});
+
+/**
+ * Gets the default SWR fetcher based on Axios web client.
+ * Caching is disabled via `DefaultAxiosRequestHeader` object.
+ */
+export const SwrFetcher = createSwrFetcher(DefaultAxiosClient);

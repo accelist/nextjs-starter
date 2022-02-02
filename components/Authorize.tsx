@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import NProgress from 'nprogress';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as msal from "@azure/msal-browser";
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal, useIsAuthenticated } from '@azure/msal-react';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { loginRequest } from '../functions/msal';
 import { AccessTokenContext, useAccessToken } from '../functions/UseAccessToken';
 
@@ -49,6 +49,24 @@ const CheckRoles: React.FC<{
     );
 }
 
+function useInterval(callback: () => void, ms: number) {
+    const savedCallback = useRef(() => {
+        // no op
+    });
+
+    useEffect(() => {
+        savedCallback.current = callback;
+    }, [callback]);
+
+    // Set up the interval.
+    useEffect(() => {
+        const timer = setInterval(() => {
+            savedCallback.current();
+        }, ms);
+        return () => clearInterval(timer);
+    }, [ms]);
+}
+
 export const Authorize: React.FC<{
     roles?: string[]
 }> = ({ roles, children }) => {
@@ -57,44 +75,78 @@ export const Authorize: React.FC<{
     const isAuthenticated = useIsAuthenticated();
     const [accessToken, setAccessToken] = useState('');
     const isReady = (inProgress === msal.InteractionStatus.None);
+    const [tokenValid, setTokenValid] = useState(false);
 
-    useEffect(() => {
+    const acquireAccessToken = useCallback(async () => {
+        // https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-spa-acquire-token?tabs=react#acquire-a-token-with-a-redirect
         const loginRequestWithAccount: msal.RedirectRequest = {
             ...loginRequest,
             account: accounts[0]
         };
-
-        async function setTokenSilently() {
+        try {
             const response = await instance.acquireTokenSilent(loginRequestWithAccount)
             setAccessToken(response.accessToken);
+            setTokenValid(true);
+        } catch (err) {
+            try {
+                if (err instanceof msal.InteractionRequiredAuthError) {
+                    instance.acquireTokenRedirect(loginRequestWithAccount);
+                }
+            } catch (err2) {
+                console.error(err2);
+            }
         }
+    }, [instance, accounts]);
 
+    useEffect(() => {
         if (isReady) {
             if (isAuthenticated) {
-                NProgress.start();
-                // https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-spa-acquire-token?tabs=react#acquire-a-token-with-a-redirect
-                setTokenSilently().catch(err => {
-                    if (err instanceof msal.InteractionRequiredAuthError) {
-                        instance.acquireTokenRedirect(loginRequestWithAccount).catch(console.error);
-                    } else {
-                        console.error(err);
-                    }
-                }).then(() => NProgress.done());
+                acquireAccessToken();
             } else {
                 instance.loginRedirect(loginRequest).catch(console.error);
             }
 
         }
-    }, [accounts, instance, isAuthenticated, isReady]);
+    }, [isReady, isAuthenticated, acquireAccessToken, instance]);
+
+    function checkTokenExpiration() {
+        if (!accessToken) {
+            return false;
+        }
+
+        const { exp } = jwtDecode<JwtPayload>(accessToken);
+        if (!exp) {
+            return false;
+        }
+
+        const currentTime = Date.now() / 1000;
+        if (currentTime >= exp) {
+            return false;
+        }
+
+        return true;
+    }
+
+    // check access token every minute
+    useInterval(() => {
+        if (isReady && isAuthenticated && accessToken) {
+            const isValid = checkTokenExpiration();
+            setTokenValid(isValid);
+            acquireAccessToken();
+        }
+    }, 60 * 1000);
 
     return (
         <>
             <AuthenticatedTemplate>
-                <AccessTokenContext.Provider value={accessToken}>
-                    <CheckRoles roles={roles}>
-                        {children}
-                    </CheckRoles>
-                </AccessTokenContext.Provider>
+                {
+                    tokenValid &&
+                    <AccessTokenContext.Provider value={accessToken}>
+                        <CheckRoles roles={roles}>
+                            {children}
+                        </CheckRoles>
+                    </AccessTokenContext.Provider>
+                }
             </AuthenticatedTemplate>
             <UnauthenticatedTemplate>
                 <div>

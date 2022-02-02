@@ -3,7 +3,7 @@ import { WithDefaultLayout } from '../components/DefautLayout';
 import { Title } from '../components/Title';
 import { Page } from '../types/Page';
 
-const Index: Page = () => {
+const IndexPage: Page = () => {
     return (
         <div>
             <Title name="Home"></Title>
@@ -12,5 +12,5 @@ const Index: Page = () => {
     );
 }
 
-Index.layout = WithDefaultLayout;
-export default Index;
+IndexPage.layout = WithDefaultLayout;
+export default IndexPage;

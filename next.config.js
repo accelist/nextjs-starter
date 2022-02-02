@@ -9,6 +9,7 @@ module.exports = {
         azureAuthTenantName: process.env['AZURE_AD_B2C_TENANT_NAME'],
         azureAuthClientID: process.env['AZURE_AD_B2C_CLIENT_ID'],
         azureAuthPrimaryUserFlow: process.env['AZURE_AD_B2C_PRIMARY_USER_FLOW'],
+        backendHost: process.env['BACKEND_HOST'],
     },
     productionBrowserSourceMaps: true,
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {

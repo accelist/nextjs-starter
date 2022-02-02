@@ -5,11 +5,12 @@ import App from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import { MsalProvider } from "@azure/msal-react";
+import { msalInstance } from '../functions/msal';
+
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
 import '../css/index.css';
-import { msalInstance } from '../functions/msal';
 
 type NextPageWithLayout = NextPage & {
     layout?: (page: React.ReactElement) => React.ReactNode;
@@ -32,7 +33,7 @@ function CustomApp({
     );
 }
 
-// This disables the ability to perform Automatic Static Optimization... 
+// This disables the ability to perform Automatic Static Optimization... (Sadge)
 // Causing every page in the app to be server-side rendered,
 // but allowing the use of runtime configuration in Docker-based Environment!
 CustomApp.getInitialProps = async (appContext: AppContext) => {

@@ -20,7 +20,7 @@ const msalConfig: msal.Configuration = {
 // Add scopes here for acquiring Access Token for back-end API
 // Read more: https://next-auth.js.org/providers/azure-ad-b2c
 export const loginRequest: msal.RedirectRequest = {
-    scopes: ['offline_access', 'openid', 'https://login.accelist.com/test-api/access'],
+    scopes: ['offline_access', 'openid', 'https://accelistadb2c.onmicrosoft.com/demo-api/access'],
 };
 
 export const msalInstance = new msal.PublicClientApplication(msalConfig);

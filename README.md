@@ -62,11 +62,15 @@ The web app should be accessible at http://localhost:3000
 
 ## Azure AD B2C Configuration
 
-> TODO, explain step by step how to create Azure AD B2C tenant, web app, web API, API permission, and environment variables setting
+> TODO, explain step by step how to create Azure AD B2C tenant, web app, web API, scope / API permission, and environment variables setting
 
 ## `Authorize` Component
 
 > TODO, explain Role-Based Access Control
+
+## Default SWR Fetcher
+
+> TODO, add simple SWR call example using `DefaultSwrFetcher` here
 
 ## Using Access Token for Web API
 

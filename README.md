@@ -10,7 +10,7 @@
 
 - Check-as-You-Type development experience (just like instapack!)
 
-- Visual Studio breakpoint and debugging configured
+- Visual Studio Code breakpoint and debugging configured
 
 - Responsive dashboard (top and side navigation bar) template
 
@@ -36,29 +36,45 @@
 
 ## How to Use?
 
-[Download as Zip File](https://github.com/accelist/nextjs-starter/archive/refs/heads/master.zip)
+[Download The Template as Zip File](https://github.com/accelist/nextjs-starter/archive/refs/heads/master.zip)
 
-Unzip the template folder, rename the folder to your project name.
+Unzip and rename the folder to your actual project name.
 
-Run `npm install` in the project root folder, then `npm run dev`
+Run `npm ci` in the project root folder, then `npm run dev`
 
 The web app should be accessible at http://localhost:3000
 
-## Project Structure
+## Building and Running as Container
 
-> TODO
+> TODO, also include a simple command line script for running the app with environment variables
 
-## `Page` Component Type
+## Deploying Container to Kubernetes
 
-> TODO, explain about page layout
+> TODO add Deployment and Services `yaml` here with environment variables
 
 ## `AppSettings` API
 
 > TODO, explain about how to work with Environment Variables
 
+## `Page` Component Type
+
+> TODO, explain about page layout
+
 ## Azure AD B2C Configuration
 
-> TODO
+> TODO, explain step by step how to create Azure AD B2C tenant, web app, web API, API permission, and environment variables setting
+
+## `Authorize` Component
+
+> TODO, explain Role-Based Access Control
+
+## Using Access Token for Web API
+
+> TODO, explain `useAuthorizedAxios` and `useAuthorizedSwrFetcher` hooks
+
+## API Gateway
+
+> TODO, explain proxying requests to back-end web API
 
 ## Navbar and Sidebar Customization
 
@@ -71,15 +87,3 @@ The web app should be accessible at http://localhost:3000
 ## Step Debugging with Visual Studio Code
 
 > TODO
-
-## `Authorize` Component
-
-> TODO, explain Role-Based Access Control
-
-## Authorized HTTP Clients
-
-> TODO, explain `useAuthorizedAxios` and `useAuthorizedSwrFetcher` hooks
-
-## API Gateway
-
-> TODO, explain proxying requests to back-end web API

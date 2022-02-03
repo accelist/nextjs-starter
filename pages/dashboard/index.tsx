@@ -3,7 +3,7 @@ import useSWR from 'swr';
 import { Authorize } from '../../components/Authorize';
 import { WithDefaultLayout } from '../../components/DefautLayout';
 import { Title } from '../../components/Title';
-import { useAuthorizedSwrFetcher } from '../../functions/UseAuthorizedSwrFetcher';
+import { useAuthorizedSwrFetcher } from '../../functions/useAuthorizedSwrFetcher';
 import { Page } from '../../types/Page';
 
 const Dashboard: React.FC = () => {

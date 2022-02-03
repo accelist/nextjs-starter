@@ -20,4 +20,4 @@ export const DefaultAxiosClient: AxiosInstance = axios.create({
  * Gets the default SWR fetcher based on Axios web client.
  * Caching is disabled via `DefaultAxiosRequestHeader` object.
  */
-export const SwrFetcher = createSwrFetcher(DefaultAxiosClient);
+export const DefaultSwrFetcher = createSwrFetcher(DefaultAxiosClient);

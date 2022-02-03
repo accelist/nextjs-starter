@@ -3,7 +3,7 @@ import { DefaultAxiosRequestHeader } from "./DefaultAxiosRequestHeader";
 import { useAccessToken } from "./useAccessToken";
 
 /**
- * This method can only be used inside `<Authorize>` component.
+ * This hook can only be used inside `<Authorize>` component.
  * Caching is disabled via `DefaultAxiosRequestHeader` object.
  * @returns Axios Instance object with Authorization Bearer Access Token set.
  */

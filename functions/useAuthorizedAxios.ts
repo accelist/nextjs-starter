@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { DefaultAxiosRequestHeader } from "./DefaultAxiosRequestHeader";
-import { useAccessToken } from "./Use_AccessToken";
+import { useAccessToken } from "./useAccessToken";
 
 /**
  * This method can only be used inside `<Authorize>` component.

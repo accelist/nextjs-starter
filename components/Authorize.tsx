@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import * as msal from "@azure/msal-browser";
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal, useIsAuthenticated } from '@azure/msal-react';
 import { loginRequest } from '../functions/msal';
-import { AccessTokenContext, useAccessToken } from '../functions/UseAccessToken';
+import { AccessTokenContext, useAccessToken } from '../functions/useAccessToken';
 import { checkTokenExpiration } from '../functions/checkTokenExpiration';
 import { useInterval } from '../functions/useInterval';
 

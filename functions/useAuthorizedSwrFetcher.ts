@@ -1,5 +1,5 @@
 import { createSwrFetcher } from "./DefaultSwrFetcher";
-import { useAuthorizedAxios } from "./Use_AuthorizedAxios";
+import { useAuthorizedAxios } from "./useAuthorizedAxios";
 
 /**
  * This method can only be used inside `<Authorize>` component.

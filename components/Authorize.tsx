@@ -7,7 +7,7 @@ import { checkTokenExpiration } from '../functions/checkTokenExpiration';
 import { useInterval } from '../functions/useInterval';
 
 /**
- * TODO: Impelement logic for checking roles against the back-end Web API
+ * TODO: Implement logic for checking roles against the back-end Web API
  * @param param0 accepts roles `string[]` and React `children` props. 
  * @returns React Element
  */
@@ -101,6 +101,8 @@ export const Authorize: React.FC<{
             try {
                 if (err instanceof msal.InteractionRequiredAuthError) {
                     instance.acquireTokenRedirect(loginRequestWithAccount);
+                } else {
+                    console.error(err);
                 }
             } catch (err2) {
                 console.error(err2);

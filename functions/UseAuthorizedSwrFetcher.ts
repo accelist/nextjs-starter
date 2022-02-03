@@ -1,4 +1,4 @@
-import { createSwrFetcher } from "./SwrFetcher";
+import { createSwrFetcher } from "./DefaultSwrFetcher";
 import { useAuthorizedAxios } from "./UseAuthorizedAxios";
 
 /**

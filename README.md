@@ -24,21 +24,23 @@
 
 - `Authorize` component: Supports Role-Based Access Control (RBAC)
 
-- API Gateway for proxying HTTP requests to back-end web API with Access Token
+- API Gateway for proxying HTTP requests to back-end web API
 
 - Automatic progress bar during page navigation
 
 - Default `SwrFetcher` function based on `axios` included for `swr` library
 
-- Batteries included: `jotai`, Bootstrap 5, `react-bootstrap`, FontAwesome 5
+- `UseAuthorizedAxios` and `UseAuthorizedSwrFetcher` hooks for acquiring HTTP clients with Authorization Bearer header set
+
+- Batteries included: `jotai`, Bootstrap 5, `react-bootstrap`, FontAwesome 5, `sweetalert2`
 
 ## How to Use?
 
-[Download as Zip File](https://github.com/accelist/nextjs-starter/archive/refs/heads/master.zip)
+[Download The Template as Zip File](https://github.com/accelist/nextjs-starter/archive/refs/heads/master.zip)
 
-Unzip the template folder, rename the folder to your project name.
+Unzip and rename the folder to your actual project name.
 
-Run `npm install` in the project root folder, then `npm run dev`
+Run `npm ci` in the project root folder, then `npm run dev`
 
 The web app should be accessible at http://localhost:3000
 
@@ -77,6 +79,18 @@ ESLint configuration file. You can customize your ESLint rules in here.
 ### `Dockerfile`
 The Docker build configuration for the app.
 
+## Building and Running as Container
+
+> TODO, also include a simple command line script for running the app with environment variables
+
+## Deploying Container to Kubernetes
+
+> TODO add Deployment and Services `yaml` here with environment variables
+
+## `AppSettings` API
+
+> TODO, explain about how to work with Environment Variables
+
 ## `Page` Component Type
 The `Page` type / interface extends the standard `React.FunctionComponent` interface, with an additional property named `layout`. The `layout` property allows attaching another component by assigning the said component into this property.
 
@@ -110,13 +124,25 @@ About.layout = WithAboutLayout;
 export default About;
 ```
 
-## `AppSettings` API
-
-> TODO, explain about how to work with Environment Variables
-
 ## Azure AD B2C Configuration
 
-> TODO
+> TODO, explain step by step how to create Azure AD B2C tenant, web app, web API, scope / API permission, and environment variables setting
+
+## `Authorize` Component
+
+> TODO, explain Role-Based Access Control
+
+## Default SWR Fetcher
+
+> TODO, add simple SWR call example using `DefaultSwrFetcher` here
+
+## Using Access Token for Web API
+
+> TODO, explain `useAuthorizedAxios` and `useAuthorizedSwrFetcher` hooks
+
+## API Gateway
+
+> TODO, explain proxying requests to back-end web API
 
 ## Navbar and Sidebar Customization
 
@@ -129,11 +155,3 @@ export default About;
 ## Step Debugging with Visual Studio Code
 
 > TODO
-
-## `Authorize` Component
-
-> TODO, explain Role-Based Access Control and session callback
-
-## API Gateway
-
-> TODO, explain proxying requests to back-end web API

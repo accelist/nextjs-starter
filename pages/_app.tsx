@@ -4,7 +4,9 @@ import type { AppProps, AppContext } from 'next/app'
 import App from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import { SessionProvider } from "next-auth/react";
+import { MsalProvider } from "@azure/msal-react";
+import { msalInstance } from '../functions/msal';
+
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
@@ -20,18 +22,18 @@ type AppPropsWithLayout = AppProps & {
 
 function CustomApp({
     Component,
-    pageProps: { session, ...pageProps }
+    pageProps
 }: AppPropsWithLayout): JSX.Element {
 
     const withLayout = Component.layout ?? (page => page);
     return (
-        <SessionProvider session={session}>
+        <MsalProvider instance={msalInstance}>
             {withLayout(<Component {...pageProps} />)}
-        </SessionProvider>
+        </MsalProvider>
     );
 }
 
-// This disables the ability to perform Automatic Static Optimization... 
+// This disables the ability to perform Automatic Static Optimization... (Sadge)
 // Causing every page in the app to be server-side rendered,
 // but allowing the use of runtime configuration in Docker-based Environment!
 CustomApp.getInitialProps = async (appContext: AppContext) => {

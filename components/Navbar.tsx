@@ -3,43 +3,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from '../components/NavLink';
 import Link from 'next/link';
-import { useSession, signOut } from "next-auth/react";
 import Dropdown from 'react-bootstrap/Dropdown';
-import { signInWithAzureADB2C } from '../functions/SignInWithAzureADB2C';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
+import { loginRequest } from '../functions/msal';
 
 export const Navbar: React.FC<{
     toggleSidebar?: () => void;
 }> = ({ toggleSidebar }) => {
 
-    const { data: session } = useSession()
+    const { instance, accounts } = useMsal();
+    const fullName = accounts[0]?.name;
 
-    function renderSignInButton() {
-        if (session) {
-            return (
-                <Dropdown align='end'>
-                    <Dropdown.Toggle variant='link' style={{
-                        color: 'white',
-                        textDecoration: 'none'
-                    }}>
-                        Signed in as {session.user?.name}
-                    </Dropdown.Toggle>
+    function signIn() {
+        instance.loginRedirect(loginRequest).catch(console.error);
+    }
 
-                    <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => signOut()}>
-                            <FontAwesomeIcon icon={faSignOutAlt} className='me-2'></FontAwesomeIcon>
-                            Sign out
-                        </Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-            );
-        } else {
-            return (
-                <button type="button" onClick={signInWithAzureADB2C} className="btn btn-success">
-                    <FontAwesomeIcon icon={faSignInAlt} className='me-2'></FontAwesomeIcon>
-                    Sign in
-                </button>
-            );
-        }
+    function signOut() {
+        instance.logoutRedirect().catch(console.error);
     }
 
     const onBurgerClick: React.MouseEventHandler<HTMLAnchorElement> = function (e) {
@@ -80,7 +60,28 @@ export const Navbar: React.FC<{
                     </li>
                 </ul>
                 <div className="col-12 col-lg-3 flex-centered justify-content-lg-end me-3">
-                    {renderSignInButton()}
+                    <AuthenticatedTemplate>
+                        <Dropdown align='end'>
+                            <Dropdown.Toggle variant='link' style={{
+                                color: 'white',
+                                textDecoration: 'none'
+                            }}>
+                                Signed in as {fullName}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item onClick={() => signOut()}>
+                                    <FontAwesomeIcon icon={faSignOutAlt} className='me-2'></FontAwesomeIcon>
+                                    Sign out
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </AuthenticatedTemplate>
+                    <UnauthenticatedTemplate>
+                        <button type="button" onClick={signIn} className="btn btn-success">
+                            <FontAwesomeIcon icon={faSignInAlt} className='me-2'></FontAwesomeIcon>
+                            Sign in
+                        </button>
+                    </UnauthenticatedTemplate>
                 </div>
             </header>
         </div>

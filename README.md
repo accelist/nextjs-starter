@@ -8,7 +8,7 @@
 
 - TypeScript + ESLint configured
 
-- Check-as-You-Type development experience (just like instapack!)
+- Type-check and lint as you type!
 
 - Visual Studio Code breakpoint and debugging configured
 

@@ -12,19 +12,4 @@ module.exports = {
         backendHost: process.env['BACKEND_HOST'],
     },
     productionBrowserSourceMaps: true,
-    webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-        if (dev && isServer) {
-            const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-            config.plugins.push(new ForkTsCheckerWebpackPlugin({
-                eslint: {
-                    files: [
-                        '**/*.{ts,tsx,js,jsx}',
-                    ]
-                }
-            }));
-        }
-
-        // Important: return the modified config
-        return config
-    },
 }

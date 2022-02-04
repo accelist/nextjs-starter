@@ -10,7 +10,7 @@
 
 - Check-as-You-Type development experience (just like instapack!)
 
-- Visual Studio breakpoint and debugging configured
+- Visual Studio Code breakpoint and debugging configured
 
 - Responsive dashboard (top and side navigation bar) template
 
@@ -44,7 +44,38 @@ The web app should be accessible at http://localhost:3000
 
 ## Project Structure
 
-> TODO
+### `pages`
+The standard folder from Next.js template to store your page components in here. You can read more in [here](https://nextjs.org/docs/basic-features/pages).
+
+### `_app.tsx`
+Located inside `pages` folder. The standard default component from Next.js template. This component is responsible for initializing all pages in your project and behave as the entry point of your front-end app. You can read more in [here](https://nextjs.org/docs/advanced-features/custom-app).
+
+### `functions`
+Use this folder to store all reusable functions here.
+
+### `types`
+Use this folder to store all your custom TypeScript definitions, such as `interface` or `type` in here.
+
+### `public`
+The standard folder from Next.js template for storing all static files like image files. You can read more in [here](https://nextjs.org/docs/basic-features/static-file-serving).
+
+### `.env.development`
+Customize your environment variable values in this file. If you need to only modify the existing value of each property in this file, create a `.env.local` file (this will act as a secrets), copy and paste the content of `.env.development`, and modify this file according to your needs.
+
+### `next.config.js`
+Customize advanced Next.js configuration in this file. This file will primary serves as environment variables registration into your front-end app. You also can configure your `webpack` configuration here, but tread it with caution since the included configurations are already robust for production usage. You can read more in [here](https://nextjs.org/docs/api-reference/next.config.js/introduction).
+
+### `package.json`
+The primary front-end metadata file. All of your installed packages are listed in here, along with the `npm` scripts. The locked dependencies' references will be stored in `package-lock.json` file. 
+
+### `tsconfig.json`
+TypeScript compiler configuration file. You can customize your TypeScript compiler options in here.
+
+### `.eslintrc.json`
+ESLint configuration file. You can customize your ESLint rules in here.
+
+### `Dockerfile`
+The Docker build configuration for the app.
 
 ## `Page` Component Type
 

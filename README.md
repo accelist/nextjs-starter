@@ -78,8 +78,37 @@ ESLint configuration file. You can customize your ESLint rules in here.
 The Docker build configuration for the app.
 
 ## `Page` Component Type
+The `Page` type / interface extends the standard `React.FunctionComponent` interface, with an additional property named `layout`. The `layout` property allows attaching another component by assigning the said component into this property.
 
-> TODO, explain about page layout
+By utilizing this feature, you can do conditional layouting on different pages, while still enables the state persistence because the React component tree is maintained between page transitions. The implementation of this feature follows the recommended layouting pattern by Next.js's author in this [document](https://nextjs.org/docs/basic-features/layouts#per-page-layouts).
+
+Below are the example codes for applying a different layout between 2 page component, while we have 2 different layout components, `WithDefaultLayout` (you can see this on `DefaultLayout.tsx` file) and `WithAboutLayout`:
+
+Codes on `index.tsx` file:
+```tsx
+// pages/index.tsx
+const Index: Page = () => {
+    return (<div>
+        <h1>Index</h1>
+    </div>);
+}
+
+Index.layout = WithDefaultLayout;
+export default Index;
+```
+
+Codes on `about.tsx` file:
+```tsx
+// pages/about.tsx
+const About: Page = () => {
+    return (<div>
+        <h1>About</h1>
+    </div>);
+}
+
+About.layout = WithAboutLayout;
+export default About;
+```
 
 ## `AppSettings` API
 

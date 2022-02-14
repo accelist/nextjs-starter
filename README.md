@@ -47,7 +47,7 @@ The web app should be accessible at http://localhost:3000
 ## Project Structure
 
 ### `components` folder
-Use this folder to store all reusable functions across the project here.
+Use this folder to store all reusable React components across the project here.
 
 ### `css` folder
 Use this folder to store all CSS or styling definition files here.
@@ -56,7 +56,9 @@ Use this folder to store all CSS or styling definition files here.
 Use this folder to store all reusable functions across the project here.
 
 ### `pages` folder
-The standard folder from Next.js template to store your page components in here. You can read more in [here](https://nextjs.org/docs/basic-features/pages).
+The standard folder from Next.js template to store your page components in here. You can read more about pages in [here](https://nextjs.org/docs/basic-features/pages).
+
+This template also disable the automatic static optimization due to the enabled runtime configuration in `next.config.js`. You can read more about automatic static optimization in [here](https://nextjs.org/docs/advanced-features/automatic-static-optimization)
 
 ### `public` folder
 The standard folder from Next.js template for storing all static files like image files. You can read more in [here](https://nextjs.org/docs/basic-features/static-file-serving).
@@ -78,9 +80,19 @@ Located inside `pages` folder. The standard default component from Next.js templ
 
 ## Building and Running as Container
 
-You can build the Docker image, including the necessary environment variables of this app by running this following command:
+To build the Docker image, you can use this following `docker build` example command:
 
-`docker run -p 80:80 -e WEBSITE_NAME="Accelist Next.js Starter" -e AZURE_AD_B2C_TENANT_NAME=accelistadb2c -e AZURE_AD_B2C_CLIENT_ID=8234d7c5-e1ce-4dc5-a4b8-f8c85b73f759 -e AZURE_AD_B2C_PRIMARY_USER_FLOW=B2C_1_AccelistNextjsStarter -e BACKEND_HOST=http://localhost:5000 -d --name next-starter next-starter`
+`docker build -t next-starter .`
+
+> Run this command on the same directory level as `Dockerfile` file. Note that all `.env.*` files are listed as ignored files which listed in `.dockerignore` file, which why you need to configure the environment variables later when creating the container.
+
+To run the Docker container of this app image, it is better to create your own Docker network to isolate your containers which are connecting to each other. To create your own Docker network, you can use this following example command:
+
+`docker network create next-starter`
+
+The, run this following command which includes the necessary environment variables of this app:
+
+`docker run -p 80:80 --network next-starter -e WEBSITE_NAME="Accelist Next.js Starter" -e AZURE_AD_B2C_TENANT_NAME=accelistadb2c -e AZURE_AD_B2C_CLIENT_ID=8234d7c5-e1ce-4dc5-a4b8-f8c85b73f759 -e AZURE_AD_B2C_PRIMARY_USER_FLOW=B2C_1_AccelistNextjsStarter -e BACKEND_HOST=http://localhost:5000 -d --restart always --name next-starter next-starter`
 
 > The above environment variable values can be changed to suits your needs.
 
@@ -107,7 +119,8 @@ Below are the explanation for each component of the flow:
 The environment variable values are obtained depends on where do you run the app:
 * Development: values will be obtained from `.env.development` file. If you have created the `.env.local` file locally, Next.js will use this file instead
 * Production: values will be obtained from the system environment variables
-You can read more in [here](https://nextjs.org/docs/basic-features/environment-variables).
+
+This template primarily focus on the `AppSettings` API. If you want to learn the basics of environment variables in Next.js, you can read it in [here](https://nextjs.org/docs/basic-features/environment-variables).
 
 ### `next.config.js`
 This file will primary serves as environment variables registration into your front-end app. There are 2 different settings that you must be aware of:
@@ -127,7 +140,7 @@ You also can configure your `webpack` configuration here, but tread it with caut
 ### `AppSettings`
 The application settings object which return the registered environment variables that has been configured in `next.config.js` upon accessing its `current` property. All client codes must access this object to access the environment variables.
 
-**You must define all properties on `RuntimeAppsettings` with the same properties' name that you have registered on `next.config.js`**. All mismatching properties will not be binded.
+**You must define all properties on `RuntimeAppsettings` with the same properties' name that you have registered on `next.config.js`**.
 
 ### Client Codes
 All client codes must import the `AppSettings` object to access any registered environment variables. Codes example on `index.tsx` page:

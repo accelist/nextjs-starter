@@ -12,4 +12,5 @@ module.exports = {
         backendHost: process.env['BACKEND_HOST'],
     },
     productionBrowserSourceMaps: true,
+    swcMinify: true
 }

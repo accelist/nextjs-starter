@@ -1,7 +1,7 @@
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
 import { AppSettings } from '../../../functions/AppSettings';
 
-// Great way to avoid using CORS and to transparently add Access Token to API requests
+// Great way to avoid using CORS and to transparently add custom headers to API requests
 // Proxy requests from /api/demo/... to http://localhost:5000/...
 const apiProxyOptions: Options = {
     target: AppSettings.current.backendHost,

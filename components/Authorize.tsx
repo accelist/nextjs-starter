@@ -41,6 +41,9 @@ const CheckRoles: React.FC<{
     if (roles) {
         const roleMatches = roles.filter(role => userRoles.includes(role));
         authorized = Boolean(roleMatches?.[0]);
+    } else {
+        // no roles required to access the page
+        authorized = true;
     }
 
     // TODO: Design 500 Forbidden page

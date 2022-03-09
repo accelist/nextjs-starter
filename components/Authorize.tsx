@@ -12,7 +12,7 @@ import { useInterval } from '../functions/useInterval';
  * @returns React Element
  */
 const CheckRoles: React.FC<{
-    roles?: string[]
+    roles: string[] | undefined
 }> = ({ roles, children }) => {
 
     // `useAuthorizedAxios` or `useAuthorizedSwr` may be also used here

@@ -1,0 +1,40 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+.build:
+  stage: build
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
+
+# When pushing to main branch, tag image as 'latest'
+main_branch_CI:
+  extends: .build
+  after_script:
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest 
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+# When pushing to versioned branch (for example: 1.2.3), tag image as the version number
+versioned_branch_CI:
+  extends: .build
+  after_script:
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^\d+\.\d+\.\d+$/'
+
+# When pushing to any other branch, only build but do not tag or push image
+feature_branch_CI:
+  extends: .build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      when: never
+    - if: '$CI_COMMIT_BRANCH =~ /^\d+\.\d+\.\d+$/'
+      when: never
+    - when: always

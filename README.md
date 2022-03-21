@@ -181,7 +181,7 @@ This template ships with `Dockerfile` and `.dockerignore` for building the app a
 To build the container image, use this command:
 
 ```sh
-docker build -t my-app .
+docker build -t app-name .
 ```
 
 > Run this command on the same directory level as `Dockerfile` file. 
@@ -191,7 +191,7 @@ docker build -t my-app .
 When running container locally, it is recommended to create a dedicated network for containers inside to connect to each other: 
 
 ```sh
-docker network create my-network
+docker network create network-name
 ```
 
 ```sh
@@ -202,10 +202,10 @@ docker run \
 -e AZURE_AD_B2C_PRIMARY_USER_FLOW=B2C_1_AccelistNextjsStarter \
 -e BACKEND_HOST=http://localhost:5000 \
 -p 80:80 \
---network next-starter \
+--network network-name \
 --restart always \
 --name instance-name \
--d my-app
+-d app-name
 ```
 
 ## Deploying Container to Kubernetes
@@ -332,6 +332,14 @@ export default MyPage;
 
 > Read more about Per-Page Layouts: https://nextjs.org/docs/basic-features/layouts#per-page-layouts
 
+## Default SWR Fetcher
+
+> TODO, add simple SWR call example using `DefaultSwrFetcher` here
+
+## API Gateway
+
+> TODO, explain proxying requests to back-end web API
+
 ## Azure AD B2C Configuration
 
 > TODO, explain step by step how to create Azure AD B2C tenant, web app, web API, scope / API permission, and environment variables setting
@@ -340,17 +348,9 @@ export default MyPage;
 
 > TODO, explain Role-Based Access Control
 
-## Default SWR Fetcher
-
-> TODO, add simple SWR call example using `DefaultSwrFetcher` here
-
 ## Using Access Token for Web API
 
 > TODO, explain `useAuthorizedAxios` and `useAuthorizedSwrFetcher` hooks
-
-## API Gateway
-
-> TODO, explain proxying requests to back-end web API
 
 ## Navbar and Sidebar Customization
 

@@ -210,7 +210,7 @@ docker run \
 
 [Next.js enables using `process.env` to read Environment Variables](https://nextjs.org/docs/basic-features/environment-variables), but it is not suitable for container-based deployment because the Environment Variables are burned during build-time (non-changeable).
 
-This technique does not adhere to [The Twelve-Factor App](https://12factor.net/build-release-run) methodology, a release is defined as a combination of a build (i.e. Container) and a config (i.e. Environment Variables).
+This technique does not adhere to [The Twelve-Factor App](https://12factor.net/build-release-run) methodology: a release is defined as a combination of a build (i.e. Container) + a config (i.e. Environment Variables).
 
 ![Build, Release, Run](https://raw.githubusercontent.com/accelist/nextjs-starter/master/public/release.png)
 

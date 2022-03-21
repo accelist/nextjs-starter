@@ -58,12 +58,6 @@ Place plain `.css` files in this folder.
 
 If there are [reusable JS style objects](https://reactjs.org/docs/dom-elements.html#style) (CSS-in-JS), it is recommended to place them in `components` folder instead.
 
-If [Sass](https://sass-lang.com/documentation/syntax#scss) compilation support is needed, run:
-
-```sh
-npm install --save-dev sass
-```
-
 ### `functions` Folder
 
 Place reusable plain JS functions in this folder.
@@ -100,7 +94,7 @@ This template ships with `_app.tsx` file which implements some of the above ment
 
 - [MSAL.js integration](https://docs.microsoft.com/en-us/azure/active-directory/develop/tutorial-v2-react)
 
-- Disabling [Automatic Static Optimization](https://nextjs.org/docs/advanced-features/automatic-static-optimization) in the entire app to allow the use of [Runtime Environment Variables](https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration) in container-based deployments
+- Opting-out from [Automatic Static Optimization](https://nextjs.org/docs/advanced-features/automatic-static-optimization) to allow the use of [Runtime Environment Variables](https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration) in container-based deployments
 
 > Read more about custom `App`: https://nextjs.org/docs/advanced-features/custom-app
 
@@ -118,6 +112,8 @@ Place type declarations in this folder. For example: `interface` or `type` or [`
 
 ESLint configuration file for TypeScript and Next.js (`next/core-web-vitals` including `react` and `react-hooks` ESLint plugins).
 
+To display ESLint errors in Visual Studio Code, install the official ESLint extension: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+
 > Read more about ESLint configuration: https://eslint.org/docs/user-guide/configuring/
 
 > List of rules supported in TypeScript-ESLint configuration: https://www.npmjs.com/package/@typescript-eslint/eslint-plugin
@@ -132,14 +128,6 @@ ESLint configuration file for TypeScript and Next.js (`next/core-web-vitals` inc
 
 The `package.json` file is a manifest for the project. It is where `npm` store the names and versions for all the installed packages. The `package.json` shipped with the template describes the following (but not limited to) metadata:
 
-- `name` sets the app name
-
-- `version` indicates the current app version
-
-- `description` is a brief description of the app
-
-- `main` sets the entry point for the app
-
 - `private` if set to `true` prevents the app to be accidentally published on `npm`
 
 - `scripts` defines a set of scripts runnable via [`npm run`](https://docs.npmjs.com/cli/v8/commands/npm-run-script)
@@ -152,9 +140,9 @@ The `package.json` file is a manifest for the project. It is where `npm` store t
 
 `package-lock.json` is automatically generated for any operations where npm modifies either the `node_modules` tree, or `package.json`. It describes the exact tree that was generated, such that subsequent installs are able to generate identical trees, regardless of intermediate dependency updates. This file is intended to be committed into source repositories.
 
-**Restoring packages should be done using `npm ci` command to prevent accidentally modifying the `package.json` and `package.lock.json`**
-
 > Read more about `package.lock.json`: https://docs.npmjs.com/cli/v8/configuring-npm/package-lock-json https://nodejs.dev/learn/the-package-lock-json-file
+
+**Restoring packages should be done using `npm ci` NOT `npm install` command to prevent accidentally modifying the `package.json` and `package.lock.json`**
 
 ### `tsconfig.json` File
 

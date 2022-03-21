@@ -212,7 +212,7 @@ docker run \
 
 This technique does not adhere to [The Twelve-Factor App](https://12factor.net/build-release-run) methodology, a release is defined as a combination of a build (i.e. Container) and a config (i.e. Environment Variables).
 
-![Build, Release, Run](https://12factor.net/images/release.png)
+![Build, Release, Run](https://raw.githubusercontent.com/accelist/nextjs-starter/master/public/release.png)
 
 For this reason, [`Runtime Configuration`](https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration) is recommended to be used instead.
 

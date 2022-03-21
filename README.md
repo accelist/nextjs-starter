@@ -214,9 +214,9 @@ This technique does not adhere to [The Twelve-Factor App](https://12factor.net/b
 
 ![Build, Release, Run](https://raw.githubusercontent.com/accelist/nextjs-starter/master/public/release.png)
 
-For this reason, [`Runtime Configuration`](https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration) is recommended to be used instead.
+For this reason, [Runtime Configuration](https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration) is recommended to be used instead.
 
-This project template ships `AppSettings` API as a high-level abstraction of the runtime Environment Variables:
+This project template ships [`AppSettings`](https://github.com/accelist/nextjs-starter/blob/master/functions/AppSettings.ts) API as a high-level abstraction of the runtime Environment Variables:
 
 ```
 Environment Variables --> next.config.js --> AppSettings
@@ -234,7 +234,7 @@ The values of Environment Variables are sourced differently, depending on how th
 
 > Read more about Environment Variables in Docker: https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file
 
-### `next.config.js`
+### Add Settings to `next.config.js`
 
 To add runtime configuration to your app open `next.config.js` and add the `publicRuntimeConfig` and / or `serverRuntimeConfig` configs:
 

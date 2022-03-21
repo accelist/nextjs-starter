@@ -202,7 +202,7 @@ docker run \
 
 ## `AppSettings` API
 
-[Next.js enables using `process.env` to read Environment Variables](https://nextjs.org/docs/basic-features/environment-variables), but it is not suitable for container-based deployment because the Environment Variables are burned during build-time (non-changeable).
+[Next.js allows using `process.env` to read Environment Variables](https://nextjs.org/docs/basic-features/environment-variables), but it is not suitable for container-based deployment because the Environment Variables are burned during build-time (non-changeable).
 
 This technique does not adhere to [The Twelve-Factor App](https://12factor.net/build-release-run) methodology: a release is defined as a combination of a build (i.e. Container) + a config (i.e. Environment Variables).
 
@@ -218,7 +218,7 @@ Environment Variables --> next.config.js --> AppSettings
 
 ### Environment Variables
 
-The values of Environment Variables are sourced differently, depending on how the app is being run:
+The values of Environment Variables are sourced differently depending on how the app is being run:
 
 * Development environment using `npm run dev`: values will be obtained from `.env` files such as `.env.development` or `.env.local`
 
@@ -230,13 +230,13 @@ The values of Environment Variables are sourced differently, depending on how th
 
 ### Add Settings to `next.config.js`
 
-To add runtime configuration to your app open `next.config.js` and add the `publicRuntimeConfig` and / or `serverRuntimeConfig` configs:
+To register Environment Variables into the app, open `next.config.js` and add the `publicRuntimeConfig` or `serverRuntimeConfig` configs:
 
 - `serverRuntimeConfig`: Will only be available on the server side. (in `getServerSideProps` or `getInitialProps` or in API routes)
 
 - `publicRuntimeConfig`: Will be available on both server-side and client-side (in browser). **ONLY PUT PUBLIC SETTING VALUES IN HERE, DO NOT PUT ANY SENSITIVE VALUES IN HERE!!**
 
-For example, to register the `WEBSITE_NAME` environment variable value:
+For example:
 
 ```ts
 {

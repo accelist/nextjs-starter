@@ -20,8 +20,8 @@ main_branch_CI:
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
 
-# When a commit is tagged for release, tag image as the version number and 'latest'
-versioned_branch_CI:
+# When a commit is tagged for release, tag image as the version name and 'latest'
+release_tag_CI:
   extends: .build
   after_script:
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME

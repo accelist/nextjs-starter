@@ -58,6 +58,12 @@ Place plain `.css` files in this folder.
 
 If there are [reusable JS style objects](https://reactjs.org/docs/dom-elements.html#style) (CSS-in-JS), it is recommended to place them in `components` folder instead.
 
+If [Sass](https://sass-lang.com/documentation/syntax#scss) compilation support is needed, run:
+
+```sh
+npm install --save-dev sass
+```
+
 ### `functions` Folder
 
 Place reusable plain JS functions in this folder.

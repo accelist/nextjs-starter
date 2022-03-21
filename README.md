@@ -252,7 +252,7 @@ For example, to register the `WEBSITE_NAME` environment variable value:
 }
 ```
 
-### `functions/AppSettings.ts`
+### Add Settings to `AppSettings`
 
 To enable TypeScript intellisense working against the registered Environment Variable, the interface `RuntimeAppSettings` in the file `functions/AppSettings.ts` can be modified:
 

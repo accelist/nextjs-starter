@@ -32,6 +32,8 @@
 
 - `UseAuthorizedAxios` and `UseAuthorizedSwrFetcher` hooks for acquiring HTTP clients with Authorization Bearer header set
 
+- Enabled container builds on GitLab CI or GitHub CI
+
 - Batteries included: `jotai`, Bootstrap 5, `react-bootstrap`, FontAwesome 5, `sweetalert2`
 
 ## How to Use?
@@ -351,3 +353,11 @@ export default MyPage;
 ## Step Debugging with Visual Studio Code
 
 > TODO
+
+## GitHub CI Integration
+
+> TODO, explain how to version container images with GitHub Action
+
+## GitLab CI Integration
+
+> TODO, explain how to version container images with GitLab CI

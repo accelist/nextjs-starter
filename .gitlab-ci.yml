@@ -12,20 +12,21 @@ before_script:
     - docker pull $CI_REGISTRY_IMAGE:latest || true
     - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
 
-# When pushing to main branch, tag image as 'latest'
+# When pushing to 'main' / 'master' branch, tag image as 'main' / 'master'
 main_branch_CI:
   extends: .build
   after_script:
-    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME $CI_REGISTRY_IMAGE:latest
-    - docker push $CI_REGISTRY_IMAGE:latest 
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
 
-# When pushing to versioned branch (for example: 1.2.3), tag image as the version number
+# When pushing to versioned branch (for example: 1.2.3), tag image as the version number and 'latest'
 versioned_branch_CI:
   extends: .build
   after_script:
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /^\d+\.\d+\.\d+$/'
 

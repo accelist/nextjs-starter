@@ -20,7 +20,7 @@ main_branch_CI:
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
 
-# When pushing to versioned branch (for example: 1.2.3), tag image as the version number and 'latest'
+# When a commit is tagged for release, tag image as the version number and 'latest'
 versioned_branch_CI:
   extends: .build
   after_script:
@@ -28,7 +28,7 @@ versioned_branch_CI:
     - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME $CI_REGISTRY_IMAGE:latest
     - docker push $CI_REGISTRY_IMAGE:latest
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^\d+\.\d+\.\d+$/'
+    - if: $CI_COMMIT_TAG
 
 # When pushing to any other branch, only build but do not tag or push image
 feature_branch_CI:
@@ -36,6 +36,6 @@ feature_branch_CI:
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
       when: never
-    - if: '$CI_COMMIT_BRANCH =~ /^\d+\.\d+\.\d+$/'
+    - if: $CI_COMMIT_TAG
       when: never
     - when: always

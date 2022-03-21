@@ -1,8 +1,13 @@
 {
-  "name": "accelist-nextjs-starter",
+  "name": "@accelist/nextjs-starter",
   "version": "1.0.0",
   "description": "Next.js project starter template for PT. Accelist Lentera Indonesia",
+  "author": "Ryan Elian",
+  "homepage": "https://github.com/accelist/nextjs-starter#readme",
+  "bugs": "https://github.com/accelist/nextjs-starter/issues",
+  "license": "MIT",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:nextjs": "next dev",
@@ -13,8 +18,6 @@
     "start": "next start -p 80",
     "debug": "cross-env NODE_OPTIONS='--inspect' next dev"
   },
-  "author": "Ryan Elian",
-  "license": "MIT",
   "devDependencies": {
     "@types/node": "^17.0.21",
     "@types/nprogress": "^0.2.0",

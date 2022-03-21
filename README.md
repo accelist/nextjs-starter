@@ -228,7 +228,7 @@ The values of Environment Variables are sourced differently depending on how the
 
 > Read more about Environment Variables in Docker: https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file
 
-### Add Settings to `next.config.js`
+### Add Environment Variables to `next.config.js`
 
 To register Environment Variables into the app, open `next.config.js` and add the `publicRuntimeConfig` or `serverRuntimeConfig` configs:
 
@@ -246,7 +246,7 @@ For example:
 }
 ```
 
-### Add Settings to `AppSettings`
+### Add Environment Variables to `AppSettings`
 
 To enable TypeScript intellisense working against the registered Environment Variable, the interface `RuntimeAppSettings` in the file `functions/AppSettings.ts` can be modified:
 

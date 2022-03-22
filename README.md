@@ -36,7 +36,7 @@
 
 - Batteries included: `jotai`, Bootstrap 5, `react-bootstrap`, FontAwesome 5, `sweetalert2`
 
-## How to Use?
+## Getting Started
 
 [Download The Template as Zip File](https://github.com/accelist/nextjs-starter/archive/refs/heads/master.zip)
 
@@ -45,6 +45,8 @@ Unzip and rename the folder to your actual project name.
 Run `npm ci` in the project root folder, then `npm run dev`
 
 The web app should be accessible at http://localhost:3000
+
+To display ESLint errors in Visual Studio Code, install the official ESLint extension: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 
 ## Project Structure
 
@@ -114,17 +116,14 @@ Place type declarations in this folder. For example: `interface` or `type` or [`
 
 ESLint configuration file for TypeScript and Next.js (`next/core-web-vitals` including `react` and `react-hooks` ESLint plugins).
 
-To display ESLint errors in Visual Studio Code, install the official ESLint extension: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
-
 > Read more about ESLint configuration: https://eslint.org/docs/user-guide/configuring/
 
-> List of rules supported in TypeScript-ESLint configuration: https://www.npmjs.com/package/@typescript-eslint/eslint-plugin
-
-> List of rules supported in React ESLint configuration: https://www.npmjs.com/package/eslint-plugin-react
-
-> List of rules supported in React Hooks ESLint configuration: https://www.npmjs.com/package/eslint-plugin-react-hooks
-
-> List of rules supported in Next.js ESLint configuration: https://nextjs.org/docs/basic-features/eslint#eslint-plugin
+| Rules         | Documentation                                                     |
+| ------------- | ----------------------------------------------------------------- |
+| TypeScript    | https://www.npmjs.com/package/@typescript-eslint/eslint-plugin    |
+| React         | https://www.npmjs.com/package/eslint-plugin-react                 |
+| React Hooks   | https://www.npmjs.com/package/eslint-plugin-react-hooks           |
+| Next.js       | https://nextjs.org/docs/basic-features/eslint#eslint-plugin       |
 
 ### `package.json` & `package.lock.json` Files
 

@@ -12,7 +12,7 @@ before_script:
     - docker pull $CI_REGISTRY_IMAGE:$CI_DEFAULT_BRANCH || true
     - docker build --cache-from $CI_REGISTRY_IMAGE:$CI_DEFAULT_BRANCH --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
 
-# When pushing to 'main' / 'master' branch, tag image as 'main' / 'master'
+# When pushing to `main` / `master` branch, tag image as `main` / `master`
 main_branch_CI:
   extends: .build
   after_script:
@@ -30,12 +30,8 @@ release_tag_CI:
   rules:
     - if: $CI_COMMIT_TAG
 
-# When pushing to any other branch, only build but do not tag or push image
-feature_branch_CI:
+# When performing merge request to `main` / `master` branch, try building the image but do not push
+merge_request_CI:
   extends: .build
   rules:
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
-      when: never
-    - if: $CI_COMMIT_TAG
-      when: never
-    - when: always
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'

@@ -372,7 +372,7 @@ If working with private repository (hence private container registry), [create a
 
 This project template ships with GitLab CI pipeline for container builds enabled. Example: https://gitlab.com/ryanelian/nextjs-starter/-/pipelines
 
-When a commit is pushed into the project default branch (usually `master` or `main` branch), a container image will be build and tagged as the branch name (resulting in `master` or `main` image tag) then pushed to the GitLab Container Registry.
+When a commit is pushed or a merge request is performed against the `master` or `main` branch, a container image will be build. If a commit is pushed, then the container image will also be pushed into the GitLab Container Registry of the project as `master` or `main` tag.
 
 Upon tagging a commit (if using GitLab web, go to [Tags](https://gitlab.com/ryanelian/nextjs-starter/-/tags) page then [create a new tag](https://gitlab.com/ryanelian/nextjs-starter/-/tags/new)) with version number string such as `1.0.0`, a new container image will be build and tagged as the version number (in this example, resulting in identical `1.0.0` image tag) and `latest`.
 

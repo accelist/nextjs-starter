@@ -198,10 +198,6 @@ docker run \
 -d app-name
 ```
 
-## Deploying Container to Kubernetes
-
-> TODO add Deployment and Services `yaml` here with Environment Variables
-
 ## `AppSettings` API
 
 [Next.js allows using `process.env` to read Environment Variables](https://nextjs.org/docs/basic-features/environment-variables), but it is not suitable for container-based deployment because the Environment Variables are burned during build-time (non-changeable).
@@ -356,8 +352,42 @@ export default MyPage;
 
 ## GitHub CI Integration
 
-> TODO, explain how to version container images with GitHub Action
+This project template ships with GitHub Action workflow for Docker Images enabled. Example: https://github.com/accelist/nextjs-starter/actions
+
+When a commit is pushed or a merge request is performed against the `master` or `main` branch, a container image will be build. If a commit is pushed, then the container image will also be pushed into the GitHub Container Registry of the project as `master` or `main` tag.
+
+Upon tagging a commit (if using GitHub web, go to [Releases](https://github.com/accelist/nextjs-starter/releases) page then [draft a new release](https://github.com/accelist/nextjs-starter/releases/new)) with version number string such as `v1.0.0` (notice the mandatory `v` prefix), a new container image will be build and tagged as the version number (in this example, resulting in `1.0.0` image tag, notice the lack of `v` prefix).
+
+The container images are available via the project [GitHub Container Registry](https://github.com/accelist/nextjs-starter/pkgs/container/nextjs-starter). For example: 
+
+```sh
+docker pull ghcr.io/accelist/nextjs-starter:master
+```
+
+If working with private repository (hence private container registry), [create a new GitHub personal access token](https://github.com/settings/tokens) with `read:packages` scope to allow downloading container images from Kubernetes cluster.
+
+> Read more: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
 
 ## GitLab CI Integration
 
-> TODO, explain how to version container images with GitLab CI
+This project template ships with GitLab CI pipeline for container builds enabled. Example: https://gitlab.com/ryanelian/nextjs-starter
+
+When a commit is pushed into the project default branch (usually `master` or `main` branch), a container image will be build and tagged as the branch name (resulting in `master` or `main` image tag) then pushed to the GitLab Container Registry.
+
+Upon tagging a commit (if using GitLab web, go to [Tags](https://gitlab.com/ryanelian/nextjs-starter/-/tags) page then [create a new tag](https://gitlab.com/ryanelian/nextjs-starter/-/tags/new)) with version number string such as `1.0.0`, a new container image will be build and tagged as the version number (in this example, resulting in identical `1.0.0` image tag).
+
+The container images are available via the project [GitLab Container Registry](https://gitlab.com/ryanelian/nextjs-starter/container_registry). For example: 
+
+```sh
+docker pull registry.gitlab.com/ryanelian/nextjs-starter:master
+```
+
+If working with private repository (hence private container registry), [create a new GitLab personal access token](https://gitlab.com/-/profile/personal_access_tokens) with `read_registry` scope to allow downloading container images from Kubernetes cluster.
+
+> Read more: https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
+
+## Deploying Container to Kubernetes
+
+> TODO add guide for adding GitHub / GitLab personal access token to Kubernetes for pulling from private registry: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+
+> TODO add Deployment and Services `yaml` here with Environment Variables

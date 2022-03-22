@@ -370,7 +370,7 @@ If working with private repository (hence private container registry), [create a
 
 ## GitLab CI Integration
 
-This project template ships with GitLab CI pipeline for container builds enabled. Example: https://gitlab.com/ryanelian/nextjs-starter
+This project template ships with GitLab CI pipeline for container builds enabled. Example: https://gitlab.com/ryanelian/nextjs-starter/-/pipelines
 
 When a commit is pushed into the project default branch (usually `master` or `main` branch), a container image will be build and tagged as the branch name (resulting in `master` or `main` image tag) then pushed to the GitLab Container Registry.
 

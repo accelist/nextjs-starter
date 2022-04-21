@@ -16,9 +16,7 @@
     "dev": "concurrently \"npm:typescript\" \"npm:eslint\" \"npm:dev:nextjs\"",
     "build": "next build",
     "start": "next start -p 80",
-    "debug": "cross-env NODE_OPTIONS='--inspect' next dev",
-    "prepare": "husky install",
-    "husky": "tsc --pretty && esw --ext .js,.jsx,.ts,.tsx"
+    "debug": "cross-env NODE_OPTIONS='--inspect' next dev"
   },
   "devDependencies": {
     "@types/node": "^17.0.23",

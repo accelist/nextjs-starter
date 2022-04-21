@@ -390,3 +390,9 @@ If working with private repository (hence private container registry), [create a
 > TODO add guide for adding GitHub / GitLab personal access token to Kubernetes for pulling from private registry: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 
 > TODO add Deployment and Services `yaml` here with Environment Variables
+
+## Git Pre-Commit Compile Check
+
+Upon launching development server via `npm run dev`, git pre-commit hook will be installed into the local repository.
+
+This hook will execute `npm run build` when a developer attempts to commit into the git repository and fail the commit if the project failed to build due to TypeScript or ESLint or Next.js compile error.

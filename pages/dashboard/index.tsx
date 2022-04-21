@@ -31,7 +31,7 @@ const Dashboard: React.FC = () => {
 const DashboardPage: Page = () => {
     return (
         <Authorize roles={['Administrator', 'Operation']}>
-            <Title name="Dashboard"></Title>
+            <Title>Dashboard</Title>
             <Dashboard></Dashboard>
         </Authorize>
     );

@@ -7,7 +7,7 @@ const SignInPage: Page = () => {
     // MSAL should automatically redirect user to previous URL that started the login process
     return (
         <div>
-            <Title name="Signing in..."></Title>
+            <Title>Signing in...</Title>
         </div>
     );
 }

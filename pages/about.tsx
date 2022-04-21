@@ -6,7 +6,7 @@ import { Page } from '../types/Page';
 const AboutPage: Page = () => {
     return (
         <div>
-            <Title name="About">About</Title>
+            <Title>About</Title>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
             Morbi mattis tempus justo, ut vulputate justo volutpat in. 
             Interdum et malesuada fames ac ante ipsum primis in faucibus. 

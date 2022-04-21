@@ -6,7 +6,7 @@ import { Page } from '../types/Page';
 const IndexPage: Page = () => {
     return (
         <div>
-            <Title name="Home"></Title>
+            <Title>Home</Title>
             Hello World!
         </div>
     );

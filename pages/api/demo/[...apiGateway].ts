@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { AppSettings } from '../../../functions/AppSettings';
 
 // Great way to avoid using CORS and making API calls from HTTPS pages to back-end HTTP servers
+// Recommendation for projects in Kubernetes cluster: set target to Service DNS name instead of public DNS name
 const server = Proxy.createProxyServer({
     target: AppSettings.current.backendHost,
     changeOrigin: true,

@@ -4,7 +4,8 @@ import { useRouter } from 'next/router';
 
 export const NavLink: React.FC<{
     href?: string,
-    style?: React.CSSProperties
+    style?: React.CSSProperties,
+    children: React.ReactNode
 }> = ({ href, children, style }) => {
 
     const router = useRouter();

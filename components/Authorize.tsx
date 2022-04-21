@@ -13,6 +13,7 @@ import { useInterval } from '../functions/useInterval';
  */
 const CheckRoles: React.FC<{
     roles: string[] | undefined
+    children: React.ReactNode
 }> = ({ roles, children }) => {
 
     // `useAuthorizedAxios` or `useAuthorizedSwr` may be also used here
@@ -71,7 +72,8 @@ const CheckRoles: React.FC<{
  * @returns React Element
  */
 export const Authorize: React.FC<{
-    roles?: string[]
+    roles?: string[],
+    children: React.ReactNode
 }> = ({ roles, children }) => {
 
     const { instance, inProgress, accounts } = useMsal();

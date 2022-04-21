@@ -3,7 +3,9 @@ import Head from 'next/head';
 import { SideBar } from "./Sidebar";
 import { Navbar } from "./Navbar";
 
-const DefaultLayout: React.FC = ({ children }) => {
+const DefaultLayout: React.FC<{
+    children: React.ReactNode
+}> = ({ children }) => {
     const [displaySidebar, setDisplaySidebar] = useState(false);
 
     return (

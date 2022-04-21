@@ -1,4 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm eslint && npm run typescript && npm build
+echo \"Running Husky pre-commit\" 
+npm run husky && npm run build

@@ -319,11 +319,90 @@ export default MyPage;
 
 ## Default SWR Fetcher
 
-> TODO, add simple SWR call example using `DefaultSwrFetcher` here
+```tsx
+import React from 'react';
+import useSWR from 'swr';
+import { DefaultSwrFetcher } from "../../functions/DefaultSwrFetcher";
+import { WithDefaultLayout } from '../../components/DefautLayout';
+import { Page } from '../../types/Page';
+
+const Test: React.FC = () => {
+    const { data, error } = useSWR('/api/demo/api/Values', DefaultSwrFetcher);
+
+    return (
+        <div>
+            <p>Test Page</p>
+            <p>
+                {JSON.stringify(data)}
+            </p>
+            <p>
+                {error?.toString()}
+            </p>
+        </div>
+    );
+}
+```
 
 ## API Gateway
 
-> TODO, explain proxying requests to back-end web API
+For security reasons, browsers restrict cross-origin HTTP requests initiated from scripts. For example, `XMLHttpRequest` and the `Fetch API` follow the `same-origin policy`. An example of a cross-origin request: the front-end JavaScript code served from `https://domain-a.com` uses `XMLHttpRequest` to make a request for `https://domain-b.com/data.json`.
+
+Use `http-proxy` to bypass CORS policy setup in back-end application.
+
+```tsx
+// /pages/api/demo/[...apiGateway].ts
+import Proxy from 'http-proxy';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { AppSettings } from '../../../functions/AppSettings';
+
+// Great way to avoid using CORS and making API calls from HTTPS pages to back-end HTTP servers
+// Recommendation for projects in Kubernetes cluster: set target to Service DNS name instead of public DNS name
+const server = Proxy.createProxyServer({
+    target: AppSettings.current.backendHost,
+    changeOrigin: true,
+    xfwd: true,
+    // https://github.com/http-party/node-http-proxy#proxying-websockets
+    ws: false,
+});
+
+server.on('proxyReq', (proxyReq, req) => {
+    // Proxy requests from /api/demo/... to http://my-web-api.com/...
+    const urlRewrite = req.url?.replace(new RegExp('^/api/demo'), '');
+    if (urlRewrite) {
+        proxyReq.path = urlRewrite;
+    } else {
+        proxyReq.path = '/';
+    }
+    // console.log('Proxying:', req.url, '-->', AppSettings.current.backendHost + urlRewrite);
+});
+
+const apiGateway = async (req: NextApiRequest, res: NextApiResponse) => {
+    server.web(req, res, {}, (err) => {
+        if (err instanceof Error) {
+            throw err;
+        }
+
+        throw new Error(`Failed to proxy request: '${req.url}'`);
+    });
+}
+
+export default apiGateway;
+
+export const config = {
+    api: {
+        externalResolver: true,
+        bodyParser: false
+    },
+}
+```
+
+With this configuration, every back-end API route, need to be prepended with `api/demo`. For example this code:
+
+```tsx
+const { data, error } = useSWR('/api/demo/api/Values', swrFetcher);
+```
+
+the client will fetch data from `api/Values` route in the back-end application.
 
 ## Azure AD B2C Configuration
 
@@ -331,23 +410,101 @@ export default MyPage;
 
 ## `Authorize` Component
 
-> TODO, explain Role-Based Access Control
+`Authorize` component will validate access to the component. Access will be granted if the mapped role for the user match at least one role passed on `Authorize` component.
 
 ## Using Access Token for Web API
+
+Use `useAuthorizedAxios` and `useAuthorizedSwrFetcher` when need to fetch or post data with access token. Only use them inside `Authorize` component, because the access token passed from the context on `Authorize` component.
 
 > TODO, explain `useAuthorizedAxios` and `useAuthorizedSwrFetcher` hooks
 
 ## Navbar and Sidebar Customization
 
-> TODO, explain about `NavLink` component API
+`Navbar` and `Sidebar` use `NavLink` component to display each navigation. `NavLink` use `Link` component from `next/link` for navigation between pages routes.
+
+```tsx
+...
+    return (
+        <div className={sideBarClass()} >
+            <ul className="nav nav-pills d-flex flex-column p-3">
+                <li className="nav-item">
+                    <NavLink style={textWhite} href='/'>
+                        <FontAwesomeIcon fixedWidth icon={faHome} className='me-2'></FontAwesomeIcon>
+                        Home
+                    </NavLink>
+                </li>
+...
+```
+
+`NavLink` has 3 props `href`, `style`, and `children`.
+
+`href` is the destination route for the navigation.
+
+`style` is additional styling for the navigation label.
+
+`children` is what will be displayed as the navigation label that written between the `NavLink` tag.
 
 ## Theme Customization
 
-> TODO, explain how to customize `Navbar`, `Sidebar`, and progress bar color
+To customize theme on DefaultLayout, change values on `/css/default-layout.css`. For example:
+
+```css
+/*
+    Sidebar NavLink background color.
+*/
+.sidebar .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/*  
+    Color of progress bar.
+*/
+#nprogress .bar {
+    background: limegreen !important;
+}
+```
 
 ## Step Debugging with Visual Studio Code
 
-> TODO
+Create a file named .vscode/launch.json at the root of your project with the following content:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Next.js: debug server-side",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev"
+    },
+    {
+      "name": "Next.js: debug client-side",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:3000"
+    },
+    {
+      "name": "Next.js: debug full stack",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "console": "integratedTerminal",
+      "serverReadyAction": {
+        "pattern": "started server on .+, url: (https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      }
+    }
+  ]
+}
+```
+
+Press F5 to start debugging.
 
 ## GitHub CI Integration
 

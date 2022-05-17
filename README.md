@@ -463,7 +463,7 @@ useEffect(() => {
     if (accessToken) {
         // Using the Bearer Access Token (with Axios request), check roles against the back-end web API:
         // GET http://demo.accelist.com/api/check-roles?r=Administrator&r=IT%20Manager
-        checkRoles(accessToken)
+        tryAuthorize(accessToken, roles)
             .then(isAuthorized => {
                 setAuthorized(isAuthorized);
             })
@@ -474,7 +474,7 @@ useEffect(() => {
                 setReady(true);
             });
     }
-}, [accessToken]);
+}, [accessToken, roles]);
 ```
 
 Convenience hooks `useAuthorizedAxios` and `useAuthorizedSwrFetcher` are available for use inside `Authorize` component. When using these hooks, the request clients will be configured to use the Bearer Access Token automatically.

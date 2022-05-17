@@ -1,13 +1,21 @@
 {
     "configurations": [
         {
-            "type": "node",
-            "request": "attach",
-            "name": "Debug Next.js Dev",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "port": 9229
+            "name": "Next.js: Debug Client-Side",
+            "type": "pwa-msedge",
+            "request": "launch",
+            "url": "http://localhost:3000"
+        },
+        {
+            "name": "Next.js: Debug Full-Stack",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm run debug",
+            "serverReadyAction": {
+                "pattern": "started server on .+, url: (https?://.+)",
+                "uriFormat": "%s",
+                "action": "debugWithEdge"
+            }
         }
     ]
 }

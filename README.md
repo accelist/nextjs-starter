@@ -319,35 +319,204 @@ export default MyPage;
 
 ## Default SWR Fetcher
 
-> TODO, add simple SWR call example using `DefaultSwrFetcher` here
+This template ships with an [SWR Fetcher implemented with the Axios library](https://swr.vercel.app/docs/data-fetching#axios). 
+
+```tsx
+import React from 'react';
+import useSWR from 'swr';
+import { DefaultSwrFetcher } from "../../functions/DefaultSwrFetcher";
+
+const TestPage: React.FC = () => {
+    const { data, error } = useSWR('/api/demo/api/Values', DefaultSwrFetcher);
+
+    return (
+        <div>
+            <p>
+                {JSON.stringify(data)}
+            </p>
+            <p>
+                {error?.toString()}
+            </p>
+        </div>
+    );
+}
+```
+
+The default SWR fetcher is configured with these request headers:
+
+```ts
+{
+    'Cache-Control': 'no-cache',
+    'Pragma': 'no-cache',
+    'Expires': '0',
+}
+```
 
 ## API Gateway
 
-> TODO, explain proxying requests to back-end web API
+For security reasons, HTTP requests initiated from a browser is restricted to the same domain (CORS) and the same protocol (HTTPS requests must be performed from web pages with HTTPS URL) due to the [Same-Origin Policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
+
+> For example, `https://front-end.app` accessing `http://back-end.app/api/data` will fail by default.
+
+To ease development against microservices, this template ships an implementation of API Gateway in `/pages/api/demo/[...apiGateway].ts` file: 
+
+```tsx
+import Proxy from 'http-proxy';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { AppSettings } from '../../../functions/AppSettings';
+
+// Great way to avoid using CORS and making API calls from HTTPS pages to back-end HTTP servers
+// Recommendation for projects in Kubernetes cluster: set target to Service DNS name instead of public DNS name
+const server = Proxy.createProxyServer({
+    target: AppSettings.current.backendHost,
+    changeOrigin: true,
+    xfwd: true,
+    // https://github.com/http-party/node-http-proxy#proxying-websockets
+    ws: false,
+});
+
+server.on('proxyReq', (proxyReq, req) => {
+    // Proxy requests from /api/demo/... to http://my-web-api.com/...
+    const urlRewrite = req.url?.replace(new RegExp('^/api/demo'), '');
+    if (urlRewrite) {
+        proxyReq.path = urlRewrite;
+    } else {
+        proxyReq.path = '/';
+    }
+    // console.log('Proxying:', req.url, '-->', AppSettings.current.backendHost + urlRewrite);
+});
+
+const apiGateway = async (req: NextApiRequest, res: NextApiResponse) => {
+    server.web(req, res, {}, (err) => {
+        if (err instanceof Error) {
+            throw err;
+        }
+
+        throw new Error(`Failed to proxy request: '${req.url}'`);
+    });
+}
+
+export default apiGateway;
+
+export const config = {
+    api: {
+        externalResolver: true,
+        bodyParser: false
+    },
+}
+```
+
+The API Gateway is implemented using [API Routes for Next.js](https://nextjs.org/docs/api-routes/introduction). For clarity, it is recommended to create separate API Routes for different back-end microservices. (e.g. `/api/employees`, `/api/products`, etc.)
+
+The above implementation allows forwarding from the Next.js API Route to the actual back-end API URL. For example: `/api/demo/api/Values` is forwarded to the `http://back-end/api/Values`
+
+```tsx
+const { data, error } = useSWR('/api/demo/api/Values', swrFetcher);
+```
+
+When deployed in Kubernetes, the target host can be declared as a valid [RFC 1035 label name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#rfc-1035-label-names) instead of a public DNS to enable managing microservices using Kubernetes CoreDNS.
+
+For example, if the target host name is `my-service`, then the back-end web API can be [declared as a ClusterIP or LoadBalancer Service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service) with the same name and is reachable from the Next.js API Gateway via `http://my-service`:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: DemoBackEndWebApi
+  ports:
+    - protocol: TCP
+      port: 80
+```
 
 ## Azure AD B2C Configuration
 
 > TODO, explain step by step how to create Azure AD B2C tenant, web app, web API, scope / API permission, and environment variables setting
 
-## `Authorize` Component
+## `<Authorize>` Component
 
-> TODO, explain Role-Based Access Control
+`<Authorize>` component will validate user access to a component (intended to be used as top-level commponent in the `Page` component type). The component will only render contents if the access token is valid (not expired) and will attempt to refresh access tokens automatically if expiring.
 
-## Using Access Token for Web API
+```tsx
+const DashboardPage: Page = () => {
+    return (
+        <Authorize roles={['Administrator', 'Operation']}>
+            <Title>Dashboard</Title>
+            <Dashboard></Dashboard>
+        </Authorize>
+    );
+}
 
-> TODO, explain `useAuthorizedAxios` and `useAuthorizedSwrFetcher` hooks
+DashboardPage.layout = WithDefaultLayout;
+export default DashboardPage;
+```
+
+The component supports Role-Based Access Control (RBAC) but the feature is intentionally not fully developed. Developers using RBAC should implement the role-checking logic inside the `CheckRoles` component against their back-end server. For example:
+
+```tsx
+const [authorized, setAuthorized] = useState(false);
+const [ready, setReady] = useState(false);
+
+useEffect(() => {
+    if (accessToken) {
+        // Using the Bearer Access Token (with Axios request), check roles against the back-end web API:
+        // GET http://demo.accelist.com/api/check-roles?r=Administrator&r=IT%20Manager
+        checkRoles(accessToken)
+            .then(isAuthorized => {
+                setAuthorized(isAuthorized);
+            })
+            .catch(err => {
+                // ...
+            })
+            .then(() => {
+                setReady(true);
+            });
+    }
+}, [accessToken]);
+```
+
+Convenience hooks `useAuthorizedAxios` and `useAuthorizedSwrFetcher` are available for use inside `Authorize` component. When using these hooks, the request clients will be configured to use the Bearer Access Token automatically.
 
 ## Navbar and Sidebar Customization
 
-> TODO, explain about `NavLink` component API
+`<Navbar>` and `<Sidebar>` uses the `<NavLink>` component to display navigation links.
 
-## Theme Customization
+```tsx
+<div className={sideBarClass()} >
+    <ul className="nav nav-pills d-flex flex-column p-3">
+        <li className="nav-item">
+            <NavLink style={textWhite} href='/'>
+                <FontAwesomeIcon fixedWidth icon={faHome} className='me-2'></FontAwesomeIcon>
+                Home
+            </NavLink>
+        </li>
+    </ul>
+</div>
+```
 
-> TODO, explain how to customize `Navbar`, `Sidebar`, and progress bar color
+`NavLink` has 3 props:
+
+- `href` is the destination route for the navigation.
+
+- `style` allows additional styling for the navigation label if required.
+
+- `children` allows adding text, icons, or any elements to be displayed in the navigation link.
 
 ## Step Debugging with Visual Studio Code
 
-> TODO
+This template ships with Visual Studio Code step debugging support. Simply press F5 to start debugging.
+
+When only client-side debugging is required, **ensure `npm run dev` is already running** and choose the `Next.js: Debug Client-Side` launch configuration. Breakpoint can now be placed in source code lines which run in the browser-side.
+
+When server-side debugging is required, **ensure `npm run dev` is NOT running** and choose the `Next.js: Debug Full-Stack` launch configuration. Breakpoint can now be placed in source code lines which runs in the server-side, in addition to the browser-side.
+
+> The debug configuration can be selected from the Run & Debug Sidebar (CTRL + SHIFT + D)
+
+The debugging experience is set to use the new Chromium-based Microsoft Edge by default (which should be installed by default in newer Windows 10 and Windows 11). If this is not desirable, feel free to modify the `.vscode/launch.json` file.
+
+To enrich the React development experience, install the official [React Developer Tools extension](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) in the browser used for debugging. 
 
 ## GitHub CI Integration
 

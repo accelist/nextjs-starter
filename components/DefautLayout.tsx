@@ -7,7 +7,7 @@ const DefaultLayout: React.FC<{
     children: React.ReactNode
 }> = ({ children }) => {
     return (
-        <React.Fragment>
+        <div className="browser-frame">
             <Head>
                 <meta key="meta-charset" charSet="utf-8" />
                 <meta key="meta-viewport" name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,7 +20,7 @@ const DefaultLayout: React.FC<{
                     {children}
                 </main>
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 

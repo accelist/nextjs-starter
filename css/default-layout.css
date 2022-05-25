@@ -1,5 +1,6 @@
 html,
 body {
+    height: 100vh;
     max-width: 100%;
     overflow-x: hidden;
 }
@@ -14,11 +15,6 @@ body {
     max-height: 36px;
 }
 
-.stacked-nav {
-    position: relative;
-    z-index: 102;
-}
-
 .stacked-nav .nav-link {
     color: #6c757d;
 }
@@ -29,6 +25,12 @@ body {
 
 .stacked-nav .nav-link:hover {
     text-decoration: underline;
+}
+
+.browser-frame {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 .below-navbar {
@@ -51,7 +53,7 @@ body {
 
     /* allow shrinking the main page width when sidebar is shown */
     .below-navbar>.sidebar-show+main {
-        margin-left: 256px;
+        margin-left: 250px;
     }
 }
 
@@ -60,30 +62,17 @@ body {
 
     /* always display sidebar */
     .below-navbar>main {
-        margin-left: 256px;
+        margin-left: 250px;
     }
 }
 
 .sidebar {
-    position: fixed;
-    z-index: 101;
     display: flex;
     flex-direction: column;
-    width: 256px;
-    max-height: calc(100vh - 192px);
-    overflow-x: hidden;
-    overflow-y: auto;
-    transition: width 0.5s, margin 0.5s;
-}
-
-.sidebar-bg {
-    position: fixed;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    width: 256px;
-    top: 0;
-    bottom: 0;
+    position: absolute;
+    width: 250px;
+    min-height: 100%;
+    z-index: 99;
     transition: width 0.5s, margin 0.5s;
     background-image: linear-gradient(180deg, #544f30 0%, #212529 60%);
 }
@@ -102,10 +91,6 @@ body {
 
     /* hide sidebar on mobile and let it take up the entire viewport when expanded */
     .sidebar {
-        width: 100%;
-    }
-
-    .sidebar-bg {
         width: 100%;
     }
 }

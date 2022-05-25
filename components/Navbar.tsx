@@ -6,11 +6,11 @@ import Link from 'next/link';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
 import { loginRequest } from '../functions/msal';
+import { useAtom } from 'jotai';
+import { DisplaySidebarAtom } from './DisplaySidebarAtom';
 
-export const Navbar: React.FC<{
-    toggleSidebar?: () => void;
-}> = ({ toggleSidebar }) => {
-
+export const Navbar: React.FC = () => {
+    const [displaySidebar, setDisplaySidebar] = useAtom(DisplaySidebarAtom);
     const { instance, accounts } = useMsal();
     const fullName = accounts[0]?.name;
 
@@ -24,9 +24,7 @@ export const Navbar: React.FC<{
 
     const onBurgerClick: React.MouseEventHandler<HTMLAnchorElement> = function (e) {
         e.preventDefault();
-        if (toggleSidebar) {
-            toggleSidebar();
-        }
+        setDisplaySidebar(!displaySidebar);
     }
 
     return (

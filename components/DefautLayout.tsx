@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Head from 'next/head';
 import { SideBar } from "./Sidebar";
 import { Navbar } from "./Navbar";
@@ -6,8 +6,6 @@ import { Navbar } from "./Navbar";
 const DefaultLayout: React.FC<{
     children: React.ReactNode
 }> = ({ children }) => {
-    const [displaySidebar, setDisplaySidebar] = useState(false);
-
     return (
         <React.Fragment>
             <Head>
@@ -15,9 +13,9 @@ const DefaultLayout: React.FC<{
                 <meta key="meta-viewport" name="viewport" content="width=device-width, initial-scale=1" />
                 <link key="favicon" rel="icon" href="/favicon.ico" />
             </Head>
-            <Navbar toggleSidebar={() => setDisplaySidebar(!displaySidebar)}></Navbar>
+            <Navbar></Navbar>
             <div className="below-navbar">
-                <SideBar display={displaySidebar}></SideBar>
+                <SideBar></SideBar>
                 <main className="container py-4">
                     {children}
                 </main>

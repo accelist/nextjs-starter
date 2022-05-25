@@ -1,15 +1,17 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxes, faChartLine, faHome, faTable, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBoxes, faChartLine, faHome, faTable, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from '../components/NavLink';
+import { DisplaySidebarAtom } from './DisplaySidebarAtom';
+import { useAtom } from 'jotai';
 
-export const SideBar: React.FC<{
-    display: boolean
-}> = ({ display }) => {
+export const SideBar: React.FC = () => {
+
+    const [displaySidebar, setDisplaySidebar] = useAtom(DisplaySidebarAtom);
 
     function getSidebarToggleClass(className: string): string {
         let c = className;
-        if (!display) {
+        if (!displaySidebar) {
             c += " sidebar-hide";
         } else {
             c += " sidebar-show";
@@ -58,8 +60,11 @@ export const SideBar: React.FC<{
                     </li>
                 </ul>
             </div>
-            <div className={getSidebarToggleClass('sidebar-bg')}></div>
+            <div className={getSidebarToggleClass('sidebar-bg')}>
+                <button className='d-block d-lg-none btn btn-dark' onClick={() => setDisplaySidebar(false)}>
+                    <FontAwesomeIcon icon={faBars} className='me-2'></FontAwesomeIcon>
+                </button>
+            </div>
         </>
-
     );
 }

@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     max-width: 100%;
     overflow-x: hidden;
 }
@@ -50,7 +51,7 @@ html, body {
 
     /* allow shrinking the main page width when sidebar is shown */
     .below-navbar>.sidebar-show+main {
-        margin-left: 250px;
+        margin-left: 256px;
     }
 }
 
@@ -59,7 +60,7 @@ html, body {
 
     /* always display sidebar */
     .below-navbar>main {
-        margin-left: 250px;
+        margin-left: 256px;
     }
 }
 
@@ -68,8 +69,8 @@ html, body {
     z-index: 101;
     display: flex;
     flex-direction: column;
-    width: 250px;
-
+    width: 256px;
+    max-height: calc(100vh - 192px);
     overflow-x: hidden;
     overflow-y: auto;
     transition: width 0.5s, margin 0.5s;
@@ -80,7 +81,7 @@ html, body {
     z-index: 100;
     display: flex;
     flex-direction: column;
-    width: 250px;
+    width: 256px;
     top: 0;
     bottom: 0;
     transition: width 0.5s, margin 0.5s;

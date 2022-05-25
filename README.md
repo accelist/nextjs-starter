@@ -354,11 +354,13 @@ The default SWR fetcher is configured with these request headers:
 
 ## API Gateway
 
-For security reasons, HTTP requests initiated from a browser is restricted to the same domain (CORS) and the same protocol (HTTPS requests must be performed from web pages with HTTPS URL) due to the [Same-Origin Policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
+For security reasons, HTTP requests initiated from a browser is restricted to the same domain ([Same-Origin Policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)) and the same protocol (HTTPS requests must be performed from web pages with HTTPS URL).
 
 > For example, `https://front-end.app` accessing `http://back-end.app/api/data` will fail by default.
 
-To ease development against microservices, this template ships an implementation of API Gateway in `/pages/api/demo/[...apiGateway].ts` file: 
+To ease development against microservices, this template ships an implementation of API Gateway which allows bypassing Same-Origin Policy by proxying HTTP requests through the Next.js server. The API Gateway is implemented using [API Routes for Next.js](https://nextjs.org/docs/api-routes/introduction).
+
+> The content `/pages/api/demo/[...apiGateway].ts` file: 
 
 ```tsx
 import Proxy from 'http-proxy';
@@ -406,13 +408,14 @@ export const config = {
 }
 ```
 
-The API Gateway is implemented using [API Routes for Next.js](https://nextjs.org/docs/api-routes/introduction). For clarity, it is recommended to create separate API Routes for different back-end microservices. (e.g. `/api/employees`, `/api/products`, etc.)
-
 The above implementation allows forwarding from the Next.js API Route to the actual back-end API URL. For example: `/api/demo/api/Values` is forwarded to the `http://back-end/api/Values`
 
 ```tsx
+// Fetch data from http://back-end/api/Values
 const { data, error } = useSWR('/api/demo/api/Values', swrFetcher);
 ```
+
+For clarity, it is recommended to create separate API Routes for different back-end microservices. (e.g. `/api/employees`, `/api/products`, etc.)
 
 When deployed in Kubernetes, the target host can be declared as a valid [RFC 1035 label name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#rfc-1035-label-names) instead of a public DNS to enable managing microservices using Kubernetes CoreDNS.
 
@@ -496,7 +499,7 @@ Convenience hooks `useAuthorizedAxios` and `useAuthorizedSwrFetcher` are availab
 </div>
 ```
 
-`NavLink` has 3 props:
+`<NavLink>` has three props:
 
 - `href` is the destination route for the navigation.
 

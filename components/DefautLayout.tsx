@@ -16,7 +16,7 @@ const DefaultLayout: React.FC<{
             <Navbar></Navbar>
             <div className="below-navbar">
                 <SideBar></SideBar>
-                <main className="container py-4">
+                <main className="container-fluid p-4">
                     {children}
                 </main>
             </div>

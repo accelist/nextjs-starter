@@ -43,8 +43,8 @@ body {
     position: relative;
     display: flex;
     flex: 1;
-    transition: margin 0.5s;
     margin-left: 0;
+    transition: margin 0.5s;
     background-color: white;
 }
 

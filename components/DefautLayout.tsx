@@ -15,14 +15,12 @@ const DefaultLayout: React.FC<{
                 <meta key="meta-viewport" name="viewport" content="width=device-width, initial-scale=1" />
                 <link key="favicon" rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="navbar-frame">
-                <Navbar toggleSidebar={() => setDisplaySidebar(!displaySidebar)}></Navbar>
-                <div className="sidebar-frame">
-                    <SideBar display={displaySidebar}></SideBar>
-                    <main className="container py-4">
-                        {children}
-                    </main>
-                </div>
+            <Navbar toggleSidebar={() => setDisplaySidebar(!displaySidebar)}></Navbar>
+            <div className="below-navbar">
+                <SideBar display={displaySidebar}></SideBar>
+                <main className="container py-4">
+                    {children}
+                </main>
             </div>
         </React.Fragment>
     );

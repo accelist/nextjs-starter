@@ -1,11 +1,3 @@
-.navbar-frame {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    height: 100vh;
-    background-color: white;
-}
-
 .flex-centered {
     display: flex;
     align-items: center;
@@ -14,6 +6,11 @@
 
 .navbar-logo {
     max-height: 36px;
+}
+
+.stacked-nav {
+    position: relative;
+    z-index: 102;
 }
 
 .stacked-nav .nav-link {
@@ -28,48 +25,64 @@
     text-decoration: underline;
 }
 
-.sidebar-frame {
-    display: flex;
-    flex-grow: 1;
+.below-navbar {
     position: relative;
-    overflow-x: hidden;
-    overflow-y: auto;
+    display: flex;
+    flex: 1;
 }
 
-.sidebar-frame > main {
-    margin-left: 0;
+.below-navbar>main {
+    position: relative;
+    display: flex;
+    flex: 1;
     transition: margin 0.5s;
+    margin-left: 0;
+    background-color: white;
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+
     /* allow shrinking the main page width when sidebar is shown */
-    .sidebar-frame > .sidebar-show + main {
+    .below-navbar>.sidebar-show+main {
         margin-left: 250px;
     }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+
     /* always display sidebar */
-    .sidebar-frame > main {
+    .below-navbar>main {
         margin-left: 250px;
     }
 }
 
 .sidebar {
-    width: 250px;
-    height: 100%;
-    flex-shrink: 0;
     position: fixed;
-    background-image: linear-gradient(180deg, #544f30 0%, #212529 60%);
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+
     overflow-x: hidden;
     overflow-y: auto;
-    transition: margin 0.5s;
+    transition: width 0.5s, margin 0.5s;
+}
+
+.sidebar-bg {
+    position: fixed;
+    z-index: 100;
+    width: 250px;
+    top: 0;
+    bottom: 0;
+    transition: width 0.5s, margin 0.5s;
+    background-image: linear-gradient(180deg, #544f30 0%, #212529 60%);
 }
 
 /* Medium devices (tablets, less than 992px) */
 @media (max-width: 991.98px) {
+
     /* hide sidebar on tablets, but keep desktop-sized sidebar */
     .sidebar-hide {
         margin-left: -100vw;
@@ -78,9 +91,14 @@
 
 /* Small devices (landscape phones, less than 768px) */
 @media (max-width: 767.98px) {
+
     /* hide sidebar on mobile and let it take up the entire viewport when expanded */
     .sidebar {
-        width: 100vw;
+        width: 100%;
+    }
+
+    .sidebar-bg {
+        width: 100%;
     }
 }
 

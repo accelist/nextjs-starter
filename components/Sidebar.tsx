@@ -34,32 +34,32 @@ export const SideBar: React.FC = () => {
 
     return (
         <div className={getSidebarToggleClass('sidebar')} >
-            <ul className={getSidebarDisplayClass() + ' flex-column nav nav-pills p-3'}>
+            <ul className={getSidebarDisplayClass() + ' flex-column flex-fill nav nav-pills p-3'}>
                 <li className="nav-item">
                     <NavLink style={textWhite} href='/'>
                         <FontAwesomeIcon fixedWidth icon={faHome} className='me-2'></FontAwesomeIcon>
                         Home
                     </NavLink>
                 </li>
-                <li>
+                <li className="nav-item">
                     <NavLink style={textWhite} href='/dashboard'>
                         <FontAwesomeIcon fixedWidth icon={faChartLine} className='me-2'></FontAwesomeIcon>
                         Dashboard
                     </NavLink>
                 </li>
-                <li>
+                <li className="nav-item">
                     <NavLink style={textWhite}>
                         <FontAwesomeIcon fixedWidth icon={faTable} className='me-2'></FontAwesomeIcon>
                         Orders
                     </NavLink>
                 </li>
-                <li>
+                <li className="nav-item">
                     <NavLink style={textWhite}>
                         <FontAwesomeIcon fixedWidth icon={faBoxes} className='me-2'></FontAwesomeIcon>
                         Products
                     </NavLink>
                 </li>
-                <li>
+                <li className="nav-item">
                     <NavLink style={textWhite}>
                         <FontAwesomeIcon fixedWidth icon={faUsers} className='me-2'></FontAwesomeIcon>
                         Customers

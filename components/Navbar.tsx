@@ -36,24 +36,24 @@ export const Navbar: React.FC = () => {
                     </a>
                 </Link>
                 <ul className="nav col-12 col-lg-auto flex-centered mb-2 mb-lg-0">
-                    <li className="d-lg-none">
+                    <li className="nav-item d-lg-none">
                         <a href="#" className="nav-link" onClick={onBurgerClick}>
                             <FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
                         </a>
                     </li>
-                    <li>
+                    <li className='nav-item'>
                         <NavLink href='/'>Home</NavLink>
                     </li>
-                    <li>
+                    <li className='nav-item'>
                         <NavLink>Features</NavLink>
                     </li>
-                    <li>
+                    <li className='nav-item'>
                         <NavLink>Pricing</NavLink>
                     </li>
-                    <li>
+                    <li className='nav-item'>
                         <NavLink>FAQ</NavLink>
                     </li>
-                    <li>
+                    <li className='nav-item'>
                         <NavLink href='/about'>About</NavLink>
                     </li>
                 </ul>

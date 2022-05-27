@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { AppSettings } from '../functions/AppSettings';
 
 export const Title: React.FC<{
-    children: React.ReactText
+    children: string | number
 }> = ({ children }) => {
     return (
         <Head>

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxes, faChartLine, faDownLeftAndUpRightToCenter, faHome, faTable, faUpRightAndDownLeftFromCenter, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faBackward, faBoxes, faChartLine, faForward, faHome, faTable, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from '../components/NavLink';
 import { DisplaySidebarAtom } from './DisplaySidebarAtom';
 import { useAtom } from 'jotai';
@@ -8,7 +8,35 @@ import { useAtom } from 'jotai';
 export const SideBar: React.FC = () => {
 
     const [displaySidebar] = useAtom(DisplaySidebarAtom);
-    const [compact, setCompact] = useState(false);
+    const [compact, setCompact] = useState(true);
+
+    function getCompactSidebarFromLocalStorage(): boolean {
+        if (!window?.localStorage) {
+            return false;
+        }
+
+        const lsCompactSidebar = window.localStorage.getItem('CompactSidebar');
+        if (!lsCompactSidebar) {
+            return false;
+        }
+
+        try {
+            return JSON.parse(lsCompactSidebar);
+        } catch (error) {
+            return false;
+        }
+    }
+
+    useEffect(() => {
+        setCompact(getCompactSidebarFromLocalStorage());
+    }, []);
+
+    function setCompactSidebarToLocalStorage(value: boolean): void {
+        setCompact(value);
+        if (window?.localStorage) {
+            window.localStorage.setItem('CompactSidebar', JSON.stringify(value));
+        }
+    }
 
     function getSidebarToggleClass(className: string): string {
         let c = className;
@@ -41,15 +69,15 @@ export const SideBar: React.FC = () => {
         if (compact) {
             // expand
             return (
-                <a className='nav-link d-none d-md-block' href='#' style={textWhite} onClick={() => setCompact(false)}>
-                    <FontAwesomeIcon fixedWidth icon={faUpRightAndDownLeftFromCenter}></FontAwesomeIcon>
+                <a className='nav-link d-none d-md-block' href='#' style={textWhite} onClick={() => setCompactSidebarToLocalStorage(false)}>
+                    <FontAwesomeIcon fixedWidth icon={faForward}></FontAwesomeIcon>
                 </a>
             );
         } else {
             // compact
             return (
-                <a className='nav-link d-none d-md-block' href='#' style={textWhite} onClick={() => setCompact(true)}>
-                    <FontAwesomeIcon fixedWidth icon={faDownLeftAndUpRightToCenter}></FontAwesomeIcon>
+                <a className='nav-link d-none d-md-block' href='#' style={textWhite} onClick={() => setCompactSidebarToLocalStorage(true)}>
+                    <FontAwesomeIcon fixedWidth icon={faBackward}></FontAwesomeIcon>
                     <span className='ms-2'>Compact</span>
                 </a>
             );

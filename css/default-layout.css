@@ -57,7 +57,7 @@ body {
     }
 
     .below-navbar>.sidebar-compact.sidebar-show+main {
-        margin-left: 90px;
+        margin-left: 88px;
     }
 }
 
@@ -70,7 +70,7 @@ body {
     }
 
     .below-navbar>.sidebar-compact+main {
-        margin-left: 90px;
+        margin-left: 88px;
     }
 }
 
@@ -91,7 +91,7 @@ body {
 
     /* Do NOT compact sidebar in mobile view */
     .sidebar.sidebar-compact {
-        width: 90px;
+        width: 88px;
     }
 }
 

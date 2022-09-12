@@ -3,4 +3,6 @@
 @import 'nprogress/nprogress.css';
 @import '@fortawesome/fontawesome-svg-core/styles.css';
 
-@import './default-layout.css';
+#nprogress .bar {
+    background: limegreen !important;
+}

@@ -20,11 +20,9 @@
 
 - `AppSettings` API: Supports Runtime Environment Variables for Kubernetes deployment
 
-- OAuth to Azure Active Directory B2C configured
+- Plug-and-play OpenID Connect integrations to standard providers. (Such as Keycloak, IdentityServer, OpenIddict, FusionAuth, etc.)
 
-- `Authorize` component: Supports Role-Based Access Control (RBAC)
-
-- API Gateway for proxying HTTP requests to back-end web API
+- API Gateway for proxying HTTP requests to back-end web API bypassing CORS
 
 - Automatic progress bar during page navigation
 
@@ -96,7 +94,7 @@ This template ships with `_app.tsx` file which implements some of the above ment
 
 - Progress bar on navigation
 
-- Plug-and-play OpenID Connect integrations to standard providers. (Such as Keycloak, IdentityServer, OpenIddict, FusionAuth, etc.)
+- OpenID Connect provider configuration
 
 - Opting-out from [Automatic Static Optimization](https://nextjs.org/docs/advanced-features/automatic-static-optimization) to allow the use of [Runtime Environment Variables](https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration) in container-based deployments
 

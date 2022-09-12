@@ -2,11 +2,10 @@ import React from 'react';
 import type { NextPage } from 'next'
 import type { AppProps, AppContext } from 'next/app'
 import App from 'next/app';
+import dynamic from 'next/dynamic';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import { MsalProvider } from "@azure/msal-react";
-import { msalInstance } from '../functions/msal';
-
+import { NextJsOidcProvider } from '../components/NextJsOidcProvider';
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
@@ -20,16 +19,19 @@ type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout;
 }
 
+const BrowserOidcProvider = dynamic(() => Promise.resolve(NextJsOidcProvider), {
+    ssr: false
+});
+
 function CustomApp({
     Component,
     pageProps
 }: AppPropsWithLayout): JSX.Element {
-
     const withLayout = Component.layout ?? (page => page);
     return (
-        <MsalProvider instance={msalInstance}>
+        <BrowserOidcProvider>
             {withLayout(<Component {...pageProps} />)}
-        </MsalProvider>
+        </BrowserOidcProvider>
     );
 }
 

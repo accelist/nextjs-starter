@@ -6,10 +6,10 @@ module.exports = {
     // visible in Browser and Next.js server (DANGER!! Public Information!)
     publicRuntimeConfig: {
         websiteName: process.env['WEBSITE_NAME'],
-        azureAuthTenantName: process.env['AZURE_AD_B2C_TENANT_NAME'],
-        azureAuthClientID: process.env['AZURE_AD_B2C_CLIENT_ID'],
-        azureAuthPrimaryUserFlow: process.env['AZURE_AD_B2C_PRIMARY_USER_FLOW'],
         backendHost: process.env['BACKEND_HOST'],
+        oidcAuthority: process.env['OIDC_AUTHORITY'],
+        oidcClientId: process.env['OIDC_CLIENT_ID'],
+        oidcScope: process.env['OIDC_SCOPE'],
     },
     productionBrowserSourceMaps: true,
     swcMinify: true

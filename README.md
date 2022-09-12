@@ -12,7 +12,7 @@
 
 - Visual Studio Code breakpoint and debugging configured
 
-- Responsive dashboard (top and side navigation bar) template
+- Responsive dashboard with sidebar template
 
 - `Page` Component Type: Supports variable layout
 
@@ -186,10 +186,10 @@ docker network create network-name
 ```sh
 docker run \
 -e WEBSITE_NAME="Accelist Next.js Starter" \
--e AZURE_AD_B2C_TENANT_NAME=accelistadb2c \
--e AZURE_AD_B2C_CLIENT_ID=8234d7c5-e1ce-4dc5-a4b8-f8c85b73f759 \
--e AZURE_AD_B2C_PRIMARY_USER_FLOW=B2C_1_AccelistNextjsStarter \
--e BACKEND_HOST=http://localhost:5000 \
+-e BACKEND_HOST="http://localhost:5000" \
+-e OIDC_AUTHORITY="https://sso.accelist.com/auth/realms/Dev" \
+-e OIDC_CLIENT_ID="accelist-nextjs-starter" \
+-e OIDC_SCOPE="openid profile email offline_access" \
 -p 80:80 \
 --network network-name \
 --restart always \

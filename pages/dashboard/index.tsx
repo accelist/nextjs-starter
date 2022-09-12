@@ -62,7 +62,7 @@ const Dashboard: React.FC = () => {
 
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
-    // Because <Dashboard> is inside <Authorize> we can use the access token
+    // Because <Dashboard> is inside <OidcSecure> we can use the access token
     // to create an SWR Fetcher with Authorization Bearer header
     const swrFetcher = useAuthorizedSwrFetcher();
 

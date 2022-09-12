@@ -3,7 +3,9 @@ import { OidcProvider } from '@axa-fr/react-oidc';
 import { useRouter } from "next/router";
 import { AppSettings } from '../functions/AppSettings';
 
-export const NextJsOidcProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const NextJsOidcProvider: React.FC<{
+    children: React.ReactNode
+}> = ({ children }) => {
     const router = useRouter()
     const withCustomHistory = () => {
         return {
@@ -38,6 +40,8 @@ export const NextJsOidcProvider: React.FC<{ children: React.ReactNode }> = ({ ch
             scope: AppSettings.current.oidcScope,
             redirect_uri: `${window.location.origin}/authentication/callback`,
             silent_redirect_uri: `${window.location.origin}/authentication/silent-callback`,
-        }}>{children}</OidcProvider>
+        }}>
+            {children}
+        </OidcProvider>
     );
 };

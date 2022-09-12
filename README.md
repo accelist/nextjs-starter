@@ -96,7 +96,7 @@ This template ships with `_app.tsx` file which implements some of the above ment
 
 - Progress bar on navigation
 
-- [MSAL.js integration](https://docs.microsoft.com/en-us/azure/active-directory/develop/tutorial-v2-react)
+- Plug-and-play OpenID Connect integrations to standard providers. (Such as Keycloak, IdentityServer, OpenIddict, FusionAuth, etc.)
 
 - Opting-out from [Automatic Static Optimization](https://nextjs.org/docs/advanced-features/automatic-static-optimization) to allow the use of [Runtime Environment Variables](https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration) in container-based deployments
 
@@ -434,53 +434,9 @@ spec:
       port: 80
 ```
 
-## Azure AD B2C Configuration
+## OpenID Connect
 
-> TODO, explain step by step how to create Azure AD B2C tenant, web app, web API, scope / API permission, and environment variables setting
-
-## `<Authorize>` Component
-
-`<Authorize>` component will validate user access to a component (intended to be used as top-level commponent in the `Page` component type). The component will only render contents if the access token is valid (not expired) and will attempt to refresh access tokens automatically if expiring.
-
-```tsx
-const DashboardPage: Page = () => {
-    return (
-        <Authorize roles={['Administrator', 'Operation']}>
-            <Title>Dashboard</Title>
-            <Dashboard></Dashboard>
-        </Authorize>
-    );
-}
-
-DashboardPage.layout = WithDefaultLayout;
-export default DashboardPage;
-```
-
-The component supports Role-Based Access Control (RBAC) but the feature is intentionally not fully developed. Developers using RBAC should implement the role-checking logic inside the `CheckRoles` component against their back-end server. For example:
-
-```tsx
-const [authorized, setAuthorized] = useState(false);
-const [ready, setReady] = useState(false);
-
-useEffect(() => {
-    if (accessToken) {
-        // Using the Bearer Access Token (with Axios request), check roles against the back-end web API:
-        // GET http://demo.accelist.com/api/check-roles?r=Administrator&r=IT%20Manager
-        tryAuthorize(accessToken, roles)
-            .then(isAuthorized => {
-                setAuthorized(isAuthorized);
-            })
-            .catch(err => {
-                // ...
-            })
-            .then(() => {
-                setReady(true);
-            });
-    }
-}, [accessToken, roles]);
-```
-
-Convenience hooks `useAuthorizedAxios` and `useAuthorizedSwrFetcher` are available for use inside `Authorize` component. When using these hooks, the request clients will be configured to use the Bearer Access Token automatically.
+> TODO
 
 ## Navbar and Sidebar Customization
 

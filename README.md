@@ -34,7 +34,7 @@
 
 - Enabled container builds on GitLab CI or GitHub CI
 
-- Batteries included: `jotai`, Bootstrap 5, `react-bootstrap`, FontAwesome 5, `sweetalert2`
+- Batteries included: `jotai`, Bootstrap 5, `antd`, FontAwesome 5
 
 ## Getting Started
 

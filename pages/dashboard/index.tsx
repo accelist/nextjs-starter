@@ -1,10 +1,10 @@
 import React from 'react';
 import useSWR from 'swr';
-import { Authorize } from '../../components/Authorize';
 import { WithDefaultLayout } from '../../components/DefautLayout';
 import { Title } from '../../components/Title';
 import { useAuthorizedSwrFetcher } from '../../functions/useAuthorizedSwrFetcher';
 import { Page } from '../../types/Page';
+import { OidcSecure } from '@axa-fr/react-oidc';
 
 const Dashboard: React.FC = () => {
 
@@ -30,10 +30,10 @@ const Dashboard: React.FC = () => {
 
 const DashboardPage: Page = () => {
     return (
-        <Authorize roles={['Administrator', 'Operation']}>
+        <OidcSecure>
             <Title>Dashboard</Title>
             <Dashboard></Dashboard>
-        </Authorize>
+        </OidcSecure>
     );
 }
 

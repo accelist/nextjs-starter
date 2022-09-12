@@ -4,7 +4,7 @@ import { Page } from '../../types/Page';
 
 const SignInPage: Page = () => {
     // This page is intentionally left blank
-    // MSAL should automatically redirect user to previous URL that started the login process
+    // react-oidc should automatically redirect user to previous URL that started the login process
     return (
         <div>
             <Title>Signing in...</Title>

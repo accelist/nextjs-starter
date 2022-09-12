@@ -3,28 +3,43 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from '../components/NavLink';
 import Link from 'next/link';
-import Dropdown from 'react-bootstrap/Dropdown';
-import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
-import { loginRequest } from '../functions/msal';
 import { useAtom } from 'jotai';
 import { DisplaySidebarAtom } from './DisplaySidebarAtom';
+import { useOidcUser, useOidc } from '@axa-fr/react-oidc';
 
 export const Navbar: React.FC = () => {
     const [displaySidebar, setDisplaySidebar] = useAtom(DisplaySidebarAtom);
-    const { instance, accounts } = useMsal();
-    const fullName = accounts[0]?.name;
-
-    function signIn() {
-        instance.loginRedirect(loginRequest).catch(console.error);
-    }
-
-    function signOut() {
-        instance.logoutRedirect().catch(console.error);
-    }
+    const { isAuthenticated, login, logout } = useOidc();
+    const { oidcUser } = useOidcUser();
 
     const onBurgerClick: React.MouseEventHandler<HTMLAnchorElement> = function (e) {
         e.preventDefault();
         setDisplaySidebar(!displaySidebar);
+    }
+
+    function renderLoginLogoutButtons() {
+        if (isAuthenticated) {
+            return (
+                <div>
+                    <p>
+                        Signed in as {oidcUser?.name}
+                    </p>
+                    <p>
+                        <button type='button' onClick={() => logout()}>
+                            <FontAwesomeIcon icon={faSignOutAlt} className='me-2'></FontAwesomeIcon>
+                            Sign out
+                        </button>
+                    </p>
+                </div>
+            );
+        }
+
+        return (
+            <button type="button" onClick={() => login()} className="btn btn-success">
+                <FontAwesomeIcon icon={faSignInAlt} className='me-2'></FontAwesomeIcon>
+                Sign in
+            </button>
+        );
     }
 
     return (
@@ -58,28 +73,7 @@ export const Navbar: React.FC = () => {
                     </li>
                 </ul>
                 <div className="col-12 col-lg-3 flex-centered justify-content-lg-end me-3">
-                    <AuthenticatedTemplate>
-                        <Dropdown align='end'>
-                            <Dropdown.Toggle variant='link' style={{
-                                color: 'white',
-                                textDecoration: 'none'
-                            }}>
-                                Signed in as {fullName}
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <Dropdown.Item onClick={() => signOut()}>
-                                    <FontAwesomeIcon icon={faSignOutAlt} className='me-2'></FontAwesomeIcon>
-                                    Sign out
-                                </Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </AuthenticatedTemplate>
-                    <UnauthenticatedTemplate>
-                        <button type="button" onClick={signIn} className="btn btn-success">
-                            <FontAwesomeIcon icon={faSignInAlt} className='me-2'></FontAwesomeIcon>
-                            Sign in
-                        </button>
-                    </UnauthenticatedTemplate>
+                    {renderLoginLogoutButtons()}
                 </div>
             </header>
         </div>

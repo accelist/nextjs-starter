@@ -5,10 +5,10 @@ import getConfig from 'next/config';
  */
 export interface RuntimeAppSettings {
     websiteName: string;
-    azureAuthTenantName: string;
-    azureAuthClientID: string;
-    azureAuthPrimaryUserFlow: string;
     backendHost: string;
+    oidcAuthority: string;
+    oidcClientId: string;
+    oidcScope: string;
 }
 
 /**

@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { useMemo } from "react";
 import { DefaultAxiosRequestHeader } from "./DefaultAxiosRequestHeader";
-import { useAccessToken } from "./useAccessToken";
+import { useOidcAccessToken } from '@axa-fr/react-oidc';
 
 /**
  * This hook can only be used inside `<Authorize>` component.
@@ -9,9 +9,9 @@ import { useAccessToken } from "./useAccessToken";
  * @returns Axios Instance object with Authorization Bearer Access Token set.
  */
 export function useAuthorizedAxios(): AxiosInstance {
-    const accessToken = useAccessToken();
+    const { accessToken } = useOidcAccessToken();
 
-    const client = useMemo(()=>{
+    const client = useMemo(() => {
         return axios.create({
             headers: {
                 ...DefaultAxiosRequestHeader,

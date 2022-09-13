@@ -9,39 +9,42 @@ import { ReactCSS } from "../functions/ReactCSS";
 
 const { Content, Sider } = Layout;
 
+const deepNavyBlue = '#001529';
+const logoHeight = 48;
+
 const styles = ReactCSS.create({
     container: {
         minHeight: '100vh'
     },
     sidebarLogo: {
-        height: 64,
+        height: logoHeight,
         padding: 8,
         margin: 16,
+        color: 'white',
         background: '#333',
-        color: 'white'
     },
     sidebar: {
-        paddingBottom: 96
+        backgroundColor: deepNavyBlue,
+        paddingBottom: 96,
     },
     topbar: {
+        backgroundColor: deepNavyBlue,
         paddingLeft: 32,
         paddingRight: 32,
         paddingBottom: 16,
         paddingTop: 16,
-        backgroundColor: 'white',
         display: "flex",
-        alignItems: 'center'
+        alignItems: 'center',
     },
     topbarLogo: {
-        height: 48,
+        height: logoHeight,
         padding: 8,
         color: 'white',
         background: '#333',
-        flex: 1
     },
     content: {
-        margin: 24,
-        padding: 24,
+        margin: 20,
+        padding: 32,
         minHeight: 280,
         background: 'white'
     },
@@ -67,7 +70,7 @@ const DefaultLayout: React.FC<{
     const { isAuthenticated, login, logout } = useOidc();
     const { oidcUser } = useOidcUser();
 
-    // menu.key must match the router.pathname, see example below: /dashboard
+    // menu.key must match the router.pathname, see example below: "/dashboard"
     const [selected, setSelected] = useState([router.pathname]);
 
     // key must also be unique, for obvious reason

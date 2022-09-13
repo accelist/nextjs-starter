@@ -49,12 +49,12 @@ const styles = ReactCSS.create({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: 32
+        marginTop: 24
     },
     helloUser: {
         color: 'white',
         marginTop: 16,
-        marginBottom: 20
+        marginBottom: 16
     }
 });
 
@@ -67,7 +67,7 @@ const DefaultLayout: React.FC<{
     const { isAuthenticated, login, logout } = useOidc();
     const { oidcUser } = useOidcUser();
 
-    // menu.key must match the router.pathname, see example (/dashboard) below
+    // menu.key must match the router.pathname, see example below: /dashboard
     const [selected, setSelected] = useState([router.pathname]);
 
     // key must also be unique, for obvious reason
@@ -83,7 +83,7 @@ const DefaultLayout: React.FC<{
 
         menu.push(
             {
-                key: 'menu1',
+                key: '#menu-1',
                 label: 'Menu 1',
                 icon: <FontAwesomeIcon icon={faCubes}></FontAwesomeIcon>,
                 children: [
@@ -93,56 +93,56 @@ const DefaultLayout: React.FC<{
                         onClick: () => router.push('/dashboard')
                     },
                     {
-                        key: 'subMenuB',
+                        key: '/sub-menu-b',
                         label: 'Sub Menu B',
                         onClick: () => router.push('/')
                     },
                     {
-                        key: 'subMenuC',
+                        key: '/sub-menu-c',
                         label: 'Sub Menu C',
                         onClick: () => router.push('/')
                     }
                 ]
             },
             {
-                key: 'menu2',
+                key: '#menu-2',
                 label: 'Menu 2',
                 icon: <FontAwesomeIcon icon={faUsers}></FontAwesomeIcon>,
                 children: [
                     {
-                        key: 'subMenuD',
+                        key: '/sub-menu-d',
                         label: 'Sub Menu D',
                         onClick: () => router.push('/')
                     },
                     {
-                        key: 'subMenuE',
+                        key: '/sub-menu-e',
                         label: 'Sub Menu E',
                         onClick: () => router.push('/')
                     },
                     {
-                        key: 'subMenuF',
+                        key: '/sub-menu-f',
                         label: 'Sub Menu F',
                         onClick: () => router.push('/')
                     }
                 ]
             },
             {
-                key: 'menu3',
+                key: '#menu-3',
                 label: 'Menu 3',
                 icon: <FontAwesomeIcon icon={faFlaskVial}></FontAwesomeIcon>,
                 children: [
                     {
-                        key: 'subMenuG',
+                        key: '/sub-menu-g',
                         label: 'Sub Menu G',
                         onClick: () => router.push('/')
                     },
                     {
-                        key: 'subMenuH',
+                        key: '/sub-menu-h',
                         label: 'Sub Menu H',
                         onClick: () => router.push('/')
                     },
                     {
-                        key: 'subMenuI',
+                        key: '/sub-menu-i',
                         label: 'Sub Menu I',
                         onClick: () => router.push('/')
                     }
@@ -152,14 +152,14 @@ const DefaultLayout: React.FC<{
 
         if (isAuthenticated) {
             menu.push({
-                key: 'signOut',
+                key: '/sign-out',
                 label: 'Sign out',
                 icon: <FontAwesomeIcon icon={faSignOut}></FontAwesomeIcon>,
                 onClick: () => logout()
             });
         } else {
             menu.push({
-                key: 'signIn',
+                key: '/sign-in',
                 label: 'Sign in',
                 icon: <FontAwesomeIcon icon={faSignIn}></FontAwesomeIcon>,
                 onClick: () => login()
@@ -211,12 +211,7 @@ const DefaultLayout: React.FC<{
                         selectedKeys={selected} onSelect={e => setSelected(e.selectedKeys)} />
                 </Sider>
                 <Layout>
-                    <Drawer
-                        title="Menu"
-                        placement="left"
-                        open={drawerOpen}
-                        onClose={() => setDrawerOpen(false)}
-                    >
+                    <Drawer placement="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                         <Menu className="border-0" mode="inline" items={getMenu()}
                             selectedKeys={selected} onSelect={e => setSelected(e.selectedKeys)} />
                     </Drawer>

@@ -4,7 +4,7 @@ import { DefaultAxiosRequestHeader } from "./DefaultAxiosRequestHeader";
 import { useOidcAccessToken } from '@axa-fr/react-oidc';
 
 /**
- * This hook can only be used inside `<Authorize>` component.
+ * This hook can only be used inside `<OidcSecure>` component.
  * Caching is disabled via `DefaultAxiosRequestHeader` object.
  * @returns Axios Instance object with Authorization Bearer Access Token set.
  */

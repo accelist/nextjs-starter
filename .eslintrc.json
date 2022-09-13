@@ -13,6 +13,7 @@
   },
   "ignorePatterns": [
     ".next",
-    "next.config.js"
+    "next.config.js",
+    "public"
   ]
 }

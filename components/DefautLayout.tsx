@@ -205,35 +205,32 @@ const DefaultLayout: React.FC<{
                 <meta key="meta-viewport" name="viewport" content="width=device-width, initial-scale=1" />
                 <link key="favicon" rel="icon" href="/favicon.ico" />
             </Head>
-
+            <Sider width={240} breakpoint="lg" collapsedWidth={0} trigger={null} style={styles.sidebar}>
+                <div style={styles.sidebarLogo}>Logo</div>
+                {renderAvatar()}
+                <Menu theme="dark" mode="vertical" items={getMenu()}
+                    selectedKeys={selected} onSelect={e => setSelected(e.selectedKeys)} />
+            </Sider>
+            <Drawer placement="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                <Menu className="border-0" mode="inline" items={getMenu()}
+                    selectedKeys={selected} onSelect={e => setSelected(e.selectedKeys)} />
+            </Drawer>
             <Layout>
-                <Sider width={240} breakpoint="lg" collapsedWidth={0} trigger={null} style={styles.sidebar}>
-                    <div style={styles.sidebarLogo}>Logo</div>
-                    {renderAvatar()}
-                    <Menu theme="dark" mode="vertical" items={getMenu()}
-                        selectedKeys={selected} onSelect={e => setSelected(e.selectedKeys)} />
-                </Sider>
-                <Layout>
-                    <Drawer placement="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-                        <Menu className="border-0" mode="inline" items={getMenu()}
-                            selectedKeys={selected} onSelect={e => setSelected(e.selectedKeys)} />
-                    </Drawer>
-                    <Row style={styles.topbar} className='d-lg-none'>
-                        <Col flex={1}>
-                            <button onClick={() => setDrawerOpen(true)} type="button" className='btn btn-outline-primary'>
-                                <FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
-                            </button>
-                        </Col>
-                        <Col flex={1} style={styles.topbarLogo}>
-                            Logo
-                        </Col>
-                        <Col flex={1}>
-                        </Col>
-                    </Row>
-                    <Content style={styles.content}>
-                        {children}
-                    </Content>
-                </Layout>
+                <Row style={styles.topbar} className='d-lg-none'>
+                    <Col flex={1}>
+                        <button onClick={() => setDrawerOpen(true)} type="button" className='btn btn-outline-primary'>
+                            <FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
+                        </button>
+                    </Col>
+                    <Col flex={1} style={styles.topbarLogo}>
+                        Logo
+                    </Col>
+                    <Col flex={1}>
+                    </Col>
+                </Row>
+                <Content style={styles.content}>
+                    {children}
+                </Content>
             </Layout>
         </Layout>
     );

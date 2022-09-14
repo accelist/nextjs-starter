@@ -178,21 +178,21 @@ docker build -t app-name .
 When running container locally, it is recommended to create a dedicated network for containers inside to connect to each other: 
 
 ```sh
-docker network create network-name
+docker network create my-network
 ```
 
 ```sh
 docker run \
--e WEBSITE_NAME="Accelist Next.js Starter" \
--e BACKEND_HOST="http://localhost:5000" \
--e OIDC_AUTHORITY="https://sso.accelist.com/auth/realms/Dev" \
--e OIDC_CLIENT_ID="accelist-nextjs-starter" \
--e OIDC_SCOPE="openid profile email offline_access" \
+-e HOST="https://www.my-website.com" \
+-e DEMO_API_HOST="https://demo.duendesoftware.com" \
+-e OIDC_AUTHORITY="https://demo.duendesoftware.com" \
+-e OIDC_CLIENT_ID="interactive.public.short" \
+-e OIDC_SCOPE="openid profile email api offline_access" \
 -p 80:80 \
---network network-name \
+--network my-network \
 --restart always \
---name instance-name \
--d app-name
+--name my-container \
+-d my-app
 ```
 
 ## `AppSettings` API
@@ -236,22 +236,10 @@ For example:
 ```ts
 {
     publicRuntimeConfig: {
-        websiteName: process.env['WEBSITE_NAME']
+        host: process.env['host']
     }
 }
 ```
-
-### Add Environment Variables to `AppSettings`
-
-To enable TypeScript intellisense working against the registered Environment Variable, the interface `RuntimeAppSettings` in the file `functions/AppSettings.ts` can be modified:
-
-```ts
-export interface RuntimeAppSettings {
-    websiteName: string;
-}
-```
-
-> Environment Variables have `string` data type
 
 ### Using `AppSettings`
 
@@ -263,11 +251,13 @@ import { AppSettings } from '../functions/AppSettings';
 const MyPage: Page = () => {
     return (
         <div>
-            <h1>{AppSettings.current.websiteName}</h1>
+            <h1>{AppSettings.current.host}</h1>
         </div>
     );
 }
 ```
+
+> Environment Variables have `string` data type
 
 ## `Page` & Layout
 

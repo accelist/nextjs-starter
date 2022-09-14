@@ -1,15 +1,5 @@
 import getConfig from 'next/config';
-
-/**
- * Defines the combined runtime application environment variables.
- */
-export interface RuntimeAppSettings {
-    demoApiHost: string;
-    host: string;
-    oidcAuthority: string;
-    oidcClientId: string;
-    oidcScope: string;
-}
+import type { RuntimeAppSettings } from '../types/RuntimeAppSettings';
 
 /**
  * Returns a combined runtime application environment variables.

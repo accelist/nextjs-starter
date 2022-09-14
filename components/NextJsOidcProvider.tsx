@@ -2,6 +2,22 @@ import React from 'react';
 import { OidcProvider } from '@axa-fr/react-oidc';
 import { useRouter } from "next/router";
 import { AppSettings } from '../functions/AppSettings';
+import { Spin } from 'antd';
+
+const LoadingOidc: React.FC = () => {
+    return (
+        <div style={{
+            width: '100%',
+            height: '100vh',
+            backgroundColor: 'white',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+        }}>
+            <Spin size='large' tip='Loading...'></Spin>
+        </div>
+    );
+}
 
 export const NextJsOidcProvider: React.FC<{
     children: React.ReactNode
@@ -38,9 +54,9 @@ export const NextJsOidcProvider: React.FC<{
             authority: AppSettings.current.oidcAuthority,
             client_id: AppSettings.current.oidcClientId,
             scope: AppSettings.current.oidcScope,
-            redirect_uri: `${window.location.origin}/authentication/callback`,
-            silent_redirect_uri: `${window.location.origin}/authentication/silent-callback`,
-        }}>
+            redirect_uri: `${AppSettings.current.host}/authentication/callback`,
+            silent_redirect_uri: `${AppSettings.current.host}/authentication/silent-callback`,
+        }} loadingComponent={LoadingOidc}>
             {children}
         </OidcProvider>
     );

@@ -4,8 +4,8 @@ import getConfig from 'next/config';
  * Defines the combined runtime application environment variables.
  */
 export interface RuntimeAppSettings {
-    websiteName: string;
-    backendHost: string;
+    demoApiHost: string;
+    host: string;
     oidcAuthority: string;
     oidcClientId: string;
     oidcScope: string;

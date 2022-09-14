@@ -7,54 +7,30 @@ import { Page } from '../../types/Page';
 import { OidcSecure } from '@axa-fr/react-oidc';
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
+import { BackendApiUrl } from '../../functions/BackendApiUrl';
 
-interface DataType {
-    key: React.Key;
-    name: string;
-    age: number;
-    address: string;
+interface DataItem {
+    type: string;
+    value: number;
 }
 
-const rows: DataType[] = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-    },
-    {
-        key: '4',
-        name: 'Disabled User',
-        age: 99,
-        address: 'Sidney No. 1 Lake Park',
-    },
-];
+interface DataRow extends DataItem {
+    rowNumber: number;
+    key: React.Key;
+}
 
-const columns: ColumnsType<DataType> = [
+const columns: ColumnsType<DataRow> = [
     {
-        title: 'Name',
-        dataIndex: 'name',
-        render: (text: string) => <a>{text}</a>,
+        title: 'No.',
+        dataIndex: 'rowNumber'
     },
     {
-        title: 'Age',
-        dataIndex: 'age',
+        title: 'Type',
+        dataIndex: 'type',
     },
     {
-        title: 'Address',
-        dataIndex: 'address',
+        title: 'Value',
+        dataIndex: 'value',
     },
 ];
 
@@ -66,21 +42,35 @@ const Dashboard: React.FC = () => {
     // to create an SWR Fetcher with Authorization Bearer header
     const swrFetcher = useAuthorizedSwrFetcher();
 
-    // Request will be proxied via /api/demo/[...apiGateway].ts
-    const { data, error } = useSWR('/api/demo/api/Values', swrFetcher);
+    const { data, error, isValidating } = useSWR<DataItem[]>(BackendApiUrl.test, swrFetcher);
+
+    function dataSource(): DataRow[] {
+        if (!data) {
+            return [];
+        }
+
+        return data.map((item, index) => {
+            const row: DataRow = {
+                key: index,
+                rowNumber: index + 1,
+                type: item.type,
+                value: item.value,
+            };
+            return row;
+        })
+    }
 
     return (
         <div>
-            <Table
+            <Table dataSource={dataSource()}
+                columns={columns}
+                loading={isValidating}
                 rowSelection={{
                     selectedRowKeys: selectedRowKeys,
                     onChange: (e) => setSelectedRowKeys(e)
                 }}
-                columns={columns}
-                dataSource={rows}
             />
             <pre><code>{JSON.stringify(selectedRowKeys)}</code></pre>
-            <pre><code>{JSON.stringify(data)}</code></pre>
             <p style={{ color: 'red' }}>
                 {error?.toString()}
             </p>

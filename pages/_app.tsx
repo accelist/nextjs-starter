@@ -2,7 +2,6 @@ import React from 'react';
 import type { NextPage } from 'next'
 import type { AppProps, AppContext } from 'next/app'
 import App from 'next/app';
-import dynamic from 'next/dynamic';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import { NextJsOidcProvider } from '../components/NextJsOidcProvider';
@@ -19,19 +18,15 @@ type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout;
 }
 
-const BrowserOidcProvider = dynamic(() => Promise.resolve(NextJsOidcProvider), {
-    ssr: false
-});
-
 function CustomApp({
     Component,
     pageProps
 }: AppPropsWithLayout): JSX.Element {
     const withLayout = Component.layout ?? (page => page);
     return (
-        <BrowserOidcProvider>
+        <NextJsOidcProvider>
             {withLayout(<Component {...pageProps} />)}
-        </BrowserOidcProvider>
+        </NextJsOidcProvider>
     );
 }
 

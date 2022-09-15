@@ -426,30 +426,9 @@ spec:
 
 > TODO
 
-## Navbar and Sidebar Customization
+## Sidebar Menu Programming
 
-`<Navbar>` and `<Sidebar>` uses the `<NavLink>` component to display navigation links.
-
-```tsx
-<div className={sideBarClass()} >
-    <ul className="nav nav-pills d-flex flex-column p-3">
-        <li className="nav-item">
-            <NavLink style={textWhite} href='/'>
-                <FontAwesomeIcon fixedWidth icon={faHome} className='me-2'></FontAwesomeIcon>
-                Home
-            </NavLink>
-        </li>
-    </ul>
-</div>
-```
-
-`<NavLink>` has three props:
-
-- `href` is the destination route for the navigation.
-
-- `style` allows additional styling for the navigation label if required.
-
-- `children` allows adding text, icons, or any elements to be displayed in the navigation link.
+> TODO
 
 ## Step Debugging with Visual Studio Code
 

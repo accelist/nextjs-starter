@@ -27,7 +27,7 @@ function CustomApp({
 }: AppPropsWithLayout): JSX.Element {
     const withLayout = Component.layout ?? (page => page);
     return (
-        <SessionProvider session={session} refetchInterval={60} refetchOnWindowFocus={false}>
+        <SessionProvider session={session} refetchInterval={120} refetchOnWindowFocus={false}>
             {withLayout(<Component {...pageProps} />)}
         </SessionProvider>
     );

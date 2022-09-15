@@ -1,4 +1,4 @@
-import { Spin } from "antd";
+import { notification, Spin } from "antd";
 import { useSession, signIn } from "next-auth/react";
 import nProgress from "nprogress";
 import React, { useEffect } from "react";
@@ -18,6 +18,10 @@ export const Authorize: React.FC<{
     useEffect(() => {
         // this error bubbles up from [...nextauth].ts, refreshAccessToken()
         if (session?.['error'] === "RefreshAccessTokenError") {
+            notification['warning']({
+                message: 'Login Required',
+                description: 'Your session has ended. Redirecting to login page...'
+            });
             nProgress.start();
             signIn('oidc'); // Force sign in to hopefully resolve error
         }

@@ -168,7 +168,7 @@ This template ships with `Dockerfile` and `.dockerignore` for building the app a
 To build the container image, use this command:
 
 ```sh
-docker build -t app-name .
+docker build -t my-app .
 ```
 
 > Run this command on the same directory level as `Dockerfile` file. 
@@ -183,9 +183,10 @@ docker network create my-network
 
 ```sh
 docker run \
--e HOST="https://www.my-website.com" \
+-e NEXTAUTH_URL="https://www.my-website.com" \
+-e NEXTAUTH_SECRET="e01b7895a403fa7364061b2f01a650fc" \
 -e DEMO_API_HOST="https://demo.duendesoftware.com" \
--e OIDC_AUTHORITY="https://demo.duendesoftware.com" \
+-e OIDC_ISSUER="https://demo.duendesoftware.com" \
 -e OIDC_CLIENT_ID="interactive.public.short" \
 -e OIDC_SCOPE="openid profile email api offline_access" \
 -p 80:80 \
@@ -422,7 +423,11 @@ spec:
       port: 80
 ```
 
-## OpenID Connect
+## OpenID Connect Integrations
+
+> TODO
+
+## Authorize Component and AuthorizationContext
 
 > TODO
 

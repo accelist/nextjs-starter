@@ -1,10 +1,11 @@
 import React from 'react';
-import type { NextPage } from 'next'
-import type { AppProps, AppContext } from 'next/app'
+import type { NextPage } from 'next';
+import type { AppProps, AppContext } from 'next/app';
+import type { Session } from 'next-auth';
 import App from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import { NextJsOidcProvider } from '../components/NextJsOidcProvider';
+import { SessionProvider } from 'next-auth/react';
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
@@ -14,19 +15,21 @@ type NextPageWithLayout = NextPage & {
     layout?: (page: React.ReactElement) => React.ReactNode;
 }
 
-type AppPropsWithLayout = AppProps & {
+type AppPropsWithLayout = AppProps<{
+    session?: Session;
+}> & {
     Component: NextPageWithLayout;
 }
 
 function CustomApp({
     Component,
-    pageProps
+    pageProps: { session, ...pageProps }
 }: AppPropsWithLayout): JSX.Element {
     const withLayout = Component.layout ?? (page => page);
     return (
-        <NextJsOidcProvider>
+        <SessionProvider session={session} refetchInterval={60} refetchOnWindowFocus={false}>
             {withLayout(<Component {...pageProps} />)}
-        </NextJsOidcProvider>
+        </SessionProvider>
     );
 }
 

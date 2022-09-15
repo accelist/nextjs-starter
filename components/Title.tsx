@@ -6,7 +6,7 @@ export const Title: React.FC<{
 }> = ({ children }) => {
     return (
         <Head>
-            <title key="title">{children} - Accelist Next.js Starter</title>
+            <title key="title">{children.toString() + '- Accelist Next.js Starter'}</title>
         </Head>
     );
 }

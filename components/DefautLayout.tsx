@@ -4,8 +4,9 @@ import { Avatar, Col, Drawer, Layout, Menu, MenuProps, Row } from "antd";
 import { faBars, faSignOut, faSignIn, faHome, faCubes, faUser, faUsers, faFlaskVial } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
-import { useOidc, useOidcUser } from '@axa-fr/react-oidc';
 import { ReactCSS } from "../functions/ReactCSS";
+import { useSession, signIn, signOut } from "next-auth/react";
+import nProgress from "nprogress";
 
 const { Content, Sider } = Layout;
 
@@ -67,8 +68,7 @@ const DefaultLayout: React.FC<{
 
     const [drawerOpen, setDrawerOpen] = useState(false);
     const router = useRouter();
-    const { isAuthenticated, login, logout } = useOidc();
-    const { oidcUser } = useOidcUser();
+    const { data: session, status } = useSession();
 
     // menu.key must match the router.pathname, see example below: "/dashboard"
     const [selected, setSelected] = useState([router.pathname]);
@@ -153,43 +153,42 @@ const DefaultLayout: React.FC<{
             }
         );
 
-        if (isAuthenticated) {
+        if (status === 'authenticated') {
             menu.push({
                 key: '/sign-out',
                 label: 'Sign out',
                 icon: <FontAwesomeIcon icon={faSignOut}></FontAwesomeIcon>,
-                onClick: () => logout()
+                onClick: () => {
+                    nProgress.start();
+                    signOut();
+                }
             });
         } else {
             menu.push({
                 key: '/sign-in',
                 label: 'Sign in',
                 icon: <FontAwesomeIcon icon={faSignIn}></FontAwesomeIcon>,
-                onClick: () => login()
+                onClick: () => {
+                    nProgress.start();
+                    signIn('oidc');
+                }
             });
         }
 
         return menu;
     }
 
-    function getUserName(): string {
-        // oidc user can be null before user data is loaded, be careful
-        if (oidcUser) {
-            return oidcUser.name;
-        }
-
-        return '';
-    }
+    const displayUserName = session?.user?.name;
 
     function renderAvatar() {
-        if (isAuthenticated) {
+        if (status === 'authenticated') {
             return (
                 <div style={styles.avatarContainer}>
                     <div>
                         <Avatar size={64} icon={<FontAwesomeIcon icon={faUser}></FontAwesomeIcon>} />
                     </div>
                     <div style={styles.helloUser}>
-                        Hello, {getUserName()}
+                        Hello, {displayUserName}
                     </div>
                 </div>
             );

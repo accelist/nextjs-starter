@@ -4,10 +4,10 @@ import { WithDefaultLayout } from '../../components/DefautLayout';
 import { Title } from '../../components/Title';
 import { useAuthorizedSwrFetcher } from '../../functions/useAuthorizedSwrFetcher';
 import { Page } from '../../types/Page';
-import { OidcSecure } from '@axa-fr/react-oidc';
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
 import { BackendApiUrl } from '../../functions/BackendApiUrl';
+import { Authorize } from '../../components/Authorize';
 
 interface DataItem {
     type: string;
@@ -38,7 +38,7 @@ const Dashboard: React.FC = () => {
 
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
-    // Because <Dashboard> is inside <OidcSecure> we can use the access token
+    // Because <Dashboard> is inside <Authorize> we can use the access token
     // to create an SWR Fetcher with Authorization Bearer header
     const swrFetcher = useAuthorizedSwrFetcher();
 
@@ -80,10 +80,10 @@ const Dashboard: React.FC = () => {
 
 const DashboardPage: Page = () => {
     return (
-        <OidcSecure>
+        <Authorize>
             <Title>Dashboard</Title>
             <Dashboard></Dashboard>
-        </OidcSecure>
+        </Authorize>
     );
 }
 

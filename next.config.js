@@ -6,8 +6,7 @@ module.exports = {
     },
     // visible in Browser and Next.js server (DANGER!! Public Information!)
     publicRuntimeConfig: {
-        host: process.env['HOST'],
-        oidcAuthority: process.env['OIDC_AUTHORITY'],
+        oidcIssuer: process.env['OIDC_ISSUER'],
         oidcClientId: process.env['OIDC_CLIENT_ID'],
         oidcScope: process.env['OIDC_SCOPE'],
     },

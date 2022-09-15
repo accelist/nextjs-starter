@@ -10,6 +10,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
 import '../css/index.css';
+import { SessionErrorHandler } from '../components/SessionErrorHandler';
 
 type NextPageWithLayout = NextPage & {
     layout?: (page: React.ReactElement) => React.ReactNode;
@@ -28,7 +29,9 @@ function CustomApp({
     const withLayout = Component.layout ?? (page => page);
     return (
         <SessionProvider session={session} refetchInterval={120} refetchOnWindowFocus={false}>
-            {withLayout(<Component {...pageProps} />)}
+            <SessionErrorHandler>
+                {withLayout(<Component {...pageProps} />)}
+            </SessionErrorHandler>
         </SessionProvider>
     );
 }

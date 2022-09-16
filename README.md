@@ -261,8 +261,7 @@ const MyPage: Page<{
     );
 }
 
-IndexPage.layout = WithDefaultLayout;
-export default IndexPage;
+export default MyPage;
 
 export async function getServerSideProps() {
     return {

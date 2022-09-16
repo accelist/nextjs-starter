@@ -53,6 +53,18 @@ function calculateExpireAtMilliseconds(expireAtSeconds: number | undefined) {
     return expireAtSeconds * 1000;
 }
 
+function hasNotExpired(expireAtSeconds: unknown): boolean {
+    if (typeof expireAtSeconds !== 'number') {
+        return false;
+    }
+
+    if (!expireAtSeconds) {
+        return false;
+    }
+
+    return (Date.now() < expireAtSeconds);
+}
+
 export const authOptions: NextAuthOptions = {
     providers: [
         {
@@ -104,12 +116,10 @@ export const authOptions: NextAuthOptions = {
             }
 
             // Return previous token if the access token has not expired yet
-            const accessTokenExpires = token['accessTokenExpires'] as number;
             // console.log(Date.now(), accessTokenExpires);
-
-            if (Date.now() < accessTokenExpires) {
+            if (hasNotExpired(token['accessTokenExpires'])) {
                 // console.log('Token not expired yet');
-                return token
+                return token;
             }
 
             // console.log('Token has expired');

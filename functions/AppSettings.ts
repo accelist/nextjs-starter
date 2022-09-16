@@ -2,7 +2,7 @@ import getConfig from 'next/config';
 import type { RuntimeAppSettings } from '../types/RuntimeAppSettings';
 
 /**
- * Returns a combined runtime application environment variables.
+ * Returns runtime application Environment Variables readable only from server-side code.
  * Environment variables read from the machine should be set in `next.config.js`
  */
 export const AppSettings = {

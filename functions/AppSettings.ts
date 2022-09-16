@@ -8,7 +8,7 @@ import type { RuntimeAppSettings } from '../types/RuntimeAppSettings';
 export const AppSettings = {
     get current(): RuntimeAppSettings {
         const config = getConfig();
-        return { ...config.publicRuntimeConfig, ...config.serverRuntimeConfig };
+        return { ...config.serverRuntimeConfig };
     }
 }
 

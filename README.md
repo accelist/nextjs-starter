@@ -226,36 +226,53 @@ The values of Environment Variables are sourced differently depending on how the
 
 ### Add Environment Variables to `next.config.js`
 
-To register Environment Variables into the app, open `next.config.js` and add the `publicRuntimeConfig` or `serverRuntimeConfig` configs:
+To register Environment Variables into the app, open `next.config.js` and modify the `serverRuntimeConfig` field.
 
-- `serverRuntimeConfig`: Will only be available on the server side. (in `getServerSideProps` or `getInitialProps` or in API routes)
-
-- `publicRuntimeConfig`: Will be available on both server-side and client-side (in browser). **ONLY PUT PUBLIC SETTING VALUES IN HERE, DO NOT PUT ANY SENSITIVE VALUES IN HERE!!**
+The Environment Variables will only be available on the server-side code. (in `getServerSideProps` or in API routes)
 
 For example:
 
 ```ts
 {
-    publicRuntimeConfig: {
-        host: process.env['host']
-    }
+    serverRuntimeConfig: {
+        demoApiHost: process.env['DEMO_API_HOST'],
+        oidcIssuer: process.env['OIDC_ISSUER'],
+        oidcClientId: process.env['OIDC_CLIENT_ID'],
+        oidcScope: process.env['OIDC_SCOPE'],
+    },
 }
 ```
 
 ### Using `AppSettings`
 
-Import the `AppSettings` object to read registered Environment Variables. For example:
+Import the `AppSettings` object from `getServerSideProps` to read registered Environment Variables and pass it down to the page as props. For example:
 
 ```tsx
 import { AppSettings } from '../functions/AppSettings';
 
-const MyPage: Page = () => {
+const MyPage: Page<{
+    myEnv: string
+}> = ({ myEnv }) => {
     return (
         <div>
-            <h1>{AppSettings.current.host}</h1>
+            <p>
+                {myEnv}
+            </p>
         </div>
     );
 }
+
+IndexPage.layout = WithDefaultLayout;
+export default IndexPage;
+
+export async function getServerSideProps() {
+    return {
+        props: {
+            myEnv: AppSettings.current.myEnv
+        },
+    }
+}
+
 ```
 
 > Environment Variables have `string` data type

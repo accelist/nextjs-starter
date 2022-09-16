@@ -1,11 +1,10 @@
 module.exports = {
     // add environment variables accessible via AppSettings here:
-    // visible only by Next.js server (secrets)
+    // visible only by server-side Next.js (secrets)
+    // if accessing variables required in browser-side code, use getServerSideProps
+    // https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props
     serverRuntimeConfig: {
         demoApiHost: process.env['DEMO_API_HOST'],
-    },
-    // visible in Browser and Next.js server (DANGER!! Public Information!)
-    publicRuntimeConfig: {
         oidcIssuer: process.env['OIDC_ISSUER'],
         oidcClientId: process.env['OIDC_CLIENT_ID'],
         oidcScope: process.env['OIDC_SCOPE'],

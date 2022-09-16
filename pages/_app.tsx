@@ -1,8 +1,7 @@
 import React from 'react';
 import type { NextPage } from 'next';
-import type { AppProps, AppContext } from 'next/app';
+import type { AppProps } from 'next/app';
 import type { Session } from 'next-auth';
-import App from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import { SessionProvider } from 'next-auth/react';
@@ -34,15 +33,6 @@ function CustomApp({
             </SessionErrorHandler>
         </SessionProvider>
     );
-}
-
-// This disables the ability to perform Automatic Static Optimization... (Sadge)
-// Causing every page in the app to be server-side rendered,
-// but allowing the use of runtime configuration in Docker-based Environment!
-CustomApp.getInitialProps = async (appContext: AppContext) => {
-    // calls page's `getInitialProps` and fills `appProps.pageProps`
-    const appProps = await App.getInitialProps(appContext);
-    return { ...appProps };
 }
 
 NProgress.configure({

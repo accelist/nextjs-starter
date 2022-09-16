@@ -45,9 +45,9 @@ async function refreshAccessToken(token: JWT & { refreshToken?: string }) {
 }
 
 function calculateExpireAtMilliseconds(expireAtSeconds: number | undefined) {
+    // we didn't get expireAt value, just assume it will expire in 15 minutes
     if (!expireAtSeconds) {
-        // assume it will expire in 60 seconds
-        return Date.now() + 60 * 1000;
+        return Date.now() + 15 * 60 * 1000;
     }
 
     return expireAtSeconds * 1000;

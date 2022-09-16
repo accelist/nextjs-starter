@@ -235,13 +235,12 @@ For example:
 ```ts
 {
     serverRuntimeConfig: {
-        demoApiHost: process.env['DEMO_API_HOST'],
-        oidcIssuer: process.env['OIDC_ISSUER'],
-        oidcClientId: process.env['OIDC_CLIENT_ID'],
-        oidcScope: process.env['OIDC_SCOPE'],
+        myEnv: process.env['MY_ENVIRONMENT_VARIABLE'],
     },
 }
 ```
+
+> Read more for explanation about this behavior: https://www.saltycrane.com/blog/2021/04/buildtime-vs-runtime-environment-variables-nextjs-docker/
 
 ### Using `AppSettings`
 

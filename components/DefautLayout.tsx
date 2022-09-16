@@ -5,8 +5,9 @@ import { faBars, faSignOut, faSignIn, faHome, faCubes, faUser, faUsers, faFlaskV
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import { ReactCSS } from "../functions/ReactCSS";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import nProgress from "nprogress";
+import { useBetterSession } from "../functions/useBetterSession";
 
 const { Content, Sider } = Layout;
 
@@ -68,7 +69,7 @@ const DefaultLayout: React.FC<{
 
     const [drawerOpen, setDrawerOpen] = useState(false);
     const router = useRouter();
-    const { data: session, status } = useSession();
+    const { name, isAuthenticated } = useBetterSession();
 
     // menu.key must match the router.pathname, see example below: "/dashboard"
     const [selected, setSelected] = useState([router.pathname]);
@@ -153,7 +154,7 @@ const DefaultLayout: React.FC<{
             }
         );
 
-        if (status === 'authenticated') {
+        if (isAuthenticated) {
             menu.push({
                 key: '/sign-out',
                 label: 'Sign out',
@@ -178,17 +179,15 @@ const DefaultLayout: React.FC<{
         return menu;
     }
 
-    const displayUserName = session?.user?.name;
-
     function renderAvatar() {
-        if (status === 'authenticated') {
+        if (isAuthenticated) {
             return (
                 <div style={styles.avatarContainer}>
                     <div>
                         <Avatar size={64} icon={<FontAwesomeIcon icon={faUser}></FontAwesomeIcon>} />
                     </div>
                     <div style={styles.helloUser}>
-                        Hello, {displayUserName}
+                        Hello, {name}
                     </div>
                 </div>
             );

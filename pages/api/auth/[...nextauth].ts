@@ -3,7 +3,7 @@ import type { JWT } from "next-auth/jwt";
 import { Issuer } from 'openid-client';
 import { custom } from 'openid-client';
 import { AppSettings } from "../../../functions/AppSettings"
-import { UserInfo } from "../../../functions/AuthorizationContext";
+import { UserInfo } from "../../../functions/useBetterSession";
 
 /**
  * Takes a token, and returns a new token with updated
@@ -94,10 +94,30 @@ export const authOptions: NextAuthOptions = {
                 }
             },
             async profile(profile) {
+                // add claims obtained from user info endpoint to the session.user data
+                // reference: https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
+                // console.log(profile);
                 return {
                     id: profile.sub,
                     name: profile.name,
+                    // givenName: profile.given_name,
+                    // familyName: profile.family_name,
+                    // middleName: profile.middle_name,
+                    // nickname: profile.nickname,
+                    // username: profile.preferred_username,
+                    // profile: profile.profile,
+                    // picture: profile.picture,
+                    // website: profile.website,
                     email: profile.email,
+                    // emailVerified: profile.email_verified,
+                    // gender: profile.gender,
+                    // birthdate: profile.birthdate,
+                    // zoneinfo: profile.zoneinfo,
+                    // locale: profile.locale,
+                    // phoneNumber: profile.phone_number,
+                    // phoneNumberVerified: profile.phone_number_verified,
+                    // address: profile?.address,
+                    // updatedAt: profile.updated_at
                 }
             },
         }
@@ -127,9 +147,8 @@ export const authOptions: NextAuthOptions = {
             return refreshAccessToken(token)
         },
         async session({ session, token }) {
-            // Send properties to the client, like an access_token from a provider.
+            // Send properties to the client-side accessible from useSession()
             session.user = token['user'] as UserInfo;
-            session['accessToken'] = token['accessToken'];
             session['error'] = token['error'];
             return session
         }

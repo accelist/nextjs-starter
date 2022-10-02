@@ -5,16 +5,17 @@ import { AppSettings } from '../../../functions/AppSettings';
 // Great way to avoid using CORS and making API calls from HTTPS pages to back-end HTTP servers
 // Recommendation for projects in Kubernetes cluster: set target to Service DNS name instead of public DNS name
 const server = Proxy.createProxyServer({
-    target: AppSettings.current.demoApiHost,
+    target: AppSettings.current.backendApiHost,
+    // changeOrigin to support name-based virtual hosting
     changeOrigin: true,
-    xfwd: true,
+    xfwd: true, 
     // https://github.com/http-party/node-http-proxy#proxying-websockets
     ws: false,
 });
 
 server.on('proxyReq', (proxyReq, req) => {
-    // Proxy requests from /api/demo/... to http://my-web-api.com/...
-    const urlRewrite = req.url?.replace(new RegExp('^/api/demo'), '');
+    // Proxy requests from /api/be/... to http://my-web-api.com/...
+    const urlRewrite = req.url?.replace(new RegExp('^/api/be'), '');
     if (urlRewrite) {
         proxyReq.path = urlRewrite;
     } else {

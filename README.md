@@ -185,7 +185,7 @@ docker network create my-network
 docker run \
 -e NEXTAUTH_URL="https://www.my-website.com" \
 -e NEXTAUTH_SECRET="e01b7895a403fa7364061b2f01a650fc" \
--e DEMO_API_HOST="https://demo.duendesoftware.com" \
+-e BACKEND_API_HOST="https://demo.duendesoftware.com" \
 -e OIDC_ISSUER="https://demo.duendesoftware.com" \
 -e OIDC_CLIENT_ID="interactive.public.short" \
 -e OIDC_SCOPE="openid profile email api offline_access" \

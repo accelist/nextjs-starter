@@ -21,10 +21,14 @@ server.on('proxyReq', (proxyReq, req) => {
     } else {
         proxyReq.path = '/';
     }
-    // console.log('Proxying:', req.url, '-->', AppSettings.current.backendHost + urlRewrite);
+    proxyReq.removeHeader('cookie');
+    // console.log(JSON.stringify(proxyReq.getHeaders(), null, 4));
+    console.log('HTTP Proxy:', req.url, '-->', AppSettings.current.backendApiHost + urlRewrite);
 });
 
 const apiGateway = async (req: NextApiRequest, res: NextApiResponse) => {
+    const startTime = new Date().getTime();
+
     server.web(req, res, {}, (err) => {
         if (err instanceof Error) {
             throw err;
@@ -32,6 +36,11 @@ const apiGateway = async (req: NextApiRequest, res: NextApiResponse) => {
 
         throw new Error(`Failed to proxy request: '${req.url}'`);
     });
+
+    res.on('finish', () => {
+        const endTime = new Date().getTime();
+        console.log(`HTTP Proxy: Finished ${res.req.url} in ${endTime - startTime}ms `);
+    })
 }
 
 export default apiGateway;

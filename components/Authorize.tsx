@@ -27,14 +27,6 @@ export const Authorize: React.FC<{
         return '';
     }
 
-    function getUserInfo(): UserInfo {
-        return {
-            id: session?.user?.['id'] ?? '',
-            name: session?.user?.name ?? '',
-            email: session?.user?.email ?? ''
-        }
-    }
-
     if (status !== 'authenticated') {
         return (
             <div style={{
@@ -51,7 +43,7 @@ export const Authorize: React.FC<{
 
     const ctx: AuthorizationContextData = {
         accessToken: getAccessToken(),
-        user: getUserInfo()
+        user: session.user as UserInfo
     };
 
     return (

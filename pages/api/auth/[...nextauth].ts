@@ -94,10 +94,31 @@ export const authOptions: NextAuthOptions = {
                 }
             },
             async profile(profile) {
+                // add claims obtained from user info endpoint to the session.user data
+                // reference: https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
+                // console.log(profile);
                 return {
                     id: profile.sub,
                     name: profile.name,
+                    // given_name: profile.given_name,
+                    // family_name: profile.family_name,
+                    // middle_name: profile.middle_name,
+                    // nickname: profile.nickname,
+                    // preferred_username: profile.preferred_username,
+                    // profile: profile.profile,
+                    // picture: profile.picture,
+                    // website: profile.website,
                     email: profile.email,
+                    // email_verified: profile.email_verified,
+                    // gender: profile.gender,
+                    // birthdate: profile.birthdate,
+                    // zoneinfo: profile.zoneinfo,
+                    // locale: profile.locale,
+                    // phone_number: profile.phone_number,
+                    // phone_number_verified: profile.phone_number_verified,
+                    // address: profile.address,
+                    // updated_at: profile.updated_at
+                    role: profile.role
                 }
             },
         }

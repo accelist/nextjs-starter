@@ -161,6 +161,10 @@ const DefaultLayout: React.FC<{
                 onClick: () => {
                     nProgress.start();
                     signOut();
+                    // HINT: use this method call if need to end SSO server authentication session:
+                    // signOut({
+                    //     callbackUrl: '/api/end-session'
+                    // });
                 }
             });
         } else {

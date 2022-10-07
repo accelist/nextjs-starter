@@ -32,7 +32,9 @@
 
 - Enabled container builds on GitLab CI or GitHub CI
 
-- Batteries included: `jotai`, Bootstrap 5, `antd`, FontAwesome 5
+- Batteries included: `jotai`, Bootstrap 5, `antd`, FontAwesome 5, `react-hook-form`
+
+- Provide sane defaults for the most common security headers
 
 ## Getting Started
 
@@ -161,6 +163,28 @@ For custom advanced configuration of Next.js (such as webpack), `next.config.js`
 
 > Read more about custom webpack configuration: https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config
 
+## Building and Running Production Build
+
+```sh
+npm run build
+```
+
+```sh
+npx cross-env \
+    NODE_ENV='production' \
+    NEXTAUTH_URL='https://www.my-website.com' \
+    NEXTAUTH_SECRET='e01b7895a403fa7364061b2f01a650fc' \
+    BACKEND_API_HOST='https://demo.duendesoftware.com' \
+    OIDC_ISSUER='https://demo.duendesoftware.com' \
+    OIDC_CLIENT_ID='interactive.public.short' \
+    OIDC_SCOPE='openid profile email api offline_access' \
+    npm run start
+```
+
+> **DO NOT FORGET** to randomize `NEXTAUTH_SECRET` value for Production Environment with https://generate-secret.vercel.app/32 or `openssl rand -base64 32`
+
+To use SSL Certificates, simply use reverse proxy such as [NGINX](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/) or [Traefik](https://doc.traefik.io/traefik/getting-started/install-traefik/).
+
 ## Building and Running as Container
 
 This template ships with `Dockerfile` and `.dockerignore` for building the app as a standard container image. To proceed, please [install Docker](https://docs.docker.com/get-docker/) or any OCI container CLI such as [`podman`](https://podman.io/) in your machine. (The examples given will use Docker)
@@ -183,18 +207,20 @@ docker network create my-network
 
 ```sh
 docker run \
--e NEXTAUTH_URL="https://www.my-website.com" \
--e NEXTAUTH_SECRET="e01b7895a403fa7364061b2f01a650fc" \
--e BACKEND_API_HOST="https://demo.duendesoftware.com" \
--e OIDC_ISSUER="https://demo.duendesoftware.com" \
--e OIDC_CLIENT_ID="interactive.public.short" \
--e OIDC_SCOPE="openid profile email api offline_access" \
--p 80:80 \
---network my-network \
---restart always \
---name my-container \
--d my-app
+    -e NEXTAUTH_URL="https://www.my-website.com" \
+    -e NEXTAUTH_SECRET="e01b7895a403fa7364061b2f01a650fc" \
+    -e BACKEND_API_HOST="https://demo.duendesoftware.com" \
+    -e OIDC_ISSUER="https://demo.duendesoftware.com" \
+    -e OIDC_CLIENT_ID="interactive.public.short" \
+    -e OIDC_SCOPE="openid profile email api offline_access" \
+    -p 80:80 \
+    --network my-network \
+    --restart always \
+    --name my-container \
+    -d my-app
 ```
+
+> **DO NOT FORGET** to randomize `NEXTAUTH_SECRET` value for Production Environment with https://generate-secret.vercel.app/32 or `openssl rand -base64 32`
 
 ## `AppSettings` API
 
@@ -447,6 +473,10 @@ spec:
 > TODO
 
 ## Sidebar Menu Programming
+
+> TODO
+
+## Security Headers
 
 > TODO
 

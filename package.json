@@ -48,7 +48,7 @@
     "next": "12.3.1",
     "next-auth": "4.12.3",
     "nprogress": "0.2.0",
-    "openid-client": "5.1.10",
+    "openid-client": "5.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.37.0",

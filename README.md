@@ -394,9 +394,11 @@ These Fetch APIs are configured with these request headers:
 
 When the Fetch API is called inside the `<Authorize>` component context, it will automatically append `Authorization: Bearer ACCESS_TOKEN` header into the HTTP request.
 
+> Contrary to the function name, **it is completely safe** to use `useFetchWithAccessToken` outside `<Authorize>` component context.
+
 ## Default SWR Fetcher
 
-This template ships with an default [SWR Fetcher](https://swr.vercel.app/docs/data-fetching#fetch) implementation based on above Fetch API wrapper.
+This template ships with a default [SWR Fetcher](https://swr.vercel.app/docs/data-fetching#fetch) implementation based on above Fetch API wrapper.
 
 ```tsx
 import React from 'react';
@@ -419,6 +421,8 @@ const TestPage: React.FC = () => {
     );
 }
 ```
+
+> Contrary to the function name, **it is completely safe** to use `useSwrFetcherWithAccessToken` outside `<Authorize>` component context.
 
 ## API Gateway
 

@@ -46,7 +46,9 @@ Run `npm ci` in the project root folder, then `npm run dev`
 
 The web app should be accessible at http://localhost:3000
 
-To display ESLint errors in Visual Studio Code, install the official ESLint extension: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+To display ESLint errors in Visual Studio Code, install [the official ESLint extension by Microsoft](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
+
+To display Tailwind CSS intellisense in Visual Studio Code, install [the official Tailwind CSS Intellisense extension](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss).
 
 ## Project Structure
 
@@ -315,7 +317,7 @@ import React from "react";
 const MyLayout: React.FC = ({ children }) => {
     return (
         <React.Fragment>
-            <main className="container py-4">
+            <main>
                 {children}
             </main>
         </React.Fragment>

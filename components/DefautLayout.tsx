@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Head from 'next/head';
-import { Avatar, Col, Drawer, Layout, Menu, MenuProps, Row } from "antd";
+import { Avatar, Button, Col, Drawer, Layout, Menu, MenuProps, Row } from "antd";
 import { faBars, faSignOut, faSignIn, faHome, faCubes, faUser, faUsers, faFlaskVial } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
@@ -34,7 +34,6 @@ const styles = ReactCSS.create({
         paddingRight: 32,
         paddingBottom: 16,
         paddingTop: 16,
-        display: "flex",
         alignItems: 'center',
     },
     topbarLogo: {
@@ -219,11 +218,11 @@ const DefaultLayout: React.FC<{
                     selectedKeys={selected} onSelect={e => setSelected(e.selectedKeys)} />
             </Drawer>
             <Layout>
-                <Row style={styles.topbar} className='d-lg-none'>
+                <Row style={styles.topbar} className='flex lg:hidden'>
                     <Col flex={1}>
-                        <button onClick={() => setDrawerOpen(true)} type="button" className='btn btn-outline-primary'>
+                        <Button onClick={() => setDrawerOpen(true)} type='primary'>
                             <FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
-                        </button>
+                        </Button>
                     </Col>
                     <Col flex={1} style={styles.topbarLogo}>
                         Logo

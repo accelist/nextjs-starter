@@ -20,17 +20,21 @@
 
 - `AppSettings` API: Supports Runtime Environment Variables for Kubernetes deployment
 
-- Plug-and-play OpenID Connect integrations to standard providers. (Such as Keycloak, IdentityServer, OpenIddict, FusionAuth, etc.)
+- Plug-and-play OpenID Connect integrations to standard providers (Such as Keycloak, IdentityServer, OpenIddict, FusionAuth, etc.)
 
 - API Gateway for proxying HTTP requests to back-end web API bypassing CORS
 
 - Automatic progress bar during page navigation
 
-- Convenient Fetch API wrapper and SWR Fetcher implementation. 
+- Convenient Fetch API wrapper and SWR Fetcher implementation
 
 - Enabled container builds on GitLab CI or GitHub CI
 
-- Batteries included: `jotai`, Tailwind CSS, Emotion CSS-in-JS, `antd`, FontAwesome 5, `react-hook-form`
+- Enabled `className` intellisense in React components with Tailwind CSS
+
+- Enabled CSS-in-JS with Emotion
+
+- Batteries included: `jotai`, `antd`, `@headlessui/react`, FontAwesome 5, `react-hook-form`
 
 - Provide sane defaults for the most common security headers
 

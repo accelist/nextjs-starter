@@ -28,7 +28,7 @@
     "@typescript-eslint/eslint-plugin": "5.40.1",
     "@typescript-eslint/parser": "5.40.1",
     "autoprefixer": "10.4.12",
-    "concurrently": "7.4.0",
+    "concurrently": "7.5.0",
     "cross-env": "7.0.3",
     "eslint": "8.26.0",
     "eslint-config-next": "12.3.1",

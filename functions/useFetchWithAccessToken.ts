@@ -13,7 +13,7 @@ export function useFetchWithAccessToken() {
     const headers: Record<string, string> = {
         ...DefaultApiRequestHeader
     };
-    if (isAuthenticated) {
+    if (isAuthenticated && accessToken) {
         headers['Authorization'] = `Bearer ${accessToken}`;
     }
 

@@ -13,6 +13,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "preserve",
+    "jsxImportSource": "@emotion/react",
 
     /* Interop Constraints */
     "isolatedModules": true,                              /* Ensure that each file can be safely transpiled without relying on other imports. */

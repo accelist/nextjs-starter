@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import useSWR from 'swr';
 import { WithDefaultLayout } from '../../components/DefautLayout';
 import { Title } from '../../components/Title';
-import { useAuthorizedSwrFetcher } from '../../functions/useAuthorizedSwrFetcher';
 import { Page } from '../../types/Page';
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
 import { BackendApiUrl } from '../../functions/BackendApiUrl';
 import { Authorize } from '../../components/Authorize';
+import { useSwrFetcherWithAccessToken } from '../../functions/useSwrFetcherWithAccessToken';
 
 interface DataItem {
     type: string;
@@ -40,7 +40,7 @@ const Dashboard: React.FC = () => {
 
     // Because <Dashboard> is inside <Authorize> we can use the access token
     // to create an SWR Fetcher with Authorization Bearer header
-    const swrFetcher = useAuthorizedSwrFetcher();
+    const swrFetcher = useSwrFetcherWithAccessToken();
 
     const { data, error, isValidating } = useSWR<DataItem[]>(BackendApiUrl.test, swrFetcher);
 
@@ -71,7 +71,7 @@ const Dashboard: React.FC = () => {
                 }}
             />
             <pre><code>{JSON.stringify(selectedRowKeys)}</code></pre>
-            <p style={{ color: 'red' }}>
+            <p className='text-red-600'>
                 {error?.toString()}
             </p>
         </div>

@@ -1,5 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import 'antd/dist/antd.css';
-@import 'bootstrap/dist/css/bootstrap.css';
 @import 'nprogress/nprogress.css';
 @import '@fortawesome/fontawesome-svg-core/styles.css';
 

@@ -76,6 +76,11 @@ module.exports = {
         at react-dom.production.min.js:284:398
     */
     swcMinify: false,
+    compiler: {
+        emotion: {
+            sourceMap: true,
+        },
+    },
     async headers() {
         return [
             {

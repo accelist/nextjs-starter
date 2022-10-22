@@ -20,19 +20,21 @@
 
 - `AppSettings` API: Supports Runtime Environment Variables for Kubernetes deployment
 
-- Plug-and-play OpenID Connect integrations to standard providers. (Such as Keycloak, IdentityServer, OpenIddict, FusionAuth, etc.)
+- Plug-and-play OpenID Connect integrations to standard providers (Such as Keycloak, IdentityServer, OpenIddict, FusionAuth, etc.)
 
 - API Gateway for proxying HTTP requests to back-end web API bypassing CORS
 
 - Automatic progress bar during page navigation
 
-- Default `SwrFetcher` function based on `axios` included for `swr` library
-
-- `UseAuthorizedAxios` and `UseAuthorizedSwrFetcher` hooks for acquiring HTTP clients with Authorization Bearer header set
+- Convenient Fetch API wrapper and SWR Fetcher implementation
 
 - Enabled container builds on GitLab CI or GitHub CI
 
-- Batteries included: `jotai`, Bootstrap 5, `antd`, FontAwesome 5, `react-hook-form`
+- Enabled `className` intellisense in React components with Tailwind CSS
+
+- Enabled CSS-in-JS with Emotion
+
+- Batteries included: `jotai`, `antd`, `@headlessui/react`, FontAwesome 5, `react-hook-form`
 
 - Provide sane defaults for the most common security headers
 
@@ -46,7 +48,9 @@ Run `npm ci` in the project root folder, then `npm run dev`
 
 The web app should be accessible at http://localhost:3000
 
-To display ESLint errors in Visual Studio Code, install the official ESLint extension: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+To display ESLint errors in Visual Studio Code, install [the official ESLint extension by Microsoft](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
+
+To display Tailwind CSS intellisense in Visual Studio Code, install [the official Tailwind CSS Intellisense extension](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss).
 
 ## Project Structure
 
@@ -315,7 +319,7 @@ import React from "react";
 const MyLayout: React.FC = ({ children }) => {
     return (
         <React.Fragment>
-            <main className="container py-4">
+            <main>
                 {children}
             </main>
         </React.Fragment>
@@ -347,17 +351,61 @@ export default MyPage;
 
 > Read more about Per-Page Layouts: https://nextjs.org/docs/basic-features/layouts#per-page-layouts
 
+## Fetch API Wrapper
+
+This template ships with a lightweight, safe, sane, and opinionated wrapper around Fetch API which integrates with RFC 7807 Problem Details JSON API response.
+
+```ts
+const {
+    fetchGET,
+    fetchPOST,
+    fetchPUT,
+    fetchPATCH,
+    fetchDELETE
+} = useFetchWithAccessToken();
+
+const { data, error, problem } = await fetchGET<ProductListItem[]>('http://my-app.test/api/v1/products');
+
+const { data, error, problem } = await fetchPOST<CreateProductResponse>('http://my-app.test/api/v1/products', {
+    name: 'Software X'
+});
+```
+
+When `response.ok`, `data` will have the data type passed to the generic of the Fetch API.
+
+When not `response.ok`,
+
+- `problem` may contain an object describing a RFC 7807 Problem Details based on [ASP.NET Core `ValidationProblemDetails` class](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-6.0). 
+
+- When that is not the case, `problem` can be a generic JSON object (values accessible via index syntax: `problem['someData']`) or simply a `string` if the response body is not JSON (use `if (typeof problem === 'object')` to check).
+
+If an unhandled exception has occurred when performing the HTTP request, `error` will contain the caught exception.
+
+These Fetch APIs are configured with these request headers:
+
+```ts
+{
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache',
+    'Pragma': 'no-cache',
+    'Expires': '0',
+}
+```
+
+When the Fetch API is called inside the `<Authorize>` component context, it will automatically append `Authorization: Bearer ACCESS_TOKEN` header into the HTTP request.
+
 ## Default SWR Fetcher
 
-This template ships with an [SWR Fetcher implemented with the Axios library](https://swr.vercel.app/docs/data-fetching#axios). 
+This template ships with an default [SWR Fetcher](https://swr.vercel.app/docs/data-fetching#fetch) implementation based on above Fetch API wrapper.
 
 ```tsx
 import React from 'react';
 import useSWR from 'swr';
-import { DefaultSwrFetcher } from "../../functions/DefaultSwrFetcher";
+import { useSwrFetcherWithAccessToken } from '../../functions/useSwrFetcherWithAccessToken';
 
 const TestPage: React.FC = () => {
-    const { data, error } = useSWR('/api/demo/api/Values', DefaultSwrFetcher);
+    const swrFetcher = useSwrFetcherWithAccessToken();
+    const { data, error } = useSWR('/api/demo/api/Values', swrFetcher);
 
     return (
         <div>
@@ -369,16 +417,6 @@ const TestPage: React.FC = () => {
             </p>
         </div>
     );
-}
-```
-
-The default SWR fetcher is configured with these request headers:
-
-```ts
-{
-    'Cache-Control': 'no-cache',
-    'Pragma': 'no-cache',
-    'Expires': '0',
 }
 ```
 

@@ -14,6 +14,8 @@
   "ignorePatterns": [
     ".next",
     "next.config.js",
-    "public"
+    "public",
+    "postcss.config.js",
+    "tailwind.config.js"
   ]
 }

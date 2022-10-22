@@ -36,6 +36,7 @@ export interface UserInfo {
 export interface AuthorizationContextData {
     accessToken: string;
     user: UserInfo;
+    isAuthenticated: boolean;
 }
 
 export const AuthorizationContext = React.createContext<AuthorizationContextData>({
@@ -45,7 +46,8 @@ export const AuthorizationContext = React.createContext<AuthorizationContextData
         name: '',
         email: '',
         role: []
-    }
+    },
+    isAuthenticated: false
 });
 
 export function useAuthorizationContext() {

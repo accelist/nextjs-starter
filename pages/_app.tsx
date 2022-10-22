@@ -8,7 +8,7 @@ import { SessionProvider } from 'next-auth/react';
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
-import '../css/index.css';
+import '../styles/globals.css';
 import { SessionErrorHandler } from '../components/SessionErrorHandler';
 
 type NextPageWithLayout = NextPage & {

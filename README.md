@@ -373,7 +373,7 @@ When not `response.ok`,
 
 - `problem` may contain an object describing a RFC 7807 Problem Details based on [ASP.NET Core `ValidationProblemDetails` class](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-6.0). 
 
-- When that is not the case, `problem` can be a generic JSON object (values accessible via index syntax: `problem['someData']`) or simply a `string` if the response body is not JSON (use `typeof Problem === 'object'` to check).
+- When that is not the case, `problem` can be a generic JSON object (values accessible via index syntax: `problem['someData']`) or simply a `string` if the response body is not JSON (use `if (typeof problem === 'object')` to check).
 
 If an unhandled exception has occurred when performing the HTTP request, `error` will contain the caught exception.
 

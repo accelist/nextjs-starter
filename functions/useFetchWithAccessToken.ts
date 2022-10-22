@@ -12,12 +12,12 @@ export interface ResponseDetails<T> {
     data?: T;
 
     /**
-     * RFC 7807 Problem Details JSON response if not `response.ok`
+     * RFC 7807 Problem Details JSON response if not `response.ok` or a `string` if the response is not JSON. 
      */
     problem?: ProblemDetails | string;
 
     /**
-     * Exceptions thrown when performing the HTTP request.
+     * Exception thrown when performing the HTTP request.
      */
     error?: unknown;
 }
@@ -29,7 +29,7 @@ export interface ResponseDetails<T> {
  * @param init 
  * @returns `data` when `response.ok`, `problem` when not `response.ok`, and `error` when exception
  */
-async function fetchWrap<T>(url: RequestInfo | URL, init: RequestInit): Promise<ResponseDetails<T>> {
+export async function tryFetchJson<T>(url: RequestInfo | URL, init: RequestInit): Promise<ResponseDetails<T>> {
     try {
         const response = await fetch(url, init);
         if (response.ok) {
@@ -44,7 +44,7 @@ async function fetchWrap<T>(url: RequestInfo | URL, init: RequestInit): Promise<
             return {
                 problem: problem
             };
-        } catch (errNotJson) {
+        } catch (problemNotJson) {
             const responseBody = await response.text();
             return {
                 problem: responseBody
@@ -81,7 +81,7 @@ export function useFetchWithAccessToken() {
          * @returns `data` when `response.ok`, `problem` when not `response.ok`, and `error` when exception
          */
         fetchGET: function <T>(url: RequestInfo | URL) {
-            return fetchWrap<T>(url, {
+            return tryFetchJson<T>(url, {
                 method: 'GET',
                 headers: headers,
             });
@@ -95,7 +95,7 @@ export function useFetchWithAccessToken() {
          * @returns `data` when `response.ok`, `problem` when not `response.ok`, and `error` when exception
          */
         fetchPOST: function <T>(url: RequestInfo | URL, body: unknown = undefined) {
-            return fetchWrap<T>(url, {
+            return tryFetchJson<T>(url, {
                 method: 'POST',
                 headers: headers,
                 body: JSON.stringify(body),
@@ -110,7 +110,7 @@ export function useFetchWithAccessToken() {
          * @returns `data` when `response.ok`, `problem` when not `response.ok`, and `error` when exception
          */
         fetchPUT: function <T>(url: RequestInfo | URL, body: unknown = undefined) {
-            return fetchWrap<T>(url, {
+            return tryFetchJson<T>(url, {
                 method: 'PUT',
                 headers: headers,
                 body: JSON.stringify(body),
@@ -124,7 +124,7 @@ export function useFetchWithAccessToken() {
          * @returns `data` when `response.ok`, `problem` when not `response.ok`, and `error` when exception
          */
         fetchPATCH: function <T>(url: RequestInfo | URL, body: unknown = undefined) {
-            return fetchWrap<T>(url, {
+            return tryFetchJson<T>(url, {
                 method: 'PATCH',
                 headers: headers,
                 body: JSON.stringify(body),
@@ -138,7 +138,7 @@ export function useFetchWithAccessToken() {
          * @returns `data` when `response.ok`, `problem` when not `response.ok`, and `error` when exception
          */
         fetchDELETE: function <T>(url: RequestInfo | URL) {
-            return fetchWrap<T>(url, {
+            return tryFetchJson<T>(url, {
                 method: 'DELETE',
                 headers: headers,
             });

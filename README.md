@@ -360,9 +360,9 @@ const {
     fetchDELETE
 } = useFetchWithAccessToken();
 
-const { data, error, problem } = await fetchGET<ProductListItem[]>('http://my-app.accelist.com/api/v1/products');
+const { data, error, problem } = await fetchGET<ProductListItem[]>('http://my-app.test/api/v1/products');
 
-const { data, error, problem } = await fetchPOST<CreateProductResponse>('http://my-app.accelist.com/api/v1/products', {
+const { data, error, problem } = await fetchPOST<CreateProductResponse>('http://my-app.test/api/v1/products', {
     name: 'Software X'
 });
 ```

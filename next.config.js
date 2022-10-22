@@ -59,6 +59,7 @@ module.exports = {
     /*
         Disable swcMinify for now
         https://github.com/vercel/next.js/issues/40889
+        https://github.com/ant-design/ant-design/issues/38106
         
         index.js:235 
         

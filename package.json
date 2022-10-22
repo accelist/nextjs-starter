@@ -44,7 +44,6 @@
     "@fortawesome/react-fontawesome": "0.2.0",
     "@headlessui/react": "1.7.3",
     "antd": "4.23.6",
-    "axios": "0.27.2",
     "http-proxy": "1.18.1",
     "jotai": "1.8.6",
     "moment": "2.29.4",

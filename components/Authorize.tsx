@@ -43,7 +43,8 @@ export const Authorize: React.FC<{
 
     const ctx: AuthorizationContextData = {
         accessToken: getAccessToken(),
-        user: session.user as UserInfo
+        user: session.user as UserInfo,
+        isAuthenticated: true,
     };
 
     return (

@@ -63,6 +63,7 @@ export function useFetchWithAccessToken() {
 
         /**
          * Fetch a URL with PATCH method with JSON serialized request body and JSON response. 
+         * If method is called inside `<Authorize>` component context, will append Access Token to request header
          * @param url 
          * @param body 
          * @returns `data` when `response.ok`, `problem` when not `response.ok`, and `error` when exception

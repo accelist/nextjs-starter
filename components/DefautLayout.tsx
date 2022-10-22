@@ -4,7 +4,7 @@ import { Avatar, Button, Col, Drawer, Layout, Menu, MenuProps, Row } from "antd"
 import { faBars, faSignOut, faSignIn, faHome, faCubes, faUser, faUsers, faFlaskVial } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
-import { ReactCSS } from "../functions/ReactCSS";
+import { css } from '@emotion/react';
 import { useSession, signIn, signOut } from "next-auth/react";
 import nProgress from "nprogress";
 
@@ -13,53 +13,51 @@ const { Content, Sider } = Layout;
 const deepNavyBlue = '#001529';
 const logoHeight = 48;
 
-const styles = ReactCSS.create({
-    container: {
-        minHeight: '100vh'
-    },
-    sidebarLogo: {
+// https://emotion.sh/docs/best-practices
+const styles = {
+    sidebarLogo: css({
         height: logoHeight,
         padding: 8,
         margin: 16,
         color: 'white',
         background: '#333',
-    },
-    sidebar: {
+    }),
+    sidebar: css({
         backgroundColor: deepNavyBlue,
         paddingBottom: 96,
-    },
-    topbar: {
+    }),
+    topbar: css({
         backgroundColor: deepNavyBlue,
         paddingLeft: 32,
         paddingRight: 32,
         paddingBottom: 16,
         paddingTop: 16,
         alignItems: 'center',
-    },
-    topbarLogo: {
+    }),
+    topbarLogo: css({
         height: logoHeight,
         padding: 8,
         color: 'white',
         background: '#333',
-    },
-    content: {
+    }),
+    content: css({
         margin: 20,
         padding: 32,
         minHeight: 280,
         background: 'white'
-    },
-    avatarContainer: {
+    }),
+    avatarContainer: css({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         marginTop: 24
-    },
-    helloUser: {
+    }),
+    helloUser: css({
         color: 'white',
         marginTop: 16,
         marginBottom: 16
-    }
-});
+    })
+};
 
 const DefaultLayout: React.FC<{
     children: React.ReactNode
@@ -186,11 +184,11 @@ const DefaultLayout: React.FC<{
     function renderAvatar() {
         if (status === 'authenticated') {
             return (
-                <div style={styles.avatarContainer}>
+                <div css={styles.avatarContainer}>
                     <div>
                         <Avatar size={64} icon={<FontAwesomeIcon icon={faUser}></FontAwesomeIcon>} />
                     </div>
-                    <div style={styles.helloUser}>
+                    <div css={styles.helloUser}>
                         Hello, {displayUserName}
                     </div>
                 </div>
@@ -201,14 +199,14 @@ const DefaultLayout: React.FC<{
     }
 
     return (
-        <Layout style={styles.container}>
+        <Layout className="min-h-screen">
             <Head>
                 <meta key="meta-charset" charSet="utf-8" />
                 <meta key="meta-viewport" name="viewport" content="width=device-width, initial-scale=1" />
                 <link key="favicon" rel="icon" href="/favicon.ico" />
             </Head>
-            <Sider width={240} breakpoint="lg" collapsedWidth={0} trigger={null} style={styles.sidebar}>
-                <div style={styles.sidebarLogo}>Logo</div>
+            <Sider width={240} breakpoint="lg" collapsedWidth={0} trigger={null} css={styles.sidebar}>
+                <div css={styles.sidebarLogo}>Logo</div>
                 {renderAvatar()}
                 <Menu theme="dark" mode="vertical" items={getMenu()}
                     selectedKeys={selected} onSelect={e => setSelected(e.selectedKeys)} />
@@ -218,19 +216,19 @@ const DefaultLayout: React.FC<{
                     selectedKeys={selected} onSelect={e => setSelected(e.selectedKeys)} />
             </Drawer>
             <Layout>
-                <Row style={styles.topbar} className='flex lg:hidden'>
+                <Row css={styles.topbar} className='flex lg:hidden'>
                     <Col flex={1}>
                         <Button onClick={() => setDrawerOpen(true)} type='primary'>
                             <FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
                         </Button>
                     </Col>
-                    <Col flex={1} style={styles.topbarLogo}>
+                    <Col flex={1} css={styles.topbarLogo}>
                         Logo
                     </Col>
                     <Col flex={1}>
                     </Col>
                 </Row>
-                <Content style={styles.content}>
+                <Content css={styles.content}>
                     {children}
                 </Content>
             </Layout>

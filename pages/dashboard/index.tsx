@@ -71,7 +71,7 @@ const Dashboard: React.FC = () => {
                 }}
             />
             <pre><code>{JSON.stringify(selectedRowKeys)}</code></pre>
-            <p style={{ color: 'red' }}>
+            <p className='text-red-600'>
                 {error?.toString()}
             </p>
         </div>

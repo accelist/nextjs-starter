@@ -355,7 +355,7 @@ export default MyPage;
 
 ## Fetch API Wrapper
 
-This template ships with a lightweight, sane-but-opinionated wrapper around Fetch API which integrates with RFC 7807 Problem Details JSON API response.
+This template ships with a lightweight, sane-but-opinionated wrapper around [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) which integrates with [RFC 7807 Problem Details](https://www.rfc-editor.org/rfc/rfc7807).
 
 ```ts
 const {
@@ -371,9 +371,21 @@ const { data, error, problem } = await fetchGET<ProductListItem[]>('http://my-ap
 const { data, error, problem } = await fetchPOST<CreateProductResponse>('http://my-app.test/api/v1/products', {
     name: 'Software X'
 });
+
+// tryFetchJson is a lower-level fetch wrapper used by above functions
+const { data, error, problem } = await tryFetchJson<CityListItem[]>('http://my-app.test/api/v1/cities', {
+    method: 'GET',
+    headers: {
+        ...DefaultApiRequestHeader,
+    },
+});
 ```
 
-When `response.ok`, `data` will have the data type passed to the generic of the Fetch API.
+> :warning: `useFetchWithAccessToken` is a hook and it can ONLY be called from the top-level code block of a React functional component. https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level
+
+The wrapper serializes HTTP request body (second parameter of POST / PUT / PATCH methods) as JSON and expects strictly JSON response from the Web API.
+
+When `response.ok` (status in the range 200–299), `data` will have the data type passed to the generic of the Fetch API.
 
 When not `response.ok`,
 
@@ -381,9 +393,9 @@ When not `response.ok`,
 
 - When that is not the case, `problem` can be a generic JSON object (values accessible via index syntax: `problem['someData']`) or simply a `string` if the response body is not JSON (use `if (typeof problem === 'object')` to check).
 
-Unlike Fetch API, this wrapper will not throw. If an unhandled exception has occurred when performing the HTTP request, `error` will contain the caught exception.
+Unlike Fetch API, these wrappers will not throw. If an unhandled exception has occurred when performing the HTTP request, `error` will contain the caught exception.
 
-These Fetch APIs are configured with these request headers:
+The functions returned from `useFetchWithAccessToken` use these default HTTP request headers:
 
 ```ts
 {
@@ -394,49 +406,67 @@ These Fetch APIs are configured with these request headers:
 }
 ```
 
-When the Fetch API is called inside the `<Authorize>` component context, it will automatically append `Authorization: Bearer ACCESS_TOKEN` header into the HTTP request.
+When the function is called inside the `<Authorize>` component context, it will automatically append `Authorization: Bearer ACCESS_TOKEN` header into the HTTP request.
 
-> Contrary to the function name, **it is safe to use `useFetchWithAccessToken` outside `<Authorize>` component context.**
+> :bulb: Contrary to the function name, **it is safe to use `useFetchWithAccessToken` outside `<Authorize>` component context.**
+
+## Sending Files and Form Data
+
+If advanced solution is required, such as sending non-JSON or [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) request bodies [or accepting non-JSON responses](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_streams#consuming_a_fetch_as_a_stream), the above Fetch API wrappers cannot be used. (Use [the base Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/fetch) or [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instead)
+
+```ts
+// Example: PUT File to AWS S3 presigned URL
+var xhr = new XMLHttpRequest();
+xhr.open('PUT', presignedUrl, true);
+xhr.setRequestHeader('Content-Type', file.type);
+xhr.onload = () => {
+    if (xhr.status === 200) {
+        // success
+    } else {
+        // problem
+    }
+};
+xhr.onerror = () => {
+    // error
+};
+xhr.upload.onprogress = (e) => {
+    if (e.lengthComputable) {
+        var percent = Math.round((e.loaded / e.total) * 100)
+        // Update UI progress bar here
+        // Use lodash.throttle to control state change frequency
+        // https://lodash.com/docs/4.17.15#throttle
+        // For example: const updateProgressBar = useCallback(throttle(setProgressBar, 300), []);
+    }
+};
+// `file` is a File object
+// https://developer.mozilla.org/en-US/docs/Web/API/File
+xhr.send(file);
+```
 
 ## Default SWR Fetcher
 
 This template ships with a default [SWR Fetcher](https://swr.vercel.app/docs/data-fetching#fetch) implementation based on above Fetch API wrapper.
 
-```tsx
-import React from 'react';
-import useSWR from 'swr';
-import { useSwrFetcherWithAccessToken } from '../../functions/useSwrFetcherWithAccessToken';
-
-const TestPage: React.FC = () => {
-    const swrFetcher = useSwrFetcherWithAccessToken();
-    const { data, error } = useSWR('/api/demo/api/Values', swrFetcher);
-
-    return (
-        <div>
-            <p>
-                {JSON.stringify(data)}
-            </p>
-            <p>
-                {error?.toString()}
-            </p>
-        </div>
-    );
-}
+```ts
+const swrFetcher = useSwrFetcherWithAccessToken();
+const { data, error } = useSWR('/api/demo/api/Values', swrFetcher);
 ```
 
-> Contrary to the function name, **it is safe to use `useSwrFetcherWithAccessToken` outside `<Authorize>` component context.**
+> :warning: `useSwrFetcherWithAccessToken` and `useSWR` are hooks and they can ONLY be called from the top-level code block of a React functional component. https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level
+
+> :bulb: Contrary to the function name, **it is safe to use `useSwrFetcherWithAccessToken` outside `<Authorize>` component context.**
 
 ## API Gateway
 
-For security reasons, HTTP requests initiated from a browser is restricted to the same domain ([Same-Origin Policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)) and the same protocol (HTTPS requests must be performed from web pages with HTTPS URL).
+HTTP requests initiated from a browser is restricted to the same domain ([Same-Origin Policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)) and the same protocol (HTTPS requests must be performed from web pages with HTTPS URL).
 
 > For example, `https://front-end.app` accessing `http://back-end.app/api/data` will fail by default.
 
 To ease development against microservices, this template ships an implementation of API Gateway which allows bypassing Same-Origin Policy by proxying HTTP requests through the Next.js server. The API Gateway is implemented using [API Routes for Next.js](https://nextjs.org/docs/api-routes/introduction).
 
-> The content `/pages/api/demo/[...apiGateway].ts` file: 
+> The content `/pages/api/be/[...apiGateway].ts` file: 
 
-```tsx
+```ts
 import Proxy from 'http-proxy';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { AppSettings } from '../../../functions/AppSettings';
@@ -444,25 +474,30 @@ import { AppSettings } from '../../../functions/AppSettings';
 // Great way to avoid using CORS and making API calls from HTTPS pages to back-end HTTP servers
 // Recommendation for projects in Kubernetes cluster: set target to Service DNS name instead of public DNS name
 const server = Proxy.createProxyServer({
-    target: AppSettings.current.backendHost,
+    target: AppSettings.current.backendApiHost,
+    // changeOrigin to support name-based virtual hosting
     changeOrigin: true,
-    xfwd: true,
+    xfwd: true, 
     // https://github.com/http-party/node-http-proxy#proxying-websockets
     ws: false,
 });
 
 server.on('proxyReq', (proxyReq, req) => {
-    // Proxy requests from /api/demo/... to http://my-web-api.com/...
-    const urlRewrite = req.url?.replace(new RegExp('^/api/demo'), '');
+    // Proxy requests from /api/be/... to http://my-web-api.com/...
+    const urlRewrite = req.url?.replace(new RegExp('^/api/be'), '');
     if (urlRewrite) {
         proxyReq.path = urlRewrite;
     } else {
         proxyReq.path = '/';
     }
-    // console.log('Proxying:', req.url, '-->', AppSettings.current.backendHost + urlRewrite);
+    proxyReq.removeHeader('cookie');
+    // console.log(JSON.stringify(proxyReq.getHeaders(), null, 4));
+    console.log('HTTP Proxy:', req.url, '-->', AppSettings.current.backendApiHost + urlRewrite);
 });
 
 const apiGateway = async (req: NextApiRequest, res: NextApiResponse) => {
+    const startTime = new Date().getTime();
+
     server.web(req, res, {}, (err) => {
         if (err instanceof Error) {
             throw err;
@@ -470,6 +505,11 @@ const apiGateway = async (req: NextApiRequest, res: NextApiResponse) => {
 
         throw new Error(`Failed to proxy request: '${req.url}'`);
     });
+
+    res.on('finish', () => {
+        const endTime = new Date().getTime();
+        console.log(`HTTP Proxy: Finished ${res.req.url} in ${endTime - startTime}ms `);
+    })
 }
 
 export default apiGateway;

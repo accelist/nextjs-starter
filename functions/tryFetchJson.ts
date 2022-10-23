@@ -27,7 +27,6 @@ import { ProblemDetails } from "../types/ProblemDetails";
  * @param init
  * @returns `data` when `response.ok`, `problem` when not `response.ok`, and `error` when exception
  */
-
 export async function tryFetchJson<T>(url: RequestInfo | URL, init: RequestInit): Promise<ResponseDetails<T>> {
     try {
         const response = await fetch(url, init);

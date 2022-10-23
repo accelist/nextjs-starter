@@ -13,6 +13,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "preserve",
+
+    // https://emotion.sh/docs/typescript#emotionreact
     "jsxImportSource": "@emotion/react",
 
     /* Interop Constraints */

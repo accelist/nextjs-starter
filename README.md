@@ -30,7 +30,7 @@
 
 - Enabled container builds on GitLab CI or GitHub CI
 
-- Enabled `className` intellisense in React components with Tailwind CSS
+- Enabled `className` IntelliSense in React components with Tailwind CSS
 
 - Enabled CSS-in-JS with Emotion
 
@@ -50,7 +50,7 @@ The web app should be accessible at http://localhost:3000
 
 To display ESLint errors in Visual Studio Code, install [the official ESLint extension by Microsoft](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
 
-To display Tailwind CSS intellisense in Visual Studio Code, install [the official Tailwind CSS Intellisense extension](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss).
+To display Tailwind CSS IntelliSense in Visual Studio Code, install [the official Tailwind CSS IntelliSense extension](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss).
 
 ## Project Structure
 
@@ -58,13 +58,17 @@ To display Tailwind CSS intellisense in Visual Studio Code, install [the officia
 
 Place reusable React components in this folder.
 
-It is recommended to write newer components as [Functional Components](https://reactjs.org/docs/components-and-props.html) (with [Hooks](https://reactjs.org/docs/hooks-intro.html)) instead of Class Components for simplicity.
+It is recommended to write newer components as [Functional Components](https://reactjs.org/docs/components-and-props.html) (with [Hooks](https://reactjs.org/docs/hooks-intro.html)) instead of Class Components.
 
-### `css` Folder
+### `styles` Folder
 
-Place plain `.css` files in this folder.
+Place plain `.css` files in this folder and import them from `globals.css` to apply them as Global Stylesheet. These styles will apply to all pages and components in your application.
 
-If there are [reusable JS style objects](https://reactjs.org/docs/dom-elements.html#style) (CSS-in-JS), it is recommended to place them in `components` folder instead.
+> Due to the global nature of stylesheets, and to avoid conflicts, they may not be imported from pages / components.
+
+[Reusable CSS-in-JS objects](https://emotion.sh/docs/best-practices) should be placed in `components` folder instead because they export TypeScript objects.
+
+[Component-Level CSS Modules](https://nextjs.org/docs/basic-features/built-in-css-support#adding-component-level-css) specific to certain components or pages are recommended to be placed next to the corresponding `.tsx` files instead. (e.g. `components/Button.module.css` next to `components/Button.tsx`)
 
 ### `functions` Folder
 

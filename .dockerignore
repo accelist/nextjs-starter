@@ -1,8 +1,9 @@
 .git
+.github
+.husky
 .next
 .vscode
 node_modules
 
 .env.*
 .env
-.gitlab-ci.yml

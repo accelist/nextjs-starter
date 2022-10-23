@@ -28,7 +28,7 @@
 
 - Convenient Fetch API wrapper and SWR Fetcher implementation
 
-- Enabled container builds on GitLab CI or GitHub CI
+- Enabled container builds on GitHub Action
 
 - Enabled `className` IntelliSense in React components with Tailwind CSS
 
@@ -58,7 +58,7 @@ To display Tailwind CSS IntelliSense in Visual Studio Code, install [the officia
 
 Place reusable React components in this folder.
 
-It is recommended to write newer components as [Functional Components](https://reactjs.org/docs/components-and-props.html) (with [Hooks](https://reactjs.org/docs/hooks-intro.html)) instead of Class Components.
+It is recommended to develop using [function components](https://reactjs.org/docs/components-and-props.html) with [hooks](https://reactjs.org/docs/hooks-intro.html) instead of class components.
 
 ### `styles` Folder
 
@@ -100,7 +100,7 @@ Next.js uses the `App` component to initialize pages which can be overridden to 
 
 - [Add global CSS](https://nextjs.org/docs/basic-features/built-in-css-support#adding-a-global-stylesheet)
 
-This template ships with `_app.tsx` file which implements some of the above mentioned behaviors, including additional features:
+This template ships with `_app.tsx` file which implements some of the above-mentioned behaviors, including additional features:
 
 - Progress bar on navigation
 
@@ -145,7 +145,7 @@ The `package.json` file is a manifest for the project. It is where `npm` store t
 
 > Read more about `package.json`: https://docs.npmjs.com/cli/v8/configuring-npm/package-json https://nodejs.dev/learn/the-package-json-guide
 
-`package-lock.json` is automatically generated for any operations where npm modifies either the `node_modules` tree, or `package.json`. It describes the exact tree that was generated, such that subsequent installs are able to generate identical trees, regardless of intermediate dependency updates. This file is intended to be committed into source repositories.
+`package-lock.json` is automatically generated for any operations where npm modifies either the `node_modules` tree, or `package.json`. It describes the exact tree that was generated, such that subsequent installs can generate identical trees, regardless of intermediate dependency updates. This file is intended to be committed into source repositories.
 
 > Read more about `package.lock.json`: https://docs.npmjs.com/cli/v8/configuring-npm/package-lock-json https://nodejs.dev/learn/the-package-lock-json-file
 
@@ -381,7 +381,7 @@ const { data, error, problem } = await tryFetchJson<CityListItem[]>('http://my-a
 });
 ```
 
-> :warning: `useFetchWithAccessToken` is a hook and it can ONLY be called from the top-level code block of a React functional component. https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level
+> :warning: `useFetchWithAccessToken` is a hook and it can ONLY be called from the top-level code block of React function components. https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level
 
 The wrapper serializes HTTP request body (second parameter of POST / PUT / PATCH methods) as JSON and expects strictly JSON response from the Web API.
 
@@ -452,13 +452,13 @@ const swrFetcher = useSwrFetcherWithAccessToken();
 const { data, error } = useSWR('/api/demo/api/Values', swrFetcher);
 ```
 
-> :warning: `useSwrFetcherWithAccessToken` and `useSWR` are hooks and they can ONLY be called from the top-level code block of a React functional component. https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level
+> :warning: `useSwrFetcherWithAccessToken` and `useSWR` are hooks and they can ONLY be called from the top-level code block of function components. https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level
 
 > :bulb: Contrary to the function name, **it is safe to use `useSwrFetcherWithAccessToken` outside `<Authorize>` component context.**
 
 ## API Gateway
 
-HTTP requests initiated from a browser is restricted to the same domain ([Same-Origin Policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)) and the same protocol (HTTPS requests must be performed from web pages with HTTPS URL).
+HTTP requests initiated from a browser are restricted to the same domain ([Same-Origin Policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)) and the same protocol (HTTPS requests must be performed from web pages with HTTPS URL).
 
 > For example, `https://front-end.app` accessing `http://back-end.app/api/data` will fail by default.
 
@@ -582,9 +582,9 @@ To enrich the React development experience, install the official [React Develope
 
 This project template ships with GitHub Action workflow for Docker Images enabled. Example: https://github.com/accelist/nextjs-starter/actions
 
-When a commit is pushed or a merge request is performed against the `master` or `main` branch, a container image will be build. If a commit is pushed, then the container image will also be pushed into the GitHub Container Registry of the project as `master` or `main` tag.
+When a commit is pushed or a merge request is performed against the `master` or `main` branch, a container image will be built. If a commit is pushed, then the container image will also be pushed into the GitHub Container Registry of the project as `master` or `main` tag.
 
-Upon tagging a commit (if using GitHub web, go to [Releases](https://github.com/accelist/nextjs-starter/releases) page then [draft a new release](https://github.com/accelist/nextjs-starter/releases/new)) with version number string such as `v1.0.0` (notice the mandatory `v` prefix), a new container image will be build and tagged as the version number (in this example, resulting in `1.0.0` image tag, notice the lack of `v` prefix) and `latest`.
+Upon tagging a commit (if using GitHub web, go to [Releases](https://github.com/accelist/nextjs-starter/releases) page then [draft a new release](https://github.com/accelist/nextjs-starter/releases/new)) with version number string such as `v1.0.0` (notice the mandatory `v` prefix), a new container image will be built and tagged as the version number (in this example, resulting in `1.0.0` image tag, notice the lack of `v` prefix) and `latest`.
 
 The container images are available via the project [GitHub Container Registry](https://github.com/accelist/nextjs-starter/pkgs/container/nextjs-starter). For example: 
 
@@ -596,27 +596,9 @@ If working with private repository (hence private container registry), [create a
 
 > Read more: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
 
-## GitLab CI Integration
-
-This project template ships with GitLab CI pipeline for container builds enabled. Example: https://gitlab.com/ryanelian/nextjs-starter/-/pipelines
-
-When a commit is pushed or a merge request is performed against the `master` or `main` branch, a container image will be build. If a commit is pushed, then the container image will also be pushed into the GitLab Container Registry of the project as `master` or `main` tag.
-
-Upon tagging a commit (if using GitLab web, go to [Tags](https://gitlab.com/ryanelian/nextjs-starter/-/tags) page then [create a new tag](https://gitlab.com/ryanelian/nextjs-starter/-/tags/new)) with version number string such as `1.0.0`, a new container image will be build and tagged as the version number (in this example, resulting in identical `1.0.0` image tag) and `latest`.
-
-The container images are available via the project [GitLab Container Registry](https://gitlab.com/ryanelian/nextjs-starter/container_registry). For example: 
-
-```sh
-docker pull registry.gitlab.com/ryanelian/nextjs-starter:master
-```
-
-If working with private repository (hence private container registry), [create a new GitLab personal access token](https://gitlab.com/-/profile/personal_access_tokens) with `read_registry` scope to allow downloading container images from Kubernetes cluster.
-
-> Read more: https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
-
 ## Deploying Container to Kubernetes
 
-> TODO add guide for adding GitHub / GitLab personal access token to Kubernetes for pulling from private registry: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+> TODO add guide for adding GitHub access token to Kubernetes for pulling from private registry: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 
 > TODO add Deployment and Services `yaml` here with Environment Variables
 

@@ -355,7 +355,7 @@ export default MyPage;
 
 ## Fetch API Wrapper
 
-This template ships with a lightweight, safe, sane, and opinionated wrapper around Fetch API which integrates with RFC 7807 Problem Details JSON API response.
+This template ships with a lightweight, sane-but-opinionated wrapper around Fetch API which integrates with RFC 7807 Problem Details JSON API response.
 
 ```ts
 const {
@@ -381,7 +381,7 @@ When not `response.ok`,
 
 - When that is not the case, `problem` can be a generic JSON object (values accessible via index syntax: `problem['someData']`) or simply a `string` if the response body is not JSON (use `if (typeof problem === 'object')` to check).
 
-If an unhandled exception has occurred when performing the HTTP request, `error` will contain the caught exception.
+Unlike Fetch API, this wrapper will not throw. If an unhandled exception has occurred when performing the HTTP request, `error` will contain the caught exception.
 
 These Fetch APIs are configured with these request headers:
 
@@ -396,7 +396,7 @@ These Fetch APIs are configured with these request headers:
 
 When the Fetch API is called inside the `<Authorize>` component context, it will automatically append `Authorization: Bearer ACCESS_TOKEN` header into the HTTP request.
 
-> Contrary to the function name, **it is completely safe** to use `useFetchWithAccessToken` outside `<Authorize>` component context.
+> Contrary to the function name, **it is safe to use `useFetchWithAccessToken` outside `<Authorize>` component context.**
 
 ## Default SWR Fetcher
 
@@ -424,7 +424,7 @@ const TestPage: React.FC = () => {
 }
 ```
 
-> Contrary to the function name, **it is completely safe** to use `useSwrFetcherWithAccessToken` outside `<Authorize>` component context.
+> Contrary to the function name, **it is safe to use `useSwrFetcherWithAccessToken` outside `<Authorize>` component context.**
 
 ## API Gateway
 

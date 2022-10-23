@@ -106,8 +106,6 @@ This template ships with `_app.tsx` file which implements some of the above ment
 
 - OpenID Connect provider configuration
 
-- Opting-out from [Automatic Static Optimization](https://nextjs.org/docs/advanced-features/automatic-static-optimization) to allow the use of [Runtime Environment Variables](https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration) in container-based deployments
-
 > Read more about custom `App`: https://nextjs.org/docs/advanced-features/custom-app
 
 ### `public` Folder

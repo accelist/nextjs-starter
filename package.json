@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@types/http-proxy": "^1.17.9",
-    "@types/node": "^18.11.3",
+    "@types/node": "^18.11.4",
     "@types/nprogress": "^0.2.0",
     "@types/react": "^18.0.21",
     "@typescript-eslint/eslint-plugin": "5.40.1",

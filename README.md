@@ -6,9 +6,7 @@
 
 - Pure Next.js: Zero framework customization
 
-- TypeScript + ESLint configured
-
-- Type-check and lint as you type!
+- TypeScript + ESLint configured: type-check and lint as you type!
 
 - Visual Studio Code breakpoint and debugging configured
 
@@ -30,11 +28,23 @@
 
 - Enabled container builds on GitHub Action
 
-- Enabled `className` IntelliSense in React components with Tailwind CSS
+- Batteries included:
 
-- Enabled CSS-in-JS with Emotion
+    - Enterprise-level React components by [Ant Design](https://ant.design/components/overview/)
 
-- Batteries included: `jotai`, `antd`, `@headlessui/react`, FontAwesome 5, `react-hook-form`
+    - Thousands of [utility classes](https://tailwind.build/classes) powered by Tailwind CSS with `className` IntelliSense in React components
+
+    - [Headless UI](https://headlessui.com/) React components designed to integrate beautifully with Tailwind CSS
+
+    - CSS-in-JS with [Emotion React](https://emotion.sh/docs/introduction#react)
+
+    - Simple atomic React state management using [Jotai](https://jotai.org/)
+    
+    - Thousands of icons by [FontAwesome 6](https://fontawesome.com/search?o=r&m=free)
+
+    - TypeScript object schema validation with [Zod](https://zod.dev/)
+
+    - Simple form validation with [React Hook Form](https://react-hook-form.com/get-started), designed to be [integrated with Ant Design](https://react-hook-form.com/get-started#IntegratingControlledInputs) and [Zod](https://react-hook-form.com/get-started#SchemaValidation)
 
 - Provide sane defaults for the most common security headers
 
@@ -62,7 +72,7 @@ It is recommended to develop using [function components](https://reactjs.org/doc
 
 ### `styles` Folder
 
-Place plain `.css` files in this folder and import them from `globals.css` to apply them as Global Stylesheet. These styles will apply to all pages and components in your application.
+Place plain `.css` files in this folder and import them from `globals.css` to apply them as Global Stylesheet. These styles will apply to all pages and components.
 
 > Due to the global nature of stylesheets, and to avoid conflicts, they may not be imported from pages / components.
 

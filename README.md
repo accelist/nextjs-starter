@@ -251,7 +251,7 @@ For this reason, [Runtime Configuration](https://nextjs.org/docs/api-reference/n
 This project template ships [`AppSettings`](https://github.com/accelist/nextjs-starter/blob/master/functions/AppSettings.ts) API as a high-level abstraction of the runtime Environment Variables:
 
 ```
-Environment Variables --> next.config.js --> AppSettings
+Environment Variables --> appsettings.js --> next.config.js --> AppSettings
 ``` 
 
 ### Environment Variables
@@ -266,21 +266,20 @@ The values of Environment Variables are sourced differently depending on how the
 
 > Read more about Environment Variables in Docker: https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file
 
-### Add Environment Variables to `next.config.js`
+### Add Environment Variables to `appsettings.js`
 
-To register Environment Variables into the app, open `next.config.js` and modify the `serverRuntimeConfig` field.
+```js
+// appsettings.js
 
-The Environment Variables will only be available on the server-side code. (in `getServerSideProps` or in API routes)
-
-For example:
-
-```ts
-{
-    serverRuntimeConfig: {
-        myEnv: process.env['MY_ENVIRONMENT_VARIABLE'],
-    },
-}
+module.exports = {
+    backendApiHost: process.env['BACKEND_API_HOST'] ?? '',
+    oidcIssuer: process.env['OIDC_ISSUER'] ?? '',
+    oidcClientId: process.env['OIDC_CLIENT_ID'] ?? '',
+    oidcScope: process.env['OIDC_SCOPE'] ?? '',
+};
 ```
+
+The Environment Variables added in `appsettings.js` will be added to the `serverRuntimeConfig` field in `next.config.js` file and are only available on the server-side code. (in `getServerSideProps` or in API routes)
 
 > Read more for explanation about this behavior: https://www.saltycrane.com/blog/2021/04/buildtime-vs-runtime-environment-variables-nextjs-docker/
 

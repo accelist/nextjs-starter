@@ -44,17 +44,13 @@ function getSecurityHeaders(isProd) {
 
 const isProd = process.env['NODE_ENV'] === 'production';
 
-module.exports = {
+/** @type { import('next').NextConfig } */
+const nextConfig = {
     // add environment variables accessible via AppSettings here:
     // visible only by server-side Next.js (secrets)
     // if accessing variables required in browser-side code, use getServerSideProps
     // https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props
-    serverRuntimeConfig: {
-        backendApiHost: process.env['BACKEND_API_HOST'],
-        oidcIssuer: process.env['OIDC_ISSUER'],
-        oidcClientId: process.env['OIDC_CLIENT_ID'],
-        oidcScope: process.env['OIDC_SCOPE'],
-    },
+    serverRuntimeConfig: require('./appsettings'),
     productionBrowserSourceMaps: true,
     /*
         Disable swcMinify for now
@@ -91,4 +87,6 @@ module.exports = {
             },
         ]
     },
-}
+};
+
+module.exports = nextConfig;

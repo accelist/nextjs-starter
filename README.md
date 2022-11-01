@@ -34,8 +34,6 @@
 
     - Thousands of [utility classes](https://tailwind.build/classes) powered by Tailwind CSS with `className` IntelliSense in React components
 
-    - [Headless UI](https://headlessui.com/) React components designed to integrate beautifully with Tailwind CSS
-
     - CSS-in-JS with [Emotion React](https://emotion.sh/docs/introduction#react)
 
     - Simple atomic React state management using [Jotai](https://jotai.org/)

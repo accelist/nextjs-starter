@@ -1,63 +1,13 @@
 import React, { useState } from "react";
 import Head from 'next/head';
-import { Avatar, Button, Col, Drawer, Layout, Menu, MenuProps, Row } from "antd";
+import { Avatar, Button, Drawer, Layout, Menu, MenuProps } from "antd";
 import { faBars, faSignOut, faSignIn, faHome, faCubes, faUser, faUsers, faFlaskVial } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
-import { css } from '@emotion/react';
 import { useSession, signIn, signOut } from "next-auth/react";
 import nProgress from "nprogress";
 
 const { Content, Sider } = Layout;
-
-const deepNavyBlue = '#001529';
-const logoHeight = 48;
-
-// https://emotion.sh/docs/best-practices
-const styles = {
-    sidebarLogo: css({
-        height: logoHeight,
-        padding: 8,
-        margin: 16,
-        color: 'white',
-        background: '#333',
-    }),
-    sidebar: css({
-        backgroundColor: deepNavyBlue,
-        paddingBottom: 96,
-    }),
-    topbar: css({
-        backgroundColor: deepNavyBlue,
-        paddingLeft: 32,
-        paddingRight: 32,
-        paddingBottom: 16,
-        paddingTop: 16,
-        alignItems: 'center',
-    }),
-    topbarLogo: css({
-        height: logoHeight,
-        padding: 8,
-        color: 'white',
-        background: '#333',
-    }),
-    content: css({
-        margin: 20,
-        padding: 32,
-        minHeight: 280,
-        background: 'white'
-    }),
-    avatarContainer: css({
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginTop: 24
-    }),
-    helloUser: css({
-        color: 'white',
-        marginTop: 16,
-        marginBottom: 16
-    })
-};
 
 const DefaultLayout: React.FC<{
     children: React.ReactNode
@@ -184,11 +134,11 @@ const DefaultLayout: React.FC<{
     function renderAvatar() {
         if (status === 'authenticated') {
             return (
-                <div css={styles.avatarContainer}>
+                <div className="flex flex-col items-center mt-6">
                     <div>
                         <Avatar size={64} icon={<FontAwesomeIcon icon={faUser}></FontAwesomeIcon>} />
                     </div>
-                    <div css={styles.helloUser}>
+                    <div className="my-4 text-white">
                         Hello, {displayUserName}
                     </div>
                 </div>
@@ -205,10 +155,10 @@ const DefaultLayout: React.FC<{
                 <meta key="meta-viewport" name="viewport" content="width=device-width, initial-scale=1" />
                 <link key="favicon" rel="icon" href="/favicon.ico" />
             </Head>
-            <Sider width={240} breakpoint="lg" collapsedWidth={0} trigger={null} css={styles.sidebar}>
-                <div css={styles.sidebarLogo}>Logo</div>
+            <Sider width={240} className="pb-24 bg-sidebar hidden lg:block">
+                <div className="h-12 p-2 m-4 text-white bg-slate-600">Logo</div>
                 {renderAvatar()}
-                <Menu theme="dark" mode="vertical" items={getMenu()}
+                <Menu theme="dark" mode="vertical" items={getMenu()} className="main-menu"
                     selectedKeys={selected} onSelect={e => setSelected(e.selectedKeys)} />
             </Sider>
             <Drawer placement="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
@@ -216,19 +166,18 @@ const DefaultLayout: React.FC<{
                     selectedKeys={selected} onSelect={e => setSelected(e.selectedKeys)} />
             </Drawer>
             <Layout>
-                <Row css={styles.topbar} className='flex lg:hidden'>
-                    <Col flex={1}>
+                <div className='grid grid-cols-3 lg:hidden bg-sidebar px-8 py-4 items-center'>
+                    <div>  
                         <Button onClick={() => setDrawerOpen(true)} type='primary'>
                             <FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
                         </Button>
-                    </Col>
-                    <Col flex={1} css={styles.topbarLogo}>
+                    </div>
+                    <div className="h-12 p-2 text-white bg-slate-600">
                         Logo
-                    </Col>
-                    <Col flex={1}>
-                    </Col>
-                </Row>
-                <Content css={styles.content}>
+                    </div>
+                    <div></div>
+                </div>
+                <Content className="m-5 p-8 bg-white">
                     {children}
                 </Content>
             </Layout>

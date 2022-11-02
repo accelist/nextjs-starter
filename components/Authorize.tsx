@@ -1,19 +1,8 @@
-import { css } from "@emotion/react";
 import { Spin } from "antd";
 import { useSession, signIn } from "next-auth/react";
 import nProgress from "nprogress";
 import React from "react";
 import { AuthorizationContext, AuthorizationContextData, UserInfo } from "../functions/AuthorizationContext";
-
-const styles = {
-    loadingAuthenticationLoader: css({
-        width: '100%',
-        height: 600,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-    })
-}
 
 export const Authorize: React.FC<{
     children: React.ReactNode;
@@ -40,7 +29,7 @@ export const Authorize: React.FC<{
 
     if (status !== 'authenticated') {
         return (
-            <div css={styles.loadingAuthenticationLoader}>
+            <div className="w-full flex justify-center items-center h-[600px]">
                 <Spin size="large" tip="Loading Authentication..."></Spin>
             </div>
         )

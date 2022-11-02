@@ -267,8 +267,6 @@ The values of Environment Variables are sourced differently depending on how the
 ### Add Environment Variables to `appsettings.js`
 
 ```js
-// appsettings.js
-
 module.exports = {
     backendApiHost: process.env['BACKEND_API_HOST'] ?? '',
     oidcIssuer: process.env['OIDC_ISSUER'] ?? '',
@@ -312,7 +310,9 @@ export async function getServerSideProps() {
 
 ```
 
-> Environment Variables have `string` data type
+> :warning: Doing this will expose the environment variable to the browser / end-user. Exercise caution.
+
+> :bulb: Sensitive environment variables should only be used as part of a Web API, either in the back-end project (e.g. ASP.NET Core) or in the Next.js API Routes. 
 
 ## `Page` & Layout
 
@@ -456,7 +456,7 @@ This template ships with a default [SWR Fetcher](https://swr.vercel.app/docs/dat
 
 ```ts
 const swrFetcher = useSwrFetcherWithAccessToken();
-const { data, error } = useSWR('/api/demo/api/Values', swrFetcher);
+const { data, error } = useSWR('/api/be/api/Values', swrFetcher);
 ```
 
 > :warning: `useSwrFetcherWithAccessToken` and `useSWR` are hooks and they can ONLY be called from the top-level code block of function components. https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level
@@ -529,11 +529,11 @@ export const config = {
 }
 ```
 
-The above implementation allows forwarding from the Next.js API Route to the actual back-end API URL. For example: `/api/demo/api/Values` is forwarded to the `http://back-end/api/Values`
+The above implementation allows forwarding from the Next.js API Route to the actual back-end API URL. For example: `/api/be/api/Values` is forwarded to the `http://back-end/api/Values`
 
 ```tsx
 // Fetch data from http://back-end/api/Values
-const { data, error } = useSWR('/api/demo/api/Values', swrFetcher);
+const { data, error } = useSWR('/api/be/api/Values', swrFetcher);
 ```
 
 For clarity, it is recommended to create separate API Routes for different back-end microservices. (e.g. `/api/employees`, `/api/products`, etc.)

@@ -68,15 +68,52 @@ Place reusable React components in this folder.
 
 It is recommended to develop using [function components](https://reactjs.org/docs/components-and-props.html) with [hooks](https://reactjs.org/docs/hooks-intro.html) instead of class components.
 
-### `styles` Folder
+### Styling a Component
 
-Place plain `.css` files in this folder and import them from `globals.css` to apply them as Global Stylesheet. These styles will apply to all pages and components.
+Components should be styled with one of these techniques, sorted from the most recommended to the least recommended:
 
-> Due to the global nature of stylesheets, and to avoid conflicts, they may not be imported from pages / components.
+- [Tailwind CSS](https://flowbite.com/tools/tailwind-cheat-sheet/) utility classes in `className` prop for best website performance.
 
-[Reusable CSS-in-JS objects](https://emotion.sh/docs/best-practices) should be placed in `components` folder instead because they export TypeScript objects.
+```tsx
+// These websites provide Tailwind CSS components:
+// https://tailwindui.com/all-access
+// https://tailwind-elements.com
+// https://flowbite.com
 
-[Component-Level CSS Modules](https://nextjs.org/docs/basic-features/built-in-css-support#adding-component-level-css) specific to certain components or pages are recommended to be placed next to the corresponding `.tsx` files instead. (e.g. `components/Button.module.css` next to `components/Button.tsx`)
+<button type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Button</button>
+```
+
+- [Reusable CSS-in-JS objects](https://emotion.sh/docs/best-practices) placed in `components` folder. (Not `styles` folder because they export TypeScript objects)
+
+```ts
+import { css } from '@emotion/react';
+
+export const ErrorMessageStyles = css({
+    color: 'red',
+    fontWeight: 'bold',
+});
+```
+
+> :bulb: Tailwind CSS or CSS-in-JS should be used to make reusable components. For example:
+
+```tsx
+import React from 'react';
+import { ErrorMessageStyles } from '...';
+
+export const ErrorMessage: React.FC<{
+    children?: string | number
+}> = ({ children }) => {
+    return (
+        <p css={ErrorMessageStyles}>{children}</p>
+    );
+}
+```
+
+- [Local CSS Modules](https://nextjs.org/docs/basic-features/built-in-css-support#adding-component-level-css) specific to certain components or pages should be placed next to the corresponding `.tsx` files instead. (e.g. `components/Button.module.css` next to `components/Button.tsx`)
+
+- Global Stylesheets: place plain `.css` files in `styles` folder and import them from `globals.css` to apply them to all pages and components.
+
+> :warning: Due to the global nature of stylesheets, and to avoid conflicts, they may not be imported from pages / components.
 
 ### `functions` Folder
 

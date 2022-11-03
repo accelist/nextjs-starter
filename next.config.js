@@ -72,12 +72,6 @@ const nextConfig = {
         at react-dom.production.min.js:284:398
     */
     swcMinify: false,
-    // https://nextjs.org/docs/advanced-features/compiler#emotion
-    compiler: {
-        emotion: {
-            sourceMap: true,
-        },
-    },
     async headers() {
         return [
             {

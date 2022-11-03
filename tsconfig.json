@@ -14,9 +14,6 @@
     "resolveJsonModule": true,
     "jsx": "preserve",
 
-    // https://emotion.sh/docs/typescript#emotionreact
-    "jsxImportSource": "@emotion/react",
-
     /* Interop Constraints */
     "isolatedModules": true,                              /* Ensure that each file can be safely transpiled without relying on other imports. */
     // "allowSyntheticDefaultImports": true,              /* Allow 'import x from y' when a module doesn't have a default export. */

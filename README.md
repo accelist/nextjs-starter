@@ -34,8 +34,6 @@
 
     - Thousands of [utility classes](https://tailwind.build/classes) powered by Tailwind CSS with `className` IntelliSense in React components
 
-    - CSS-in-JS with [Emotion React](https://emotion.sh/docs/introduction#react)
-
     - Simple atomic React state management using [Jotai](https://jotai.org/)
     
     - Thousands of icons by [FontAwesome 6](https://fontawesome.com/search?o=r&m=free)
@@ -83,33 +81,11 @@ Components should be styled with one of these techniques, sorted from the most r
 <button type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Button</button>
 ```
 
-- [Reusable CSS-in-JS objects](https://emotion.sh/docs/best-practices) placed in `components` folder. (Not `styles` folder because they export TypeScript objects)
+> :bulb: Tailwind CSS should be used to make reusable components. Projects should always strive to have many reusable React components, each using many Tailwind CSS base classes (easier to maintain), rather than having many global CSS classes which are used everywhere (harder to maintain). This concept is called Utility-First: https://tailwindcss.com/docs/utility-first
 
-```ts
-import { css } from '@emotion/react';
+- [Local CSS Modules](https://nextjs.org/docs/basic-features/built-in-css-support#adding-component-level-css) specific to certain components or pages should be placed next to the corresponding `.tsx` files instead (e.g. `components/Button.module.css` next to `components/Button.tsx`). Tailwind CSS features such as [`theme()`](https://tailwindcss.com/docs/functions-and-directives#theme), [`screen()`](https://tailwindcss.com/docs/functions-and-directives#screen), and [`@apply`](https://tailwindcss.com/docs/functions-and-directives#apply) can be used here.
 
-export const ErrorMessageStyles = css({
-    color: 'red',
-    fontWeight: 'bold',
-});
-```
-
-> :bulb: Tailwind CSS or CSS-in-JS should be used to make reusable components. For example:
-
-```tsx
-import React from 'react';
-import { ErrorMessageStyles } from '...';
-
-export const ErrorMessage: React.FC<{
-    children?: string | number
-}> = ({ children }) => {
-    return (
-        <p css={ErrorMessageStyles}>{children}</p>
-    );
-}
-```
-
-- [Local CSS Modules](https://nextjs.org/docs/basic-features/built-in-css-support#adding-component-level-css) specific to certain components or pages should be placed next to the corresponding `.tsx` files instead. (e.g. `components/Button.module.css` next to `components/Button.tsx`)
+> CSS Modules should only be used to develop very small, reusable components ONLY when Tailwind CSS base classes cannot do the job. **Avoid using CSS Modules to style most of the application components!!** https://tailwindcss.com/docs/reusing-styles#avoiding-premature-abstraction
 
 - Global Stylesheets: place plain `.css` files in `styles` folder and import them from `globals.css` to apply them to all pages and components.
 

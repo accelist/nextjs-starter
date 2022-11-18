@@ -4,10 +4,10 @@ import { WithDefaultLayout } from '../../components/DefautLayout';
 import { Title } from '../../components/Title';
 import { Page } from '../../types/Page';
 import { Table } from 'antd';
-import type { ColumnsType } from 'antd/lib/table';
 import { BackendApiUrl } from '../../functions/BackendApiUrl';
 import { Authorize } from '../../components/Authorize';
 import { useSwrFetcherWithAccessToken } from '../../functions/useSwrFetcherWithAccessToken';
+import type { ColumnsType } from 'antd/es/table';
 
 interface DataItem {
     type: string;

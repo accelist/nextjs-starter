@@ -2,22 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@import 'antd/dist/antd.css';
 @import 'nprogress/nprogress.css';
 @import '@fortawesome/fontawesome-svg-core/styles.css';
 
 #nprogress .bar {
     background: limegreen !important;
-}
-
-.ant-menu-dark {
-    background-color: theme(colors.sidebar) !important;
-}
-
-.ant-menu-dark .ant-menu-sub {
-    background-color: theme(colors.sidebar) !important;
-}
-
-.ant-menu-dark .ant-menu-item-selected {
-    background-color: theme(colors.sidebarSelected) !important;
 }

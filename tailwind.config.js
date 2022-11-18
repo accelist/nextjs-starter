@@ -7,8 +7,7 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                sidebar: '#001529',
-                sidebarSelected: '#1890ff',
+                topbar: '#001529',
             },
         },
     },

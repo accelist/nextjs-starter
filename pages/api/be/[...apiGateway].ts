@@ -8,7 +8,7 @@ const server = Proxy.createProxyServer({
     target: AppSettings.current.backendApiHost,
     // changeOrigin to support name-based virtual hosting
     changeOrigin: true,
-    xfwd: true, 
+    xfwd: true,
     // https://github.com/http-party/node-http-proxy#proxying-websockets
     ws: false,
 });
@@ -23,7 +23,7 @@ server.on('proxyReq', (proxyReq, req) => {
     }
     proxyReq.removeHeader('cookie');
     // console.log(JSON.stringify(proxyReq.getHeaders(), null, 4));
-    console.log('HTTP Proxy:', req.url, '-->', AppSettings.current.backendApiHost + urlRewrite);
+    console.log('API Proxy:', req.url, '-->', AppSettings.current.backendApiHost + urlRewrite);
 });
 
 const apiGateway = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -39,8 +39,8 @@ const apiGateway = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.on('finish', () => {
         const endTime = new Date().getTime();
-        console.log(`HTTP Proxy: Finished ${res.req.url} in ${endTime - startTime}ms `);
-    })
+        console.log(`API Proxy: Finished ${res.req.url} in ${endTime - startTime}ms `);
+    });
 }
 
 export default apiGateway;

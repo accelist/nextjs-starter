@@ -30,7 +30,7 @@
     "autoprefixer": "10.4.13",
     "concurrently": "7.6.0",
     "cross-env": "7.0.3",
-    "eslint": "8.28.0",
+    "eslint": "8.31.0",
     "eslint-config-next": "13.0.6",
     "eslint-watch": "8.0.0",
     "husky": "8.0.2",

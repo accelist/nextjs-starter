@@ -52,6 +52,7 @@ const nextConfig = {
     // https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props
     serverRuntimeConfig: require('./appsettings'),
     productionBrowserSourceMaps: true,
+    reactStrictMode: true,
     async headers() {
         return [
             {

@@ -16,6 +16,7 @@ RUN npm run build
 # Production image
 FROM base AS app
 COPY --from=build /app/next.config.js /app/next.config.js
+COPY --from=build /app/appsettings.js /app/appsettings.js
 COPY --from=build /app/public /app/public
 COPY --from=build /app/.next /app/.next
 ENV NODE_ENV production

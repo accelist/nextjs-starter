@@ -5,7 +5,7 @@ import React from 'react';
  */
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     text: string
-    //add here for custom property or property that not included in HTMLButtonElement
+    // Add your custom properties here.
 }
 
 /**

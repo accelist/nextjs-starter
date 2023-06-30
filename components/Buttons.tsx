@@ -1,10 +1,7 @@
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 
-interface Props {
-    text: string,
-    disabled?: boolean,
-    type: string,
-    onClicked?: MouseEventHandler
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    text: string
 }
 const buttonStyle = "text-white font-bold py-2 px-4 rounded";
 
@@ -14,25 +11,22 @@ const cancelColor = "bg-red-500 hover:bg-red-700 ";
 
 const disabledButton = " opacity-50 cursor-not-allowed";
 
-export const ButtonComponent: React.FC<Props> = ({
-    text,
-    disabled = false,
-    type,
-    onClicked
-}) => {
+export const AButton: React.FC<ButtonProps> = (
+    props
+) => {
     let className: string;
-    if (type === "cancel") {
-        className = cancelColor + buttonStyle + (disabled ? disabledButton : "")
+    if (props.type === "reset") {
+        className = cancelColor + buttonStyle + (props.disabled ? disabledButton : "")
     }
-    else if (type == "primary") {
-        className = primaryColor + buttonStyle + (disabled ? disabledButton : "")
+    else if (props.type == "submit") {
+        className = primaryColor + buttonStyle + (props.disabled ? disabledButton : "")
     }
     else {
-        className = defaultColor + buttonStyle + (disabled ? disabledButton : "")
+        className = defaultColor + buttonStyle + (props.disabled ? disabledButton : "")
     }
     return (
-        <button className={className} onClick={disabled ? () => {return} : onClicked}>
-            {text}
+        <button {...props} className={className}>
+            {props.text}
         </button>
     )
 }

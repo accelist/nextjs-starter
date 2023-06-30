@@ -13,7 +13,7 @@ const IndexPage: Page = () => {
             <AButton text="This is submit" type='submit' onClick={() => console.log("submit")} />
             <AButton text="This is default" type='button' onClick={() => console.log("default")} />
             <AButton text="This is reset" type='reset' onClick={() => console.log("cancel")} />
-            <AButton text="This is disabled" disabled onClick={() => console.log("disabeld")} />
+            <AButton text="This is disabled" disabled />
         </div>
     );
 }

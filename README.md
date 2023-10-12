@@ -42,6 +42,8 @@
 
     - Simple form validation with [React Hook Form](https://react-hook-form.com/get-started), designed to be [integrated with Ant Design](https://react-hook-form.com/get-started#IntegratingControlledInputs) and [Zod](https://react-hook-form.com/get-started#SchemaValidation)
 
+    - Interactive documentation with [Storybook](https://storybook.js.org/)
+
 - Provide sane defaults for the most common security headers
 
 ## Getting Started
@@ -62,7 +64,7 @@ To display Tailwind CSS IntelliSense in Visual Studio Code, install [the officia
 
 ### `components` Folder
 
-Place reusable React components in this folder.
+Place reusable React components and Storybook stories in this folder.
 
 It is recommended to develop using [function components](https://reactjs.org/docs/components-and-props.html) with [hooks](https://reactjs.org/docs/hooks-intro.html) instead of class components.
 
@@ -90,6 +92,16 @@ Components should be styled with one of these techniques, sorted from the most r
 - Global Stylesheets: place plain `.css` files in `styles` folder and import them from `globals.css` to apply them to all pages and components.
 
 > :warning: Due to the global nature of stylesheets, and to avoid conflicts, they may not be imported from pages / components.
+
+### Making Component's Documentations
+
+Components should be documented by using [Storybook](https://storybook.js.org/) by making a stories for each component.
+
+Run the Storybook with command:
+
+```sh
+npm run storybook
+```
 
 ### `functions` Folder
 

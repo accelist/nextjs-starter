@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Index Snapshot Testing matches snapshot 1`] = `
+<div>
+  <div>
+    <h1>
+      Hello World!
+    </h1>
+    <button>
+      Test Clicking
+    </button>
+  </div>
+</div>
+`;

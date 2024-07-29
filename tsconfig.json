@@ -47,7 +47,8 @@
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "types": ["jest"]
   },
   "include": [
     "next-env.d.ts",

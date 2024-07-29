@@ -6,7 +6,9 @@ const IndexPage: Page = () => {
     return (
         <div>
             <Title>Home</Title>
-            Hello World!
+            <h1>Hello World!</h1>
+
+            <button>Test Clicking</button>
         </div>
     );
 }

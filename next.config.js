@@ -46,11 +46,10 @@ const isProd = process.env['NODE_ENV'] === 'production';
 
 /** @type { import('next').NextConfig } */
 const nextConfig = {
-    // add environment variables accessible via AppSettings here:
-    // visible only by server-side Next.js (secrets)
-    // if accessing variables required in browser-side code, use getServerSideProps
-    // https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props
-    serverRuntimeConfig: require('./appsettings'),
+    // Server-only runtime environment variables are read via AppSettings
+    // from appsettings.js (process.env). Do not use NEXT_PUBLIC_ for secrets.
+    // If a value is needed in the browser, pass it through getServerSideProps.
+    // https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props
     productionBrowserSourceMaps: true,
     reactStrictMode: true,
     async headers() {

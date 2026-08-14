@@ -12,7 +12,7 @@
             "request": "launch",
             "command": "npm run debug",
             "serverReadyAction": {
-                "pattern": "started server on .+, url: (https?://.+)",
+                "pattern": "Local:.+(https?://\\S+)",
                 "uriFormat": "%s",
                 "action": "debugWithEdge"
             }

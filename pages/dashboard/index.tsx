@@ -7,7 +7,7 @@ import { Table } from 'antd';
 import { BackendApiUrl } from '../../functions/BackendApiUrl';
 import { Authorize } from '../../components/Authorize';
 import { useSwrFetcherWithAccessToken } from '../../functions/useSwrFetcherWithAccessToken';
-import type { ColumnsType } from 'antd/es/table';
+import type { TableColumnsType } from 'antd';
 
 interface DataItem {
     type: string;
@@ -19,7 +19,7 @@ interface DataRow extends DataItem {
     key: React.Key;
 }
 
-const columns: ColumnsType<DataRow> = [
+const columns: TableColumnsType<DataRow> = [
     {
         title: 'No.',
         dataIndex: 'rowNumber'

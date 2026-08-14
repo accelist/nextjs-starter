@@ -10,9 +10,14 @@
     "noEmit": true,
     "incremental": true,
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
 
     /* Interop Constraints */
     "isolatedModules": true,                              /* Ensure that each file can be safely transpiled without relying on other imports. */
@@ -52,7 +57,8 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

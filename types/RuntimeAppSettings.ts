@@ -1,3 +1,6 @@
-import type ServerRuntimeConfig from '../appsettings';
-
-export type RuntimeAppSettings = typeof ServerRuntimeConfig;
+export interface RuntimeAppSettings {
+    backendApiHost: string;
+    oidcIssuer: string;
+    oidcClientId: string;
+    oidcScope: string;
+}

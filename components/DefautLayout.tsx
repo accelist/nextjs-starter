@@ -5,7 +5,7 @@ import { faBars, faSignOut, faSignIn, faHome, faCubes, faUser, faUsers, faFlaskV
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import { useSession, signIn, signOut } from "next-auth/react";
-import nProgress from "nprogress";
+import { BProgress } from "@bprogress/core";
 
 const { Content, Sider } = Layout;
 
@@ -109,7 +109,7 @@ const DefaultLayout: React.FC<{
                 label: 'Sign out',
                 icon: <FontAwesomeIcon icon={faSignOut}></FontAwesomeIcon>,
                 onClick: () => {
-                    nProgress.start();
+                    BProgress.start();
                     signOut();
                     // HINT: use this method call if need to end SSO server authentication session:
                     // signOut({
@@ -123,7 +123,7 @@ const DefaultLayout: React.FC<{
                 label: 'Sign in',
                 icon: <FontAwesomeIcon icon={faSignIn}></FontAwesomeIcon>,
                 onClick: () => {
-                    nProgress.start();
+                    BProgress.start();
                     signIn('oidc');
                 }
             });
@@ -157,7 +157,7 @@ const DefaultLayout: React.FC<{
                 Layout: {
                     // Sidebar background color:
                     // https://github.com/ant-design/ant-design/blob/5.0.0/components/layout/style/index.tsx#L101
-                    colorBgHeader: sidebarBackgroundColor
+                    headerBg: sidebarBackgroundColor
                 }
             }
         }}>
@@ -165,7 +165,7 @@ const DefaultLayout: React.FC<{
                 <Head>
                     <meta key="meta-charset" charSet="utf-8" />
                     <meta key="meta-viewport" name="viewport" content="width=device-width, initial-scale=1" />
-                    <link key="favicon" rel="icon" href="/favicon.ico" />
+                    <link key="favicon" rel="icon" href="/favicon.ico?v=2" />
                 </Head>
 
                 <Sider width={240} className="pb-24 hidden lg:block">
@@ -175,9 +175,9 @@ const DefaultLayout: React.FC<{
                         components: {
                             Menu: {
                                 // https://github.com/ant-design/ant-design/blob/5.0.0/components/menu/style/theme.tsx#L48
-                                colorItemBg: sidebarBackgroundColor,
+                                itemBg: sidebarBackgroundColor,
                                 // https://github.com/ant-design/ant-design/blob/5.0.0/components/menu/style/theme.tsx#L133
-                                colorItemBgSelected: sidebarMenuSelectedItemBackgroundColor
+                                itemSelectedBg: sidebarMenuSelectedItemBackgroundColor
                             }
                         }
                     }}>
@@ -190,7 +190,7 @@ const DefaultLayout: React.FC<{
                         components: {
                             Menu: {
                                 // https://github.com/ant-design/ant-design/blob/5.0.0/components/menu/style/theme.tsx#L194
-                                colorActiveBarBorderSize: 0
+                                activeBarBorderWidth: 0
                             }
                         }
                     }}>

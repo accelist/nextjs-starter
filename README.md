@@ -36,7 +36,7 @@
 
     - Simple atomic React state management using [Jotai](https://jotai.org/)
     
-    - Thousands of icons by [FontAwesome 6](https://fontawesome.com/search?o=r&m=free)
+    - Thousands of icons by [FontAwesome 7](https://fontawesome.com/search?o=r&m=free)
 
     - TypeScript object schema validation with [Zod](https://zod.dev/)
 
@@ -123,7 +123,7 @@ Next.js uses the `App` component to initialize pages which can be overridden to 
 
 This template ships with `_app.tsx` file which implements some of the above-mentioned behaviors, including additional features:
 
-- Progress bar on navigation
+- Progress bar on navigation (BProgress)
 
 - OpenID Connect provider configuration
 
@@ -139,18 +139,18 @@ Next.js can serve static files, like images, under a folder called `public` in t
 
 Place type declarations in this folder. For example: `interface` or `type` or [`.d.ts`](https://www.typescriptlang.org/docs/handbook/declaration-files/by-example.html) files.
 
-### `.eslintrc.json` File
+### `eslint.config.mjs` File
 
-ESLint configuration file for TypeScript and Next.js (`next/core-web-vitals` including `react` and `react-hooks` ESLint plugins).
+ESLint flat configuration for TypeScript and Next.js (`eslint-config-next/core-web-vitals` and `eslint-config-next/typescript`).
 
-> Read more about ESLint configuration: https://eslint.org/docs/user-guide/configuring/
+> Read more about ESLint configuration: https://eslint.org/docs/latest/use/configure/
 
 | Rules         | Documentation                                                     |
 | ------------- | ----------------------------------------------------------------- |
-| TypeScript    | https://www.npmjs.com/package/@typescript-eslint/eslint-plugin    |
+| TypeScript    | https://typescript-eslint.io/rules/                               |
 | React         | https://www.npmjs.com/package/eslint-plugin-react                 |
 | React Hooks   | https://www.npmjs.com/package/eslint-plugin-react-hooks           |
-| Next.js       | https://nextjs.org/docs/basic-features/eslint#eslint-plugin       |
+| Next.js       | https://nextjs.org/docs/app/api-reference/config/eslint           |
 
 ### `package.json` & `package.lock.json` Files
 
@@ -257,12 +257,12 @@ This technique does not adhere to [The Twelve-Factor App](https://12factor.net/b
 
 ![Build, Release, Run](https://raw.githubusercontent.com/accelist/nextjs-starter/master/public/release.png)
 
-For this reason, [Runtime Configuration](https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration) is recommended to be used instead.
+`AppSettings` reads `process.env` at runtime through `appsettings.js`, so container deployments can inject configuration with Docker `-e` without rebuilding the image.
 
 This project template ships [`AppSettings`](https://github.com/accelist/nextjs-starter/blob/master/functions/AppSettings.ts) API as a high-level abstraction of the runtime Environment Variables:
 
 ```
-Environment Variables --> appsettings.js --> next.config.js --> AppSettings
+Environment Variables --> appsettings.js --> AppSettings
 ``` 
 
 ### Environment Variables
@@ -280,15 +280,20 @@ The values of Environment Variables are sourced differently depending on how the
 ### Add Environment Variables to `appsettings.js`
 
 ```js
-module.exports = {
-    backendApiHost: process.env['BACKEND_API_HOST'] ?? '',
-    oidcIssuer: process.env['OIDC_ISSUER'] ?? '',
-    oidcClientId: process.env['OIDC_CLIENT_ID'] ?? '',
-    oidcScope: process.env['OIDC_SCOPE'] ?? '',
+/**
+ * @returns {import('./types/RuntimeAppSettings').RuntimeAppSettings}
+ */
+module.exports = function getAppSettings() {
+    return {
+        backendApiHost: process.env['BACKEND_API_HOST'] ?? '',
+        oidcIssuer: process.env['OIDC_ISSUER'] ?? '',
+        oidcClientId: process.env['OIDC_CLIENT_ID'] ?? '',
+        oidcScope: process.env['OIDC_SCOPE'] ?? '',
+    };
 };
 ```
 
-The Environment Variables added in `appsettings.js` will be added to the `serverRuntimeConfig` field in `next.config.js` file and are only available on the server-side code. (in `getServerSideProps` or in API routes)
+The Environment Variables added in `appsettings.js` are read at runtime by `AppSettings` and are only available on the server-side code. (in `getServerSideProps` or in API routes)
 
 > Read more for explanation about this behavior: https://www.saltycrane.com/blog/2021/04/buildtime-vs-runtime-environment-variables-nextjs-docker/
 
@@ -487,7 +492,7 @@ To ease development against microservices, this template ships an implementation
 > The content `/pages/api/be/[...apiGateway].ts` file: 
 
 ```ts
-import Proxy from 'http-proxy';
+import Proxy from 'http-proxy-3';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { AppSettings } from '../../../functions/AppSettings';
 
@@ -626,4 +631,4 @@ If working with private repository (hence private container registry), [create a
 
 Upon launching development server via `npm run dev`, git pre-commit hook will be installed into the local repository.
 
-This hook will perform TypeScript and ESLint checks when a developer attempts to commit into the git repository and fail the commit if any errors are detected.
+This hook will perform TypeScript and ESLint checks (`tsc` and `eslint .`) when a developer attempts to commit into the git repository and fail the commit if any errors are detected.

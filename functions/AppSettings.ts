@@ -1,4 +1,4 @@
-import getConfig from 'next/config';
+import getAppSettings from '../appsettings';
 import type { RuntimeAppSettings } from '../types/RuntimeAppSettings';
 
 /**
@@ -7,8 +7,7 @@ import type { RuntimeAppSettings } from '../types/RuntimeAppSettings';
  */
 export const AppSettings = {
     get current(): RuntimeAppSettings {
-        const config = getConfig();
-        return { ...config.serverRuntimeConfig };
+        return getAppSettings();
     }
 }
 

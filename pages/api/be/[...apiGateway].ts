@@ -1,4 +1,4 @@
-import Proxy from 'http-proxy';
+import Proxy from 'http-proxy-3';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { AppSettings } from '../../../functions/AppSettings';
 

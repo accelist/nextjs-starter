@@ -1,9 +1,9 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
 import type { JWT } from "next-auth/jwt";
-import { Issuer } from 'openid-client';
-import { custom } from 'openid-client';
+import * as client from 'openid-client';
 import { AppSettings } from "../../../functions/AppSettings"
 import { UserInfo } from "../../../functions/AuthorizationContext";
+import { getOidcConfig } from "../../../functions/oidcClient";
 
 /**
  * Takes a token, and returns a new token with updated
@@ -16,22 +16,13 @@ async function refreshAccessToken(token: JWT & { refreshToken?: string }) {
             throw new Error('Refresh token is empty!');
         }
 
-        const discovery = await Issuer.discover(AppSettings.current.oidcIssuer);
-
-        const client = new discovery.Client({
-            client_id: AppSettings.current.oidcClientId,
-            token_endpoint_auth_method: 'none',
-        });
-
-        client[custom.clock_tolerance] = 10; // to allow a 10 second skew
-
-        // console.log('NextAuth refreshing token: ', token.refreshToken);
-        const update = await client.refresh(token.refreshToken);
+        const config = await getOidcConfig();
+        const update = await client.refreshTokenGrant(config, token.refreshToken);
 
         return {
             ...token,
             accessToken: update.access_token,
-            accessTokenExpires: calculateExpireAtMilliseconds(update.expires_at),
+            accessTokenExpires: expireAtFromExpiresIn(update.expires_in),
             refreshToken: update.refresh_token ?? token.refreshToken, // Fall back to old refresh token
         }
     } catch (err) {
@@ -44,13 +35,22 @@ async function refreshAccessToken(token: JWT & { refreshToken?: string }) {
     }
 }
 
-function calculateExpireAtMilliseconds(expireAtSeconds: number | undefined) {
-    // we didn't get expireAt value, just assume it will expire in 15 minutes
+function expireAtFromUnixSeconds(expireAtSeconds: number | undefined) {
+    // next-auth account.expires_at is an absolute UNIX timestamp in seconds
     if (!expireAtSeconds) {
         return Date.now() + 15 * 60 * 1000;
     }
 
     return expireAtSeconds * 1000;
+}
+
+function expireAtFromExpiresIn(expiresInSeconds: number | undefined) {
+    // openid-client v6 returns expires_in as seconds from now
+    if (!expiresInSeconds) {
+        return Date.now() + 15 * 60 * 1000;
+    }
+
+    return Date.now() + expiresInSeconds * 1000;
 }
 
 function hasNotExpired(expireAtSeconds: unknown): boolean {
@@ -130,7 +130,7 @@ export const authOptions: NextAuthOptions = {
                 // console.log(JSON.stringify(account, null, 4));
                 return {
                     accessToken: account.access_token,
-                    accessTokenExpires: calculateExpireAtMilliseconds(account.expires_at),
+                    accessTokenExpires: expireAtFromUnixSeconds(account.expires_at),
                     refreshToken: account.refresh_token,
                     user,
                 }

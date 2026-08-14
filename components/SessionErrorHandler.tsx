@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import { signIn, useSession } from "next-auth/react";
-import nProgress from "nprogress";
+import { BProgress } from "@bprogress/core";
 import React, { useEffect } from "react";
 
 export const SessionErrorHandler: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -9,11 +9,11 @@ export const SessionErrorHandler: React.FC<{ children: React.ReactNode }> = ({ c
     useEffect(() => {
         // this error bubbles up from [...nextauth].ts, refreshAccessToken()
         if (session?.['error'] === "RefreshAccessTokenError") {
-            notification['warning']({
+            notification.warning({
                 message: 'Login Required',
                 description: 'Your session has ended. Redirecting to login page...'
             });
-            nProgress.start();
+            BProgress.start();
             signIn('oidc'); // Force sign in to hopefully resolve error
         }
     }, [session]);

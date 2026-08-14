@@ -42,7 +42,7 @@ export async function tryFetchJson<T>(url: RequestInfo | URL, init: RequestInit)
             return {
                 problem: problem
             };
-        } catch (problemNotJson) {
+        } catch {
             const responseBody = await response.text();
             return {
                 problem: responseBody

@@ -1,6 +1,6 @@
 import { Spin } from "antd";
 import { useSession, signIn } from "next-auth/react";
-import nProgress from "nprogress";
+import { BProgress } from "@bprogress/core";
 import React from "react";
 import { AuthorizationContext, AuthorizationContextData, UserInfo } from "../functions/AuthorizationContext";
 
@@ -10,7 +10,7 @@ export const Authorize: React.FC<{
     const { data: session, status } = useSession({
         required: true,
         onUnauthenticated() {
-            nProgress.start();
+            BProgress.start();
             signIn('oidc');
         },
     });
@@ -30,7 +30,9 @@ export const Authorize: React.FC<{
     if (status !== 'authenticated') {
         return (
             <div className="w-full flex justify-center items-center h-[600px]">
-                <Spin size="large" tip="Loading Authentication..."></Spin>
+                <Spin size="large" tip="Loading Authentication...">
+                    <div className="h-[600px]" />
+                </Spin>
             </div>
         )
     }
